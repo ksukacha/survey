@@ -1,0 +1,38 @@
+<form [formGroup]="logInFormGroup" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="user-email">Email:</label>
+    <input class="form-control" id="user-email" [formControlName]="'email'"
+           [ngClass]="{ 'is-invalid': submitted && email.errors }"/>
+    <div *ngIf="submitted && email.errors" class="invalid-feedback">
+      <div *ngIf="email.errors.required">Email is required</div>
+      <div *ngIf="email.errors.email">Email is incorrect</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="pass">Password:</label>
+    <input class="form-control" id="pass" [formControlName]="'password'" aria-describedby="psdHelp"
+           [ngClass]="{ 'is-invalid': submitted && password.errors }"/>
+    <small *ngIf="!submitted" id="psdHelp" class="form-text text-muted">at least 6 characters</small>
+    <div *ngIf="submitted && password.errors" class="invalid-feedback">
+      <div *ngIf="password.errors.required">Password is required</div>
+      <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="checkbox">
+      <label> <input type="checkbox" [formControlName]="'rememberMe'">Remember me</label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <ul class="list-inline">
+      <li class="list-inline-item">
+        <button class="btn btn-dark">Cancel</button>
+      </li>
+      <li class="list-inline-item">
+        <button type="submit" class="btn btn-primary">Log in</button>
+      </li>
+    </ul>
+  </div>
+
+</form>

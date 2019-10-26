@@ -1,0 +1,10 @@
+.nav-link:hover{
+  color: #32a287 !important;
+}
+.sidenav a:hover{
+  color:#32a287 !important;
+}
+.sidenav a{
+  color:#3f303f;
+}
+

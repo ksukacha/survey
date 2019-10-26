@@ -1,0 +1,22 @@
+<!--
+usgin ng-bootstrap component dropdown
+aria-controls: identifies the element(s) that are controlled by the current element
+ aria-expanded
+aria-expanded: if the button controls a grouping of other elements, the aria-expanded state indicates whether the controlled grouping is currently expanded or collapsed.  If the button has aria-expanded="false" set, the grouping is not currently expanded; If the button has aria-expanded="true" set, it is currently expanded; if the button has aria-expanded="undefined" set or the attribute is ommitted, it is not expandable.
+-->
+<button class="navbar-toggler" type="button" aria-controls="navbarContent" [attr.aria-expanded]="!collapsed"
+        (click)="collapsed = !collapsed">
+  <span class="navbar-toggler-icon"></span>
+</button>
+<div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
+  <div class="nav-item" ngbDropdown placement="bottom-right">
+    <a class="nav-link" ngbDropdownToggle id="navbarDropdown" role="button">
+      user_login
+    </a>
+    <div ngbDropdownMenu aria-labelledby="navbarDropdown" class="dropdown-menu">
+      <a class="dropdown-item" href="#">Edit profile</a>
+      <a class="dropdown-item" href="#">Log out</a>
+    </div>
+  </div>
+</div>
+

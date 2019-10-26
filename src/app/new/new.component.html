@@ -1,0 +1,17 @@
+<p><input class="form-control input-md" placeholder="Enter survey name"/></p>
+<p><textarea class="form-control text-md" placeholder="Enter brief description"></textarea></p>
+<hr/>
+<p><input class="form-control input-md" placeholder="Question name"></p>
+<div class="answer-option">
+  Answer type:
+  <ul class="list-inline">
+    <li class="list-inline-item">
+      <input (click)="radioClick()" type="radio" name="radio-ans" id="radio-ans" checked>
+      <label for="radio-ans"><img src="../../assets/images/radioIcon.png">Single choice</label>
+    </li>
+    <li class="list-inline-item">
+      <input (click)="checkboxClick()" type="radio" name="radio-ans" id="checkbox-ans">
+      <label for="checkbox-ans"><img src="../../assets/images/checkBoxIcon.png">Multiple choice</label>
+    </li>
+  </ul>
+</div>
