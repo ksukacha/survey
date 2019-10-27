@@ -16,7 +16,7 @@
           </li>
         </ul>
         <p class="card-text">Author: {{survey.author.login}}</p>
-        <a href="#" class="btn btn-primary">Open</a>
+        <a [routerLink]="['/home', survey.id]" class="btn btn-primary">Open</a>
       </div>
     </div>
   </div>

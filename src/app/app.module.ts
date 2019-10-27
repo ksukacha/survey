@@ -21,6 +21,7 @@ import { NewSurveyComponent } from './surveys/new-survey/new-survey.component';
 /*import {NewSurveyComponent} from './new-survey/new-survey.component';*/
 import {SurveysComponent} from './surveys/surveys-list/surveys.component';
 import { SurveyDetailComponent } from './surveys/survey-detail/survey-detail.component';
+import {AppRoutingModule} from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -37,15 +38,16 @@ import { SurveyDetailComponent } from './surveys/survey-detail/survey-detail.com
     ModalSignUpComponent,
     NewSurveyComponent,
     SurveysComponent,
-    SurveyDetailComponent
+    SurveyDetailComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    AppRoutingModule,
     NgbModule.forRoot(),
     ReactiveFormsModule,
     /*SurveysModule,*/
-    /*AppRoutingModule*/
   ],
   providers: [NgbActiveModal, SurveysService],
   bootstrap: [AppComponent],

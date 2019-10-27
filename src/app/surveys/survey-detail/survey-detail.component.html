@@ -1,1 +1,6 @@
-<p>survey-detail works!</p>
+<div *ngIf="survey | async as survey">
+  <p>Id: {{survey.id}}</p>
+  <p>Description: {{survey.description}}</p>
+  <p>Elapse date: {{survey.elapseDate}}</p>
+  <p>Author: {{survey.author.login}}</p>
+</div>
