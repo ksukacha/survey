@@ -16,13 +16,14 @@ import { ModalLoginComponent } from './modals/modal-login/modal-login.component'
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ModalSignUpComponent } from './modals/modal-sign-up/modal-sign-up.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { NewSurveyComponent } from './surveys/new-survey/new-survey.component';
+/*import { NewSurveyComponent } from './surveys/new-survey/new-survey.component';*/
 /*import {SurveysModule} from './surveys/surveys.module';*/
 /*import {NewSurveyComponent} from './new-survey/new-survey.component';*/
 import {SurveysComponent} from './surveys/surveys-list/surveys.component';
 import { SurveyDetailComponent } from './surveys/survey-detail/survey-detail.component';
 import {SurveyDetailModule} from './surveys/survey-detail/survey-detail.module';
 import {AppRoutingModule} from './app-routing.module';
+import {NewSurveyComponent} from './surveys/new-survey/new-survey.component';
 
 /*import {SurveyQuestionTabComponent} from './surveys/survey-detail/survey-question-tab/survey-question-tab.component';
 import {SurveyAnswerTabComponent} from './surveys/survey-detail/survey-answer-tab/survey-answer-tab.component';*/

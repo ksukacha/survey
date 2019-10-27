@@ -13,7 +13,7 @@ const routes: Routes = [
       {path: 'question-part', component: SurveyQuestionTabComponent},
       {path: 'answer-part', component: SurveyAnswerTabComponent}
     ]
-  }
+  },
 ];
 @NgModule({
   declarations: [],

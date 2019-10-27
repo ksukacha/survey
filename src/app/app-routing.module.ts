@@ -6,6 +6,7 @@ import {SurveyDetailComponent} from './surveys/survey-detail/survey-detail.compo
 import {SurveysSection} from './surveys/surveys-section';
 import {SurveyQuestionTabComponent} from './surveys/survey-detail/survey-question-tab/survey-question-tab.component';
 import {SurveyAnswerTabComponent} from './surveys/survey-detail/survey-answer-tab/survey-answer-tab.component';
+import {NewSurveyComponent} from './surveys/new-survey/new-survey.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,10 @@ const routes: Routes = [
     component: SurveysComponent,
     data: [{section: SurveysSection.MY_SURVEYS}]
   },
-  {path: 'home/:id', component: SurveyDetailComponent},
+  {
+    path: 'home/:id',
+    component: SurveyDetailComponent
+  },
   {
     path: 'explore',
     component: SurveysComponent,
@@ -24,6 +28,10 @@ const routes: Routes = [
     path: 'surveys-taken',
     component: SurveysComponent,
     data: [{section: SurveysSection.SURVEYS_TAKEN}]
+  },
+  {
+    path: 'new',
+    component: NewSurveyComponent
   },
   {
     path: 'drafts',
