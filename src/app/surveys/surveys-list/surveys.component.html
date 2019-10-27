@@ -3,13 +3,13 @@
 <div class="row">
   <div *ngFor="let survey of surveys" class="col">
     <div class="card">
-      <img class="card-img-top" src="../../assets/images/mySurvey.png" alt="Card image">
+      <img class="card-img-top" src="../../../assets/images/mySurvey.png" alt="Card image">
       <div class="card-body">
         <h4 class="card-title">Survey {{survey.id + 1}}</h4>
         <p class="card-text">{{survey.description}}</p>
         <ul class="list-inline">
           <li class="list-inline-item">
-            <img class="calendar-img" src="../../assets/images/calendar.png" alt="calendar">
+            <img class="calendar-img" src="../../../assets/images/calendar.png" alt="calendar">
           </li>
           <li class="list-inline-item">
             till {{survey.elapseDate}}

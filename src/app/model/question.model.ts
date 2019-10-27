@@ -1,6 +1,6 @@
-import {Answer} from './answer';
+import {AnswerModel} from './answer.model';
 
-export class Question {
+export class QuestionModel {
   name: string;
-  answers: Array<Answer>;
+  answers: Array<AnswerModel>;
 }

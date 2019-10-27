@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Survey} from '../model/survey.model';
-import {SurveysService} from '../surveys.service';
+import {Survey} from '../../model/survey.model';
+import {SurveysService} from '../../surveys.service';
 
 @Component({
   selector: 'app-surveys',

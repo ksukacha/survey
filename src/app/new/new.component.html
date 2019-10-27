@@ -1,9 +1,27 @@
-<p><input class="form-control input-md" placeholder="Enter survey name"/></p>
+<p><input class="form-control" placeholder="Enter survey name"/></p>
 <p><textarea class="form-control text-md" placeholder="Enter brief description"></textarea></p>
 <hr/>
-<p><input class="form-control input-md" placeholder="Question name"></p>
+<ul class="list-inline">
+  <li class="list-inline-item">
+    <input class="form-control" placeholder="QuestionModel name">
+  </li>
+  <li class="list-inline-item" ngbDropdown="">
+    <button class="btn btn-dark" id="dropdownButton" ngbDropdownToggle>{{choice=='single-choice'? 'Single choice' :
+      'Multiple choice'}}
+    </button>
+    <div ngbDropdownMenu aria-labelledby="dropdownButton" class="dropdown">
+      <button class="dropdown-item" (click)="radioClick()">
+        <label><img src="../../assets/images/radioIcon.png"> Single choice</label>
+      </button>
+      <button class="dropdown-item" (click)="checkboxClick()">
+        <label><img src="../../assets/images/checkBoxIcon.png"> Multiple choice</label>
+      </button>
+    </div>
+  </li>
+</ul>
+<!--<p><input class="form-control input-md" placeholder="QuestionModel name"></p>
 <div class="answer-option">
-  Answer type:
+  AnswerModel type:
   <ul class="list-inline">
     <li class="list-inline-item">
       <input (click)="radioClick()" type="radio" name="radio-ans" id="radio-ans" checked>
@@ -14,4 +32,27 @@
       <label for="checkbox-ans"><img src="../../assets/images/checkBoxIcon.png">Multiple choice</label>
     </li>
   </ul>
-</div>
+</div>-->
+<ng-container>
+  <div *ngIf="choice=='single-choice'">
+    <ul *ngFor="let x of [0,1,2]" class="list-inline">
+      <li class="list-inline-item" >
+        <img src="../../assets/images/radioIcon2.png">
+      </li>
+      <li class="list-inline-item col-md-11">
+        <input class="form-control" placeholder="Radio-answer text"/>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="choice=='multiple-choice'" >
+    <ul *ngFor="let x of [0,1,2]" class="list-inline">
+      <li class="list-inline-item">
+        <img src="../../assets/images/checkBoxIcon2.png">
+      </li>
+      <li class="list-inline-item col-md-11">
+        <input class="form-control" placeholder="Checkbox-answer text"/>
+      </li>
+    </ul>
+  </div>
+</ng-container>
+
