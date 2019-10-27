@@ -1,6 +1,19 @@
 <div *ngIf="survey | async as survey">
-  <p>Id: {{survey.id}}</p>
+  <!--<p>Id: {{survey.id}}</p>
   <p>Description: {{survey.description}}</p>
   <p>Elapse date: {{survey.elapseDate}}</p>
   <p>Author: {{survey.author.login}}</p>
+  <p>
+    <button (click)="goHome()" class="btn btn-dark">Back</button>
+  </p>-->
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" routerLink="/question-part">Survey</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/answer-part">Answers statistics</a>
+    </li>
+  </ul>
+  <router-outlet></router-outlet>
+
 </div>

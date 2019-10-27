@@ -21,7 +21,11 @@ import { NewSurveyComponent } from './surveys/new-survey/new-survey.component';
 /*import {NewSurveyComponent} from './new-survey/new-survey.component';*/
 import {SurveysComponent} from './surveys/surveys-list/surveys.component';
 import { SurveyDetailComponent } from './surveys/survey-detail/survey-detail.component';
+import {SurveyDetailModule} from './surveys/survey-detail/survey-detail.module';
 import {AppRoutingModule} from './app-routing.module';
+
+/*import {SurveyQuestionTabComponent} from './surveys/survey-detail/survey-question-tab/survey-question-tab.component';
+import {SurveyAnswerTabComponent} from './surveys/survey-detail/survey-answer-tab/survey-answer-tab.component';*/
 
 @NgModule({
   declarations: [
@@ -39,11 +43,14 @@ import {AppRoutingModule} from './app-routing.module';
     NewSurveyComponent,
     SurveysComponent,
     SurveyDetailComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    /*SurveyQuestionTabComponent,
+    SurveyAnswerTabComponent*/
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    SurveyDetailModule,
     AppRoutingModule,
     NgbModule.forRoot(),
     ReactiveFormsModule,

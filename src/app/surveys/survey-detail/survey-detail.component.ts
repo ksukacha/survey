@@ -25,4 +25,7 @@ export class SurveyDetailComponent implements OnInit {
         this.surveysService.getSurvey(params.get('id')))
     );
   }
+  goHome(): void {
+    this.router.navigate(['home']);
+  }
 }
