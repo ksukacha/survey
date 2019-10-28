@@ -7,6 +7,7 @@ import {SurveysSection} from './surveys/surveys-section';
 import {SurveyQuestionTabComponent} from './surveys/survey-detail/survey-question-tab/survey-question-tab.component';
 import {SurveyAnswerTabComponent} from './surveys/survey-detail/survey-answer-tab/survey-answer-tab.component';
 import {NewSurveyComponent} from './surveys/new-survey/new-survey.component';
+import {TopicsListComponent} from './topics/topics-list/topics-list.component';
 
 
 const routes: Routes = [
@@ -37,6 +38,10 @@ const routes: Routes = [
     path: 'drafts',
     component: SurveysComponent,
     data: [{section: SurveysSection.DRAFTS}]
+  },
+  {
+    path: 'topics',
+    component: TopicsListComponent
   },
  /* {
     path: 'question-part',

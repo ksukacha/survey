@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '',
     component: SurveyDetailComponent,
     children: [
-      {path: 'question-part', component: SurveyQuestionTabComponent},
+      /*{path: 'question-part', component: SurveyQuestionTabComponent},*/
       {path: 'answer-part', component: SurveyAnswerTabComponent}
     ]
   },

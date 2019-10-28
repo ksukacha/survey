@@ -1,0 +1,34 @@
+<h3>Topics</h3>
+<hr/>
+<div *ngFor="let topic of topics">
+  <div class="card mb-3" >
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="../../../assets/images/topic.png" class="card-img" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{topic.name}}</h5>
+          <div *ngFor="let question of topic.questions" class="card-text">
+            <h5>{{question.name}}</h5>
+              <div *ngFor="let answer of question.answers">
+                <ul class="list-inline">
+                  <li *ngIf="question.ansType=='single-choice'" class="list-inline-item">
+                    <img src="../../../assets/images/radioIcon2.png" alt="radio">
+                  </li>
+                  <li *ngIf="question.ansType=='multiple-choice'" class="list-inline-item">
+                    <img src="../../../assets/images/checkBoxIcon2.png" alt="checkbox">
+                  </li>
+                  <li class="list-inline-item">
+                    {{answer.name}}
+                  </li>
+                </ul>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

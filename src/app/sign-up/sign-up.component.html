@@ -38,9 +38,8 @@
         <option value="">Choose...</option>
         <option *ngFor="let gender of genders" [ngValue]="gender">{{gender}}</option>
       </select>
-      <div *ngIf="submitted"
-           class="alert alert-danger">
-        <div *ngIf="gender.errors.required">
+      <div *ngIf="submitted" class="alert alert-danger">
+        <div *ngIf="userGender.errors.required">
           Please fill this field.
         </div>
       </div>

@@ -1,5 +1,6 @@
 export class AnswerModel {
   name: string;
-  type: string;
-  selectionNumber: number;
+  constructor(name: string) {
+    this.name = name;
+  }
 }

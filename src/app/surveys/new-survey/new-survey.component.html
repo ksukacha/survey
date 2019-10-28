@@ -1,57 +1,85 @@
-<p><input class="form-control" placeholder="Enter survey name"/></p>
-<p><textarea class="form-control text-md" placeholder="Enter brief description"></textarea></p>
-<hr/>
-<ul class="list-inline">
-  <li class="list-inline-item">
-    <input class="form-control" placeholder="QuestionModel name">
-  </li>
-  <li class="list-inline-item" ngbDropdown="">
-    <button class="btn btn-dark" id="dropdownButton" ngbDropdownToggle>{{choice=='single-choice'? 'Single choice' : 'Multiple choice'}}
-    </button>
-    <div ngbDropdownMenu aria-labelledby="dropdownButton" class="dropdown">
-      <button class="dropdown-item" (click)="radioClick()">
-        <label><img src="../../assets/images/radioIcon.png"> Single choice</label>
-      </button>
-      <button class="dropdown-item" (click)="checkboxClick()">
-        <label><img src="../../assets/images/checkBoxIcon.png"> Multiple choice</label>
-      </button>
+<form [formGroup]="newSurveyFormGroup" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <input class="form-control" [formControlName]="'surveyName'" placeholder="Enter survey name"
+           [ngClass]="{ 'is-invalid': submitted && surveyName.errors }"/>
+    <div *ngIf="submitted && surveyName.errors" class="invalid-feedback">
+      <div *ngIf="surveyName.errors.required">Survey name is required</div>
     </div>
-  </li>
-</ul>
-<!--<p><input class="form-control input-md" placeholder="QuestionModel name"></p>
-<div class="answer-option">
-  AnswerModel type:
+  </div>
+  <div class="form-group">
+    <textarea class="form-control text-md" [formControlName]="'surveyDescription'"
+              placeholder="Enter brief description"></textarea>
+  </div>
+  <hr/>
+  <div class="form-group">
+
+  </div>
+  <div class="form-group">
+    <ul class="list-inline">
+      <li class="list-inline-item">
+        <input class="form-control" [formControlName]="'questionName'" [ngClass]="{ 'is-invalid': submitted && questionName.errors }" placeholder="Question name">
+        <div *ngIf="submitted && questionName.errors" class="invalid-feedback">
+          <div *ngIf="questionName.errors.required">Question is required</div>
+        </div>
+      </li>
+      <li class="list-inline-item"> <!--ngbDropdown=""-->
+        <!-- <button class="btn btn-dark" id="dropdownButton" ngbDropdownToggle>{{choice=='single-choice'? 'Single choice' : 'Multiple choice'}}
+         </button>
+         <div ngbDropdownMenu aria-labelledby="dropdownButton" class="dropdown">
+           <button class="dropdown-item" (click)="radioClick()">
+             <label><img src="../../assets/images/radioIcon.png"> Single choice</label>
+           </button>
+           <button class="dropdown-item" (click)="checkboxClick()">
+             <label><img src="../../assets/images/checkBoxIcon.png"> Multiple choice</label>
+           </button>
+         </div>-->
+        <select class="form-control custom-select" [formControlName]="'questionType'"
+                (change)="pickAnswerType($event)">
+          <option value="">Choose...</option>
+          <option *ngFor="let questionType of questionTypes" [ngValue]="questionType">
+            {{questionType.type}}
+          </option>
+        </select>
+      </li>
+    </ul>
+  </div>
+  <ng-container>
+    <div *ngIf="choice==='single-choice'">
+      <ul *ngFor="let x of [0,1,2]" class="list-inline">
+        <li class="list-inline-item">
+          <img src="../../../assets/images/radioIcon2.png">
+        </li>
+        <li class="list-inline-item col-md-11">
+          <input class="form-control" [formControlName]="'answerName'" [ngClass]="{ 'is-invalid': submitted && answerName.errors }" placeholder="Radio-answer text"/>
+          <div *ngIf="submitted && answerName.errors" class="invalid-feedback">
+            <div *ngIf="answerName.errors.required">Answer is required</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="choice==='multiple-choice'">
+      <ul *ngFor="let x of [0,1,2]" class="list-inline">
+        <li class="list-inline-item">
+          <img src="../../../assets/images/checkBoxIcon2.png">
+        </li>
+        <li class="list-inline-item col-md-11">
+          <input class="form-control" [formControlName]="'answerName'" [ngClass]="{ 'is-invalid': submitted && answerName.errors }" placeholder="Checkbox-answer text"/>
+          <div *ngIf="submitted && answerName.errors" class="invalid-feedback">
+            <div *ngIf="answerName.errors.required">Answer is required</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </ng-container>
   <ul class="list-inline">
     <li class="list-inline-item">
-      <input (click)="radioClick()" type="radio" name="radio-ans" id="radio-ans" checked>
-      <label for="radio-ans"><img src="../../assets/images/radioIcon.png">Single choice</label>
+      <button class="btn btn-dark" (click)="cancelCreation()">Cancel</button>
     </li>
     <li class="list-inline-item">
-      <input (click)="checkboxClick()" type="radio" name="radio-ans" id="checkbox-ans">
-      <label for="checkbox-ans"><img src="../../assets/images/checkBoxIcon.png">Multiple choice</label>
+      <button class="btn btn-primary" type="submit">Save as a draft</button>
+    </li>
+    <li class="list-inline-item">
+      <button class="btn btn-primary" type="submit">Create</button>
     </li>
   </ul>
-</div>-->
-<ng-container>
-  <div *ngIf="choice=='single-choice'">
-    <ul *ngFor="let x of [0,1,2]" class="list-inline">
-      <li class="list-inline-item" >
-        <img src="../../assets/images/radioIcon2.png">
-      </li>
-      <li class="list-inline-item col-md-11">
-        <input class="form-control" placeholder="Radio-answer text"/>
-      </li>
-    </ul>
-  </div>
-  <div *ngIf="choice=='multiple-choice'" >
-    <ul *ngFor="let x of [0,1,2]" class="list-inline">
-      <li class="list-inline-item">
-        <img src="../../assets/images/checkBoxIcon2.png">
-      </li>
-      <li class="list-inline-item col-md-11">
-        <input class="form-control" placeholder="Checkbox-answer text"/>
-      </li>
-    </ul>
-  </div>
-</ng-container>
-
+</form>

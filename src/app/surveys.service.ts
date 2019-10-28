@@ -13,6 +13,11 @@ export class SurveysService {
   getSurveys(): Observable<Survey[]> {
     return of(SURVEYS);
   }
+  addSurvey(s: Survey): void {
+    this.getSurveys().pipe(map(surveys => {
+      surveys.push(s);
+    }));
+  }
 
   getSurvey(id: number | string) {
     return this.getSurveys().pipe(

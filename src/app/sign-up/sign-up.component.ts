@@ -28,13 +28,14 @@ export class SignUpComponent implements OnInit {
   get lastName() { return this.signUpFormGroup.get('lastName'); }
   get userName() { return this.signUpFormGroup.get('userName'); }
   get email() { return this.signUpFormGroup.get('email'); }
+  get userGender() {return this.signUpFormGroup.get('gender'); }
   get password() { return this.signUpFormGroup.get('password'); }
   get repeatPassword() { return this.signUpFormGroup.get('repeatPassword'); }
   onSubmit(): void {
     this.submitted = true;
   }
-  pickGender(e) {
-    this.signUpFormGroup.get('address.cityName').setValue(e.target.value, {
+  pickGender(e): void {
+    this.signUpFormGroup.get('gender').setValue(e.target.value, {
       onlySelf: true
     });
   }
