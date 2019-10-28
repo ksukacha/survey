@@ -37,7 +37,7 @@
                 (change)="pickAnswerType($event)">
           <option value="">Choose...</option>
           <option *ngFor="let questionType of questionTypes" [ngValue]="questionType">
-            {{questionType.type}}
+            {{questionType}}
           </option>
         </select>
       </li>

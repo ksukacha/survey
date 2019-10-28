@@ -14,8 +14,7 @@ export class NewSurveyComponent implements OnInit {
   choice: string;
   public newSurveyFormGroup: FormGroup;
   questionTypes = [
-    {type: 'single-choice', icon: '../../../assets/images/radioIcon.png' },
-    {type: 'multiple-choice', icon: '../../../assets/images/checkBoxIcon.png'}];
+    'single-choice', 'multiple-choice'];
   submitted: boolean;
   constructor(private surveyService: SurveysService,
               private router: Router) { }
@@ -50,9 +49,10 @@ export class NewSurveyComponent implements OnInit {
     const surveyName: string = this.newSurveyFormGroup.get('surveyName').value;
     const surveyDescr: string = this.newSurveyFormGroup.get('surveyDescription').value;
     const questionName: string = this.newSurveyFormGroup.get('questionName').value;
+    console.log(questionName);
     const questionType: string = this.newSurveyFormGroup.get('questionType').value;
-    // this.surveyService.addSurvey(new Survey(10, surveyName, surveyDescr,'', '', new Array<QuestionModel>(new QuestionModel(questionName, answerType, null))));
-    // this.surveyService.addSurvey(new Survey(10, 'try', 'descr', '', null, new Array<QuestionModel>(new QuestionModel('quest', 'single-choice', null))));
+    console.log(questionType);
+
   }
   cancelCreation() {
     this.router.navigate(['home']);

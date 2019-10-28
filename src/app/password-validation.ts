@@ -1,4 +1,4 @@
-import {AbstractControl, ValidatorFn} from '@angular/forms';
+import {AbstractControl} from '@angular/forms';
 
 export class PasswordValidation {
   static MatchPassword(abstractControl: AbstractControl) {
