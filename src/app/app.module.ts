@@ -45,7 +45,7 @@ import {SurveyAnswerTabComponent} from './surveys/survey-detail/survey-answer-ta
     ModalSignUpComponent,
     NewSurveyComponent,
     SurveysComponent,
-    SurveyDetailComponent,
+   /* SurveyDetailComponent,*/
     PageNotFoundComponent,
     TopicsListComponent,
     /*SurveyQuestionTabComponent,
@@ -58,7 +58,6 @@ import {SurveyAnswerTabComponent} from './surveys/survey-detail/survey-answer-ta
     AppRoutingModule,
     NgbModule.forRoot(),
     ReactiveFormsModule,
-    /*SurveysModule,*/
   ],
   providers: [NgbActiveModal, SurveysService, TopicsService],
   bootstrap: [AppComponent],

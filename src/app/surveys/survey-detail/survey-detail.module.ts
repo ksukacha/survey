@@ -4,6 +4,7 @@ import {SurveyAnswerTabComponent} from './survey-answer-tab/survey-answer-tab.co
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {SurveyDetailRoutingModule} from './survey-detail-routing.module';
+import {SurveyDetailComponent} from './survey-detail.component';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import {SurveyDetailRoutingModule} from './survey-detail-routing.module';
     SurveyDetailRoutingModule
   ],
   declarations: [
+    SurveyDetailComponent,
     SurveyQuestionTabComponent,
     SurveyAnswerTabComponent
   ]

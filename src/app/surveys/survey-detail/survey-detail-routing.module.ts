@@ -10,8 +10,14 @@ const routes: Routes = [
     path: '',
     component: SurveyDetailComponent,
     children: [
-      /*{path: 'question-part', component: SurveyQuestionTabComponent},*/
-      {path: 'answer-part', component: SurveyAnswerTabComponent}
+      {
+        path: '',
+        component: SurveyQuestionTabComponent,
+      },
+      {
+        path: 'answer-part',
+        component: SurveyAnswerTabComponent
+      }
     ]
   },
 ];

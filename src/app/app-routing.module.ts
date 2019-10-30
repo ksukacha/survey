@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: 'home/:id',
-    component: SurveyDetailComponent
+    loadChildren: () => import('./surveys/survey-detail/survey-detail.module').then(mod => mod.SurveyDetailModule),
   },
   {
     path: 'explore',
