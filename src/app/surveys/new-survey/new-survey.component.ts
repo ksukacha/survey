@@ -28,12 +28,6 @@ export class NewSurveyComponent implements OnInit {
       answerName: new FormControl('', Validators.required)
     });
   }
-  /*radioClick() {
-    this.choice = 'single-choice';
-  }
-  checkboxClick() {
-    this.choice = 'multiple-choice';
-  }*/
   private get surveyName() { return this.newSurveyFormGroup.get('surveyName'); }
   private get questionName() { return this.newSurveyFormGroup.get('questionName'); }
   private get questionType() { return this.newSurveyFormGroup.get('questionType'); }
@@ -42,16 +36,18 @@ export class NewSurveyComponent implements OnInit {
     this.newSurveyFormGroup.get('questionType').setValue(e.target.value, {
       onlySelf: true
     });
-    this.choice = this.newSurveyFormGroup.get('questionType').value;
+    const questionType = this.newSurveyFormGroup.get('questionType').value;
+    this.choice = questionType.substring(3);
   }
   onSubmit(): void {
     this.submitted = true;
     const surveyName: string = this.newSurveyFormGroup.get('surveyName').value;
     const surveyDescr: string = this.newSurveyFormGroup.get('surveyDescription').value;
     const questionName: string = this.newSurveyFormGroup.get('questionName').value;
-    console.log(questionName);
+    // console.log(questionName);
     const questionType: string = this.newSurveyFormGroup.get('questionType').value;
-    console.log(questionType);
+    // this.choice = questionType.substring(3);
+   // console.log(this.choice);
 
   }
   cancelCreation() {
