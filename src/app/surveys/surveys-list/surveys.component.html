@@ -16,7 +16,7 @@
             till {{survey.elapseDate}}
           </li>
         </ul>
-        <p class="card-text">Author: {{survey.author.login}}</p>
+        <p class="card-text" *ngIf="survey.author != null ">Author: {{survey.author.login}}</p>
         <a [routerLink]="['/home', survey.id]" class="btn btn-primary">Open</a>
       </div>
     </div>

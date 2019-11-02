@@ -1,28 +1,36 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Survey} from './model/survey.model';
 import {SURVEYS} from './mock-survey';
-import { Observable, of } from 'rxjs';
+import {Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SurveysService {
+  subject: Subject<Survey[]> = new ReplaySubject<Survey[]>(1);
 
-  constructor() { }
-  getSurveys(): Observable<Survey[]> {
-    return of(SURVEYS);
+  constructor() {
   }
+
+  getSubject(): Observable<Survey[]> {
+    return this.subject.asObservable();
+  }
+
+  getSurveys(): Survey[] {
+    return SURVEYS;
+  }
+
   addSurvey(s: Survey): void {
-    this.getSurveys().pipe(map(surveys => {
-      surveys.push(s);
-    }));
+    this.getSurveys().push(s);
+    this.subject.next(this.getSurveys());
   }
 
   getSurvey(id: number | string) {
-    return this.getSurveys().pipe(
-      // (+) before `id` turns the string into a number
-      map((surveys: Survey[]) => surveys.find(hero => hero.id === +id))
-    );
+    return this.getSurveys().find(survey => survey.id === +id);
+  }
+
+  getSurveysLength(): number {
+    return SURVEYS.length;
   }
 }

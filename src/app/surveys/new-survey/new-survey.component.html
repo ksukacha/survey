@@ -12,7 +12,16 @@
   </div>
   <hr/>
   <div class="form-group">
-
+    <input class="form-control" [formControlName]="'elapseDate'" placeholder="Enter elapse date"
+           [ngClass]="{ 'is-invalid': submitted && elapseDate.errors}"/>
+    <div *ngIf="submitted && elapseDate.errors" class="invalid-feedback">
+      <div *ngIf="elapseDate.errors.required">
+        Elapse date is required
+      </div>
+      <div *ngIf="elapseDate.errors.pattern">
+        Date must be in format: dd.MM.yyyy
+      </div>
+    </div>
   </div>
   <div class="form-group">
     <ul class="list-inline">

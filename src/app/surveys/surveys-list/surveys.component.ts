@@ -18,13 +18,8 @@ export class SurveysComponent implements OnInit {
   constructor(private surveysService: SurveysService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.getSurveys();
-  }
-
-  getSurveys(): void {
-    this.surveysService.getSurveys().subscribe(surveys => this.surveys = surveys);
+    this.surveys = this.surveysService.getSurveys();
     this.activatedRoute.data.subscribe((currentSurveysSection: Data) => {
-      console.log(currentSurveysSection[0].section);
       this.currentSurveysSection = currentSurveysSection[0].section;
     });
   }
