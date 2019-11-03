@@ -1,17 +1,17 @@
-<form [formGroup]="newSurveyFormGroup" (ngSubmit)="onSubmit()">
+<form [formGroup]="itemFormGroup" (ngSubmit)="onSubmit()">
   <div class="form-group">
-    <input class="form-control" formControlName="surveyName" placeholder="Enter survey name"
-           [ngClass]="{ 'is-invalid': submitted && surveyName.errors }"/>
-    <div *ngIf="submitted && surveyName.errors" class="invalid-feedback">
-      <div *ngIf="surveyName.errors.required">Survey name is required</div>
+    <input class="form-control" formControlName="itemName" placeholder="Enter '{{itemType | lowercase}}' name"
+           [ngClass]="{ 'is-invalid': submitted && itemName.errors }"/>
+    <div *ngIf="submitted && itemName.errors" class="invalid-feedback">
+      <div *ngIf="itemName.errors.required">{{itemType}} name is required</div>
     </div>
   </div>
-  <div class="form-group">
-    <textarea class="form-control text-md" formControlName="surveyDescription"
+  <div *ngIf="isSurveyItem()" class="form-group">
+    <textarea class="form-control text-md" formControlName="itemDescription"
               placeholder="Enter brief description"></textarea>
   </div>
   <hr/>
-  <div class="form-group">
+  <div *ngIf="isSurveyItem()" class="form-group">
     <input class="form-control" formControlName="elapseDate" placeholder="Enter elapse date"
            [ngClass]="{ 'is-invalid': submitted && elapseDate.errors}"/>
     <div *ngIf="submitted && elapseDate.errors" class="invalid-feedback">

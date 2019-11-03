@@ -1,7 +1,7 @@
 <div class="sidenav">
   <p><a [routerLink]="'/home'">Home</a></p>
   <p><a [routerLink]="'/explore'">Explore</a></p>
-  <p><a [routerLink]="'/new'" >Create survey</a></p>
+  <p><a (click)="setSurveyItemType()">Create survey</a></p>
   <p><a [routerLink]="'/surveys-taken'">Surveys taken</a></p>
   <p><a [routerLink]="'/drafts'">Drafts</a></p>
   <p><a [routerLink]="'/topics'">Topics</a></p>

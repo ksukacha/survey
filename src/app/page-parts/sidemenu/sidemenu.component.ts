@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ModalAboutComponent} from '../../modals/modal-about/modal.about.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {CurItemTypeService} from '../../cur-item-type.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sidemenu',
@@ -8,8 +10,11 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./sidemenu.component.css']
 })
 export class SidemenuComponent implements OnInit {
-
-  constructor(private modalService: NgbModal) {}
+  curItemType: string;
+  constructor(
+    private modalService: NgbModal,
+    private curItemTypeService: CurItemTypeService,
+    private router: Router) {}
   openSurveyModal() {
     /**
      * Opens a new modal window with the specified content and using supplied options. Content can be provided
@@ -21,6 +26,11 @@ export class SidemenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.curItemTypeService.getSubject().subscribe(curItemType => this.curItemType = curItemType);
+  }
+  setSurveyItemType(): void {
+    this.curItemTypeService.setCurrentItemType('Survey');
+    this.router.navigate(['new']);
   }
 
 }

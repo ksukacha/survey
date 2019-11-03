@@ -32,7 +32,8 @@ const routes: Routes = [
   },
   {
     path: 'new',
-    component: NewSurveyComponent
+    component: NewSurveyComponent,
+    data: [{item: 'Survey'}]
   },
   {
     path: 'drafts',
@@ -41,8 +42,10 @@ const routes: Routes = [
   },
   {
     path: 'topics',
-    component: TopicsListComponent
+    component: TopicsListComponent,
+    data: [{item: 'Topic'}]
   },
+
  /* {
     path: 'question-part',
     component: SurveyQuestionTabComponent

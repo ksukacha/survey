@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {TopicsService} from '../topics.service';
 import {TopicModel} from '../../model/topic.model';
+import {Router} from '@angular/router';
+import {CurItemTypeService} from '../../cur-item-type.service';
 
 @Component({
   selector: 'app-topics-list',
@@ -8,14 +10,19 @@ import {TopicModel} from '../../model/topic.model';
   styleUrls: ['./topics-list.component.css']
 })
 export class TopicsListComponent implements OnInit {
+  curItemType: string;
   topics: TopicModel[];
-  constructor(private topicsService: TopicsService) { }
+  constructor(
+    private topicsService: TopicsService,
+    private curItemTypeService: CurItemTypeService,
+    private router: Router) { }
 
   ngOnInit() {
-    this.getTopics();
-    console.log(this.topics[0].name);
+    this.topics = this.topicsService.getTopics();
+    this.curItemTypeService.getSubject().subscribe(curItemType => this.curItemType = curItemType);
   }
-  getTopics(): void {
-    this.topicsService.getTopics().subscribe(topics => this.topics = topics);
+  createTopic(): void {
+    this.curItemTypeService.setCurrentItemType('Topic');
+    this.router.navigate(['new']);
   }
 }

@@ -26,6 +26,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {NewSurveyComponent} from './surveys/new-survey/new-survey.component';
 import { TopicsListComponent } from './topics/topics-list/topics-list.component';
 import {TopicsService} from './topics/topics.service';
+import {CurItemTypeService} from './cur-item-type.service';
 
 /*import {SurveyQuestionTabComponent} from './surveys/survey-detail/survey-question-tab/survey-question-tab.component';
 import {SurveyAnswerTabComponent} from './surveys/survey-detail/survey-answer-tab/survey-answer-tab.component';*/
@@ -59,7 +60,7 @@ import {SurveyAnswerTabComponent} from './surveys/survey-detail/survey-answer-ta
     NgbModule.forRoot(),
     ReactiveFormsModule,
   ],
-  providers: [NgbActiveModal, SurveysService, TopicsService],
+  providers: [NgbActiveModal, SurveysService, TopicsService, CurItemTypeService],
   bootstrap: [AppComponent],
   entryComponents: [ModalAboutComponent, ModalLoginComponent, ModalSignUpComponent]
 })
