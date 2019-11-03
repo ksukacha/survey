@@ -34,14 +34,14 @@ export class NewSurveyComponent implements OnInit {
     this.surveyService.getSubject().subscribe(surveys => this.surveys = surveys);
     // this.createQuestion();
   }
-  private get surveyName() { return this.newSurveyFormGroup.get('surveyName'); }
-  private get surveyDescription() { return this.newSurveyFormGroup.get('surveyDescription'); }
-  private get elapseDate() {return this.newSurveyFormGroup.get('elapseDate'); }
+  // private get surveyName() { return this.newSurveyFormGroup.get('surveyName'); }
+  // private get surveyDescription() { return this.newSurveyFormGroup.get('surveyDescription'); }
+  // private get elapseDate() {return this.newSurveyFormGroup.get('elapseDate'); }
   private get questions() {return this.newSurveyFormGroup.get('questions') as FormArray; }
-  private get questionName() { return this.newSurveyFormGroup.get('questionName'); }
-  private get questionType() { return this.newSurveyFormGroup.get('questionType'); }
+  // private get questionName() { return this.newSurveyFormGroup.get('questionName'); }
+  // private get questionType() { return this.newSurveyFormGroup.get('questionType'); }
   // private get answers() {return this.newSurveyFormGroup.get('answers') as FormArray; }
-  private get answerName() { return this.newSurveyFormGroup.get('answerName'); }
+  // private get answerName() { return this.newSurveyFormGroup.get('answerName'); }
 
   pickAnswerType(e, question): void {
     question.get('questionType').setValue(e.target.value.substring(3), {
@@ -52,7 +52,7 @@ export class NewSurveyComponent implements OnInit {
     this.choice = questionType.substring(3);*/
   }
   onSubmit(): void {
-    this.submitted = true;
+   /* this.submitted = true;
     const surveyName: string = this.newSurveyFormGroup.get('surveyName').value;
     const surveyDescr: string = this.newSurveyFormGroup.get('surveyDescription').value;
     const elapseDate: string = this.newSurveyFormGroup.get('elapseDate').value;
@@ -65,7 +65,7 @@ export class NewSurveyComponent implements OnInit {
       null,
       new Array<QuestionModel>(new QuestionModel(questionName, this.choice, new Array<AnswerModel>(new AnswerModel(answerName))))
       );
-    this.surveyService.addSurvey(this.newSurvey);
+    this.surveyService.addSurvey(this.newSurvey);*/
   }
   cancelCreation() {
     this.router.navigate(['home']);
@@ -87,5 +87,16 @@ export class NewSurveyComponent implements OnInit {
   }
   private addAnswer(question): void {
     (question.get('answers') as FormArray).push(this.answer);
+    console.log('add answer for q: ', this.newSurveyFormGroup.get('questions').get('question'));
+  }
+  private deleteQuestion(index: number): void {
+    if (index !== 0) {
+      (this.newSurveyFormGroup.get('questions') as FormArray).removeAt(index);
+    }
+  }
+  private deleteAnswer(question, answerIndex): void {
+    if (answerIndex !== 0) {
+      (question.get('answers') as FormArray).removeAt(answerIndex);
+    }
   }
 }
