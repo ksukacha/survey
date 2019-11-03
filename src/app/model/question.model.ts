@@ -2,11 +2,11 @@ import {AnswerModel} from './answer.model';
 
 export class QuestionModel {
   name: string;
-  ansType: string;
+  qType: string;
   answers: Array<AnswerModel>;
-  constructor(name: string, ansType: string, answers: Array<AnswerModel>) {
+  constructor(name: string, qType: string, answers: Array<AnswerModel>) {
     this.name = name;
-    this.ansType = ansType;
+    this.qType = qType;
     this.answers = answers;
   }
 }

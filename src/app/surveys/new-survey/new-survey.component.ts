@@ -34,9 +34,9 @@ export class NewSurveyComponent implements OnInit {
     this.surveyService.getSubject().subscribe(surveys => this.surveys = surveys);
     // this.createQuestion();
   }
-  // private get surveyName() { return this.newSurveyFormGroup.get('surveyName'); }
-  // private get surveyDescription() { return this.newSurveyFormGroup.get('surveyDescription'); }
-  // private get elapseDate() {return this.newSurveyFormGroup.get('elapseDate'); }
+  private get surveyName() { return this.newSurveyFormGroup.get('surveyName'); }
+  private get surveyDescription() { return this.newSurveyFormGroup.get('surveyDescription'); }
+  private get elapseDate() {return this.newSurveyFormGroup.get('elapseDate'); }
   private get questions() {return this.newSurveyFormGroup.get('questions') as FormArray; }
   // private get questionName() { return this.newSurveyFormGroup.get('questionName'); }
   // private get questionType() { return this.newSurveyFormGroup.get('questionType'); }
@@ -52,20 +52,27 @@ export class NewSurveyComponent implements OnInit {
     this.choice = questionType.substring(3);*/
   }
   onSubmit(): void {
-   /* this.submitted = true;
+    this.submitted = true;
     const surveyName: string = this.newSurveyFormGroup.get('surveyName').value;
     const surveyDescr: string = this.newSurveyFormGroup.get('surveyDescription').value;
     const elapseDate: string = this.newSurveyFormGroup.get('elapseDate').value;
-    const questionName: string = this.newSurveyFormGroup.get('questionName').value;
-    // console.log(questionName);
-    const answerName: string = this.newSurveyFormGroup.get('answerName').value;
-    this.newSurvey = new Survey(
-      this.surveyService.getSurveysLength(),
-      surveyName, surveyDescr, elapseDate,
-      null,
-      new Array<QuestionModel>(new QuestionModel(questionName, this.choice, new Array<AnswerModel>(new AnswerModel(answerName))))
-      );
-    this.surveyService.addSurvey(this.newSurvey);*/
+    let q: QuestionModel;
+    let a: AnswerModel;
+    const qArray: Array<QuestionModel> = [];
+    for (const qItem of this.questions.controls) {
+      q = new QuestionModel(null, null, null);
+      q.name = qItem.get('questionName').value;
+      q.qType = qItem.get('questionType').value;
+      for ( const ansItem of (qItem.get('answers') as FormArray).controls) {
+        a = new AnswerModel(null);
+        a.name = ansItem.value;
+        q.answers = [];
+        q.answers.push(a);
+      }
+      qArray.push(q);
+    }
+    this.newSurvey = new Survey(this.surveyService.getSurveysLength(), surveyName, surveyDescr, elapseDate, null, qArray);
+    this.surveyService.addSurvey(this.newSurvey);
   }
   cancelCreation() {
     this.router.navigate(['home']);
