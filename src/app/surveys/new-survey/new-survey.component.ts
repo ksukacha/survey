@@ -53,26 +53,32 @@ export class NewSurveyComponent implements OnInit {
   }
   onSubmit(): void {
     this.submitted = true;
-    const surveyName: string = this.newSurveyFormGroup.get('surveyName').value;
-    const surveyDescr: string = this.newSurveyFormGroup.get('surveyDescription').value;
-    const elapseDate: string = this.newSurveyFormGroup.get('elapseDate').value;
-    let q: QuestionModel;
-    let a: AnswerModel;
-    const qArray: Array<QuestionModel> = [];
-    for (const qItem of this.questions.controls) {
-      q = new QuestionModel(null, null, null);
-      q.name = qItem.get('questionName').value;
-      q.qType = qItem.get('questionType').value;
-      for ( const ansItem of (qItem.get('answers') as FormArray).controls) {
-        a = new AnswerModel(null);
-        a.name = ansItem.value;
-        q.answers = [];
-        q.answers.push(a);
+    if (this.newSurveyFormGroup.valid) {
+      const surveyName: string = this.newSurveyFormGroup.get('surveyName').value;
+      const surveyDescr: string = this.newSurveyFormGroup.get('surveyDescription').value;
+      const elapseDate: string = this.newSurveyFormGroup.get('elapseDate').value;
+      let q: QuestionModel;
+      let a: AnswerModel;
+      const qArray: Array<QuestionModel> = [];
+      for (const qItem of this.questions.controls) {
+        q = new QuestionModel(null, null, null);
+        q.name = qItem.get('questionName').value;
+        q.qType = qItem.get('questionType').value;
+        for (const ansItem of (qItem.get('answers') as FormArray).controls) {
+          a = new AnswerModel(null);
+          a.name = ansItem.value;
+          q.answers = [];
+          q.answers.push(a);
+        }
+        qArray.push(q);
       }
-      qArray.push(q);
+      this.newSurvey = new Survey(this.surveyService.getSurveysLength(), surveyName, surveyDescr, elapseDate, null, qArray);
+      this.surveyService.addSurvey(this.newSurvey);
+      alert('Survey created successfully!');
+      this.router.navigate(['home']);
+    } else {
+      alert('Please fill in all required fields');
     }
-    this.newSurvey = new Survey(this.surveyService.getSurveysLength(), surveyName, surveyDescr, elapseDate, null, qArray);
-    this.surveyService.addSurvey(this.newSurvey);
   }
   cancelCreation() {
     this.router.navigate(['home']);

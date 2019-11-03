@@ -25,25 +25,30 @@
   </div>
   <div formArrayName="questions">
     <div class="form-group" *ngFor="let question of questions.controls; let i = index" [formGroupName]="i">
-      <ul class="list-inline">
-        <li class="list-inline-item">
+      <div class="row">
+        <div class="col-md-9">
           <input class="form-control" [formControl]="question.controls['questionName']"
                  [ngClass]="{ 'is-invalid': submitted && question.controls['questionName'].errors }"
                  placeholder="Question name">
           <div *ngIf="submitted && question.controls['questionName'].errors" class="invalid-feedback">
             <div *ngIf="question.controls['questionName'].errors.required">Question is required</div>
           </div>
-        </li>
-        <li class="list-inline-item"> <!--ngbDropdown=""-->
+        </div>
+        <div class="col-md-3"> <!--ngbDropdown=""-->
           <select class="form-control custom-select" [formControl]="question.controls['questionType']"
-                  (change)="pickAnswerType($event, question)">
+                  (change)="pickAnswerType($event, question)"
+                  [ngClass]="{'is-invalid': submitted && question.controls['questionType'].errors }">>
             <option value="">Choose...</option>
             <option *ngFor="let q of questionTypes" [ngValue]="q">
               {{q}}
             </option>
           </select>
-        </li>
-      </ul>
+          <div *ngIf="submitted && question.controls['questionType'].errors?.required" class="invalid-feedback">
+            Select question type
+          </div>
+        </div>
+      </div>
+      <br>
       <div formArrayName="answers">
         <div class="form-group" *ngFor="let answer of question.get('answers').controls; let answerIndex = index"
              [formGroupName]="answerIndex">
