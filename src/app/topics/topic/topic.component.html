@@ -1,0 +1,18 @@
+<h3>{{topic.name}}</h3>
+
+<div *ngFor="let question of topic.questions; let i = index" class="question border border-info rounded">
+  <h5>{{i+1}}. {{question.name}}</h5>
+  <div *ngFor="let answer of question.answers" >
+    <ul class="list-inline">
+      <li *ngIf="question.qType=='single-choice'" class="list-inline-item">
+        <img src="../../../assets/images/radioIcon2.png" alt="radio">
+      </li>
+      <li *ngIf="question.qType=='multiple-choice'" class="list-inline-item">
+        <img src="../../../assets/images/checkBoxIcon2.png" alt="checkbox">
+      </li>
+      <li class="list-inline-item">
+        {{answer.name}}
+      </li>
+    </ul>
+  </div>
+</div>

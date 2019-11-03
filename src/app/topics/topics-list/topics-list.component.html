@@ -9,14 +9,14 @@
       <div class="col-md-8">
         <div class="card-body">
           <h5 class="card-title">{{topic.name}}</h5>
-          <div *ngFor="let question of topic.questions" class="card-text">
+        <!--  <div *ngFor="let question of topic.questions" class="card-text">
             <h5>{{question.name}}</h5>
               <div *ngFor="let answer of question.answers">
                 <ul class="list-inline">
-                  <li *ngIf="question.ansType=='single-choice'" class="list-inline-item">
+                  <li *ngIf="question.qType=='single-choice'" class="list-inline-item">
                     <img src="../../../assets/images/radioIcon2.png" alt="radio">
                   </li>
-                  <li *ngIf="question.ansType=='multiple-choice'" class="list-inline-item">
+                  <li *ngIf="question.qType=='multiple-choice'" class="list-inline-item">
                     <img src="../../../assets/images/checkBoxIcon2.png" alt="checkbox">
                   </li>
                   <li class="list-inline-item">
@@ -25,10 +25,11 @@
                 </ul>
               </div>
 
-          </div>
+          </div>-->
         </div>
       </div>
     </div>
+    <a [routerLink]="['/topics', topic.id]" class="btn btn-primary">Open</a>
   </div>
 </div>
 <button class="btn btn-primary" (click)="createTopic()">Create topic</button>

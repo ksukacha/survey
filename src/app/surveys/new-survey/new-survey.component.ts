@@ -85,15 +85,12 @@ export class NewSurveyComponent implements OnInit {
       let a: AnswerModel;
       const qArray: Array<QuestionModel> = [];
       for (const qItem of this.questions.controls) {
-        q = new QuestionModel(null, null, null);
+        q = new QuestionModel(null, null, []);
         q.name = qItem.get('questionName').value;
         q.qType = qItem.get('questionType').value;
-        console.log(q.name);
         for (const ansItem of (qItem.get('answers') as FormArray).controls) {
           a = new AnswerModel(null);
           a.name = ansItem.get('answerName').value;
-          console.log(a.name);
-          q.answers = [];
           q.answers.push(a);
         }
         qArray.push(q);

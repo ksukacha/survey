@@ -8,6 +8,7 @@ import {SurveyQuestionTabComponent} from './surveys/survey-detail/survey-questio
 import {SurveyAnswerTabComponent} from './surveys/survey-detail/survey-answer-tab/survey-answer-tab.component';
 import {NewSurveyComponent} from './surveys/new-survey/new-survey.component';
 import {TopicsListComponent} from './topics/topics-list/topics-list.component';
+import {TopicComponent} from './topics/topic/topic.component';
 
 
 const routes: Routes = [
@@ -33,7 +34,6 @@ const routes: Routes = [
   {
     path: 'new',
     component: NewSurveyComponent,
-    data: [{item: 'Survey'}]
   },
   {
     path: 'drafts',
@@ -43,7 +43,10 @@ const routes: Routes = [
   {
     path: 'topics',
     component: TopicsListComponent,
-    data: [{item: 'Topic'}]
+  },
+  {
+    path: 'topics/:id',
+    component: TopicComponent
   },
 
  /* {
