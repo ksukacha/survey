@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {SurveysService} from '../../surveys.service';
 import {Survey} from '../../model/survey.model';
 import {QuestionModel} from '../../model/question.model';
@@ -20,33 +20,36 @@ export class NewSurveyComponent implements OnInit {
   newSurvey: Survey;
   surveys: Survey[];
   constructor(private surveyService: SurveysService,
-              private router: Router) { }
+              private router: Router,
+              private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.newSurveyFormGroup = new FormGroup({
-      surveyName: new FormControl('', Validators.required),
-      surveyDescription: new FormControl(''),
-      elapseDate: new FormControl('', [Validators.required]),
-      questionName: new FormControl('', Validators.required),
-      questionType: new FormControl('', Validators.required),
-      answerName: new FormControl('', Validators.required)
+    this.newSurveyFormGroup = this.fb.group({
+      surveyName: ['', Validators.required],
+      surveyDescription: [''],
+      elapseDate: ['', [Validators.required]],
+
+      questions: this.fb.array([this.question])
     });
-    // this.surveyService.getSurveys().subscribe(surveys => this.surveys = surveys);
-    // this.surveyService.getSubject().subscribe(newSurvey => this.surveys.push(newSurvey));
     this.surveyService.getSubject().subscribe(surveys => this.surveys = surveys);
+    // this.createQuestion();
   }
   private get surveyName() { return this.newSurveyFormGroup.get('surveyName'); }
   private get surveyDescription() { return this.newSurveyFormGroup.get('surveyDescription'); }
   private get elapseDate() {return this.newSurveyFormGroup.get('elapseDate'); }
+  private get questions() {return this.newSurveyFormGroup.get('questions') as FormArray; }
   private get questionName() { return this.newSurveyFormGroup.get('questionName'); }
   private get questionType() { return this.newSurveyFormGroup.get('questionType'); }
+  // private get answers() {return this.newSurveyFormGroup.get('answers') as FormArray; }
   private get answerName() { return this.newSurveyFormGroup.get('answerName'); }
-  pickAnswerType(e): void {
-    this.newSurveyFormGroup.get('questionType').setValue(e.target.value, {
+
+  pickAnswerType(e, question): void {
+    question.get('questionType').setValue(e.target.value.substring(3), {
       onlySelf: true
     });
-    const questionType = this.newSurveyFormGroup.get('questionType').value;
-    this.choice = questionType.substring(3);
+    console.log(question.get('questionType').value);
+    /*const questionType = question.get('questionType').value;
+    this.choice = questionType.substring(3);*/
   }
   onSubmit(): void {
     this.submitted = true;
@@ -66,5 +69,23 @@ export class NewSurveyComponent implements OnInit {
   }
   cancelCreation() {
     this.router.navigate(['home']);
+  }
+  get question(): FormGroup {
+    return this.fb.group({
+      questionName: ['', Validators.required],
+      questionType: ['', Validators.required],
+      answers: this.fb.array([this.answer])
+    });
+  }
+  get answer(): FormGroup {
+    return this.fb.group({
+      answerName: ['', Validators.required]
+    });
+  }
+  private addQuestion(): void {
+    (this.newSurveyFormGroup.get('questions') as FormArray).push(this.question);
+  }
+  private addAnswer(question): void {
+    (question.get('answers') as FormArray).push(this.answer);
   }
 }
