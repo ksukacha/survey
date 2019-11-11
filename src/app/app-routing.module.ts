@@ -34,6 +34,26 @@ const routes: Routes = [
   {
     path: 'new',
     component: NewSurveyComponent,
+   /* children: [
+      {
+        path: 'topics-list',
+        component: TopicsListComponent,
+      },
+      {
+        path: 'topics-list/:id',
+        component: TopicComponent
+      }
+    ]*/
+  },
+  {
+    path: 'new/topics',
+    component: TopicsListComponent,
+    data: [{isSurveyCreation: true}]
+  },
+  {
+    path: 'new/topics/:id',
+    component: TopicComponent,
+    data: [{isSurveyCreation: true}]
   },
   {
     path: 'drafts',
@@ -43,12 +63,13 @@ const routes: Routes = [
   {
     path: 'topics',
     component: TopicsListComponent,
+    data: [{isSurveyCreation: false}]
   },
   {
     path: 'topics/:id',
-    component: TopicComponent
+    component: TopicComponent,
+    data: [{isSurveyCreation: false}]
   },
-
  /* {
     path: 'question-part',
     component: SurveyQuestionTabComponent

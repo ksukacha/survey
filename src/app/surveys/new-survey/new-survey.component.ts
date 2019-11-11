@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {SurveysService} from '../../surveys.service';
 import {Survey} from '../../model/survey.model';
 import {QuestionModel} from '../../model/question.model';
@@ -24,10 +24,12 @@ export class NewSurveyComponent implements OnInit {
   newTopic: TopicModel;
   surveys: Survey[];
   topics: TopicModel[];
-
+  selectedQuestions: QuestionModel[] = [];
+  addToSurvey: false;
   constructor(private surveyService: SurveysService,
               private topicService: TopicsService,
               private router: Router,
+              private activatedRoute: ActivatedRoute,
               private curItemTypeService: CurItemTypeService,
               private fb: FormBuilder) {
   }
@@ -43,6 +45,11 @@ export class NewSurveyComponent implements OnInit {
     this.curItemTypeService.getSubject().subscribe(itemType => this.itemType = itemType);
     this.surveyService.getSubject().subscribe(surveys => this.surveys = surveys);
     this.topicService.getSubject().subscribe(topics => this.topics = topics);
+    this.topicService.getSelectedQuestionsToNewSurvey().subscribe(
+      selectedQuestions => {
+        this.selectedQuestions = selectedQuestions;
+        this.addQuestionsFromTopicToSurvey();
+      });
   }
 
   private get itemName() {
@@ -115,6 +122,7 @@ export class NewSurveyComponent implements OnInit {
     this.router.navigate(['home']);
   }
 
+
   get question(): FormGroup {
     return this.fb.group({
       questionName: ['', Validators.required],
@@ -135,7 +143,6 @@ export class NewSurveyComponent implements OnInit {
 
   private addAnswer(question): void {
     (question.get('answers') as FormArray).push(this.answer);
-    console.log('add answer for q: ', this.itemFormGroup.get('questions').get('question'));
   }
 
   private deleteQuestion(index: number): void {
@@ -156,5 +163,28 @@ export class NewSurveyComponent implements OnInit {
 
   isTopicItem(): boolean {
     return this.itemType === 'Topic';
+  }
+
+  addQuestionsFromTopicToSurvey(): void {
+    if (this.selectedQuestions.length !== 0) {
+      for (let i = 0; i < this.selectedQuestions.length; ++i) {
+        this.addQuestion();
+        let curQuestion: AbstractControl;
+        if (this.questions.controls[this.questions.length - 1].touched) {
+          curQuestion = this.questions.controls[this.questions.length - 1];
+        } else {
+          curQuestion = this.questions.controls[this.questions.length - 2];
+        }
+        curQuestion.get('questionName').setValue(this.selectedQuestions[i].name);
+        curQuestion.get('questionType').setValue(this.selectedQuestions[i].qType);
+        const counter = 0;
+        for (let j = 0; j < this.selectedQuestions[i].answers.length - 1; ++j) {
+          this.addAnswer(curQuestion);
+        }
+        for ( let k = 0; k < this.selectedQuestions[i].answers.length; ++k) {
+          (curQuestion.get('answers') as FormArray).controls[k].get('answerName').setValue(this.selectedQuestions[i].answers[k].name);
+        }
+      }
+    }
   }
 }

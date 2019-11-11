@@ -56,11 +56,11 @@ import {SurveyAnswerTabComponent} from './surveys/survey-detail/survey-answer-ta
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     FormsModule,
     SurveyDetailModule,
     AppRoutingModule,
     NgbModule.forRoot(),
-    ReactiveFormsModule,
   ],
   providers: [NgbActiveModal, SurveysService, TopicsService, CurItemTypeService],
   bootstrap: [AppComponent],

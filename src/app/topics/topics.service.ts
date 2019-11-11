@@ -5,13 +5,15 @@ import {Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Survey} from '../model/survey.model';
 import {SURVEYS} from '../mock-survey';
+import {QuestionModel} from '../model/question.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TopicsService {
   subject: Subject<TopicModel[]> = new ReplaySubject<TopicModel[]>(1);
-
+  selectedQuestionsToNewSurvey: Subject<QuestionModel[]> = new ReplaySubject<QuestionModel[]>(1);
+  selectedQuestions: QuestionModel[] = [];
   constructor() {
   }
 
@@ -34,5 +36,14 @@ export class TopicsService {
 
   getTopicsLength(): number {
     return TOPICS.length;
+  }
+  getSelectedQuestionsToNewSurvey(): Observable<QuestionModel[]> {
+    return this.selectedQuestionsToNewSurvey.asObservable();
+  }
+  addSelectedQuestions(selectedQuestions: QuestionModel[]): void {
+    this.selectedQuestionsToNewSurvey.next(selectedQuestions);
+  }
+  clearSelectedQuestions() {
+    this.selectedQuestions = [];
   }
 }

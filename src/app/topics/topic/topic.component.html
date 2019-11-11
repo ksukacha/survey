@@ -18,8 +18,8 @@
       </ul>
     </div>
   </div>
-  <div class="col-md-1">
+  <div *ngIf="isSurveyCreation" class="col-md-1">
     <input class="form-control" type="checkbox" [(ngModel)]="selectedIndexes[i]"/>
   </div>
 </div>
-<button class="btn btn-primary" (click)="addToTopic()">Add to topic</button>
+<button *ngIf="isSurveyCreation" class="btn btn-primary" (click)="addToNewSurvey()">Add to topic</button>
