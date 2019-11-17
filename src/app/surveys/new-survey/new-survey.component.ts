@@ -10,6 +10,7 @@ import {TopicModel} from '../../model/topic.model';
 import {TopicsService} from '../../topics/topics.service';
 import {CurItemTypeService} from '../../cur-item-type.service';
 import {Subscription} from 'rxjs';
+import {UsersService} from '../../users.service';
 
 @Component({
   selector: 'app-new',
@@ -27,8 +28,10 @@ export class NewSurveyComponent implements OnInit {
   topics: TopicModel[];
   selectedQuestions: QuestionModel[] = [];
   subscriptions: Subscription[] = [];
+  loggedUser: User;
   constructor(private surveyService: SurveysService,
               private topicService: TopicsService,
+              private usersService: UsersService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private curItemTypeService: CurItemTypeService,
@@ -46,6 +49,9 @@ export class NewSurveyComponent implements OnInit {
     this.curItemTypeService.getSubject().subscribe(itemType => this.itemType = itemType);
     this.surveyService.getSubject().subscribe(surveys => this.surveys = surveys);
     this.topicService.getSubject().subscribe(topics => this.topics = topics);
+    this.usersService.getLoggedUserSubject().subscribe(user => {
+      this.loggedUser = user;
+    });
     this.topicService.getSelectedQuestionsToNewSurvey().subscribe(
       selectedQuestions => {
         this.selectedQuestions = selectedQuestions;
@@ -108,6 +114,7 @@ export class NewSurveyComponent implements OnInit {
         this.subscriptions.push(this.surveyService.saveSurvey(this.newSurvey).subscribe(() => {
           // this.surveys.push(this.newSurvey);
           // this.surveyService.subject.next(this.surveys);
+          this.loggedUser.ownSurveys.push(this.newSurvey);
           this.router.navigate(['surveys']);
         }));
         // this.router.navigate(['surveys']);
@@ -116,8 +123,8 @@ export class NewSurveyComponent implements OnInit {
         this.subscriptions.push(this.topicService.saveTopic(this.newTopic).subscribe(() => {
           this.topics.push(this.newTopic);
           this.topicService.subject.next(this.topics);
+          this.router.navigate(['topics']);
         }));
-        this.router.navigate(['topics']);
       }
     }
   }

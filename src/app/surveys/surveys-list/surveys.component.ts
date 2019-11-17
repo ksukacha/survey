@@ -29,14 +29,18 @@ export class SurveysComponent implements OnInit {
     });
     this.activatedRoute.data.subscribe((currentSurveysSection: Data) => {
       this.currentSurveysSection = currentSurveysSection[0].section;
+      console.log(this.currentSurveysSection);
+      if (this.currentSurveysSection === SurveysSection.EXPLORE) {
+        this.surveysService.getSurveys(); // inside there's subject.next(surveys) which allows to display all surveys from backend
+      }
+      if (this.currentSurveysSection === SurveysSection.MY_SURVEYS) {
+        this.surveysService.setSurveysForDisplay(this.loggedUser.ownSurveys);
+      } else if (this.currentSurveysSection === SurveysSection.SURVEYS_TAKEN) {
+        this.surveysService.setSurveysForDisplay(this.loggedUser.takenSurveys);
+      } else if (this.currentSurveysSection === SurveysSection.DRAFTS) {
+        this.surveysService.setSurveysForDisplay(this.loggedUser.draftSurveys);
+      }
     });
-    if (this.currentSurveysSection === SurveysSection.MY_SURVEYS) {
-      this.surveysService.setSurveysForDisplay(this.loggedUser.ownSurveys);
-    } else if (this.currentSurveysSection === SurveysSection.SURVEYS_TAKEN) {
-      this.surveysService.setSurveysForDisplay(this.loggedUser.takenSurveys);
-    } else if (this.currentSurveysSection === SurveysSection.DRAFTS) {
-      this.surveysService.setSurveysForDisplay(this.loggedUser.draftSurveys);
-    }
     // this.subscriptions.push(this.surveysService.getSurveys());
     this.surveysService.getSubject().subscribe(surveys => this.surveys = surveys);
   }

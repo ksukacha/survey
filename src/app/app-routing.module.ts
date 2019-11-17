@@ -37,7 +37,6 @@ const routes: Routes = [
   },
   {
     path: 'surveys/:id',
-    canActivate: [AuthUserGuard],
     loadChildren: () => import('./surveys/survey-detail/survey-detail.module').then(mod => mod.SurveyDetailModule),
   },
   {

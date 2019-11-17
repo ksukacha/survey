@@ -3,7 +3,7 @@
 <div class="row">
   <div *ngFor="let survey of surveys" class="col">
     <div class="card">
-      <div class="card-header text-right">
+      <div *ngIf="loggedUser && currentSurveysSection!=='Surveys taken' && currentSurveysSection!=='Explore'" class="card-header text-right">
         <button class="btn btn-danger clearfix " (click)="deleteSurvey(survey.id)">x</button>
       </div>
       <img class="card-img-top" src="../../../assets/images/mySurvey.png" alt="Card image">

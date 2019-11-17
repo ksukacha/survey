@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {UsersService} from '../../users.service';
+import {User} from '../../model/user.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-dropdown-menu',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DropdownMenuComponent implements OnInit {
   collapsed = true;
-  constructor() { }
+  private loggedUser: User;
+  constructor(private usersService: UsersService,
+              private router: Router) { }
 
   ngOnInit() {
+    this.usersService.getLoggedUserSubject().subscribe(user => {
+      this.loggedUser = user;
+    });
   }
 
+  logOut(): void {
+    this.usersService.logOut();
+    this.router.navigate(['welcome']);
+  }
 }

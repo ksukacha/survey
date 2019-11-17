@@ -5,6 +5,7 @@ import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {SurveysService} from '../../surveys.service';
 import {map, switchMap} from 'rxjs/operators';
 import {OpenedSurveyService} from './opened-survey.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-survey-detail',
@@ -16,7 +17,7 @@ export class SurveyDetailComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    private location: Location,
     private surveysService: SurveysService,
     private openedSurveyService: OpenedSurveyService
   ) {
@@ -27,17 +28,17 @@ export class SurveyDetailComponent implements OnInit, OnDestroy {
        map((params: ParamMap) =>
          this.surveysService.getSurvey(params.get('id')))
      );*/
-    console.log("survey-detail.component oninit");
+    console.log('survey-detail.component oninit');
     this.route.paramMap.subscribe(params => {
       this.subscriptions.push(this.surveysService.getSurvey(params.get('id')).subscribe(survey => {
         this.openedSurveyService.setOpenedSurvey(survey);
-        console.log("survey-detail-component", survey.id);
+        console.log('survey-detail-component', survey.id);
       }));
     });
   }
 
-  goHome(): void {
-    this.router.navigate(['home']);
+  goBack(): void {
+    this.location.back();
   }
 
   ngOnDestroy() {

@@ -26,6 +26,11 @@ export class UsersService {
       this.adminLogged = true;
     }
   }
+  logOut(): void {
+    this.loggedUserSubject.next(null);
+    this.userLogged = false;
+    this.adminLogged = false;
+  }
   isUserLogged() {
     return this.userLogged;
   }

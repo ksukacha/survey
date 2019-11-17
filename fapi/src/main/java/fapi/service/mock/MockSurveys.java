@@ -53,6 +53,18 @@ public class MockSurveys {
             new AnswerModel("Economics"), new AnswerModel("Technologies"), new AnswerModel("Linguistics"), new AnswerModel("Law"),
             new AnswerModel("Pedagogics"), new AnswerModel("Music"), new AnswerModel("none of the above")
           )))
+      ))),
+    new SurveyModel(3, "Day schedule", "survey about day schedule", "09.01.2020",
+      "schwimmy",
+      new ArrayList<QuestionModel>(Arrays.asList(
+        new QuestionModel("When do you usually get up?", "single-choice",
+          new ArrayList<AnswerModel>(Arrays.asList(
+            new AnswerModel("6am - 7am"), new AnswerModel("7am - 8am"), new AnswerModel("earlier than 6am"), new AnswerModel("later than 8am")
+          ))),
+        new QuestionModel("When do you usually go to bed?", "single-choice",
+          new ArrayList<AnswerModel>(Arrays.asList(
+            new AnswerModel("9pm - 10pm"), new AnswerModel("10pm - 11pm"), new AnswerModel("earlier than 9pm"), new AnswerModel("later than 11pm")
+          )))
       )))
   ));
   public static void addUserSurvey(SurveyModel s) {
