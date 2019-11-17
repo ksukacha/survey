@@ -45,8 +45,11 @@ export class UsersService {
     return this.httpClient.post<User>('http://localhost:8081/api/users', user);
   }
 
-  deleteUser(userId: number): Observable<void> {
-    return this.httpClient.delete<void>('http://localhost:8081/api/users/' + userId);
+  // deleteUser(userId: number): Observable<void> {
+  //   return this.httpClient.delete<void>('http://localhost:8081/api/users/' + userId);
+  // }
+  updateUser(user: User, id: number): Observable<Object> {
+    return this.httpClient.put('http://localhost:8081/api/users/' + id, user);
   }
 
 }

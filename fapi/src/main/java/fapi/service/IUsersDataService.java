@@ -11,4 +11,5 @@ public interface IUsersDataService {
   UserModel getUser(String email);
   UserModel saveUser(UserModel user);
   void deleteUser(Long id);
+  void updateUser(UserModel user, Long id);
 }

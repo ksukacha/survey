@@ -1,4 +1,4 @@
-<form [formGroup]="itemFormGroup" (ngSubmit)="onSubmit()">
+<form [formGroup]="itemFormGroup">
   <div class="form-group">
     <input class="form-control" formControlName="itemName" placeholder="Enter {{itemType | lowercase}} name"
            [ngClass]="{ 'is-invalid': submitted && itemName.errors }"/>
@@ -105,13 +105,13 @@
       <button class="btn btn-dark" (click)="cancelCreation()">Cancel</button>
     </li>
     <li class="list-inline-item">
-      <button class="btn btn-primary" type="submit">Save as a draft</button>
+      <button class="btn btn-primary" type="submit" (click)="saveAsDraft()">Save as a draft</button>
     </li>
     <li  class="list-inline-item">
       <button class="btn btn-primary" type="button" [routerLink]="'topics'">Add from topic</button>
     </li>
     <li class="list-inline-item">
-      <button class="btn btn-primary" type="submit">Create</button>
+      <button class="btn btn-primary" type="submit" (click)="createSurvey()">Create</button>
     </li>
   </ul>
 </form>

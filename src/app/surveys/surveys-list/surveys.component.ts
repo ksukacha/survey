@@ -41,15 +41,25 @@ export class SurveysComponent implements OnInit {
         this.surveysService.setSurveysForDisplay(this.loggedUser.draftSurveys);
       }
     });
-    // this.subscriptions.push(this.surveysService.getSurveys());
     this.surveysService.getSubject().subscribe(surveys => this.surveys = surveys);
   }
   deleteSurvey(id: number) {
-    this.subscriptions.push(this.surveysService.deleteSurvey(id).subscribe(() => {
-        const index = this.surveys.findIndex(s => s.id === id); // find index in your array
-        this.surveys.splice(index, 1); // remove element from array
+    /* this.subscriptions.push(this.surveysService.deleteSurvey(id).subscribe(() => {
       }
-    ));
+    )); */
+    const index = this.surveys.findIndex(s => s.id === id); // find index in your array
+    this.surveys.splice(index, 1); // remove element from array
+    if (this.currentSurveysSection === SurveysSection.MY_SURVEYS) {
+      this.loggedUser.ownSurveys = this.surveys;
+      this.subscriptions.push(this.usersService.updateUser(this.loggedUser, this.loggedUser.id).subscribe());
+      this.subscriptions.push(this.surveysService.deleteSurvey(id).subscribe());
+    } else if (this.currentSurveysSection === SurveysSection.DRAFTS) {
+      this.loggedUser.draftSurveys = this.surveys;
+      this.subscriptions.push(this.usersService.updateUser(this.loggedUser, this.loggedUser.id).subscribe());
+    } else if (this.currentSurveysSection === SurveysSection.SURVEYS_TAKEN) {
+      this.loggedUser.takenSurveys = this.surveys;
+      this.subscriptions.push(this.usersService.updateUser(this.loggedUser, this.loggedUser.id).subscribe());
+    }
   }
 
 }

@@ -19,6 +19,7 @@ public class UserDataController {
   public ResponseEntity<List<UserModel>> getAllUsers() {
     return ResponseEntity.ok(usersDataService.getAllUsers());
   }
+
   @RequestMapping(value = "/{email}", method = RequestMethod.GET)
   public ResponseEntity<UserModel> getUser(@PathVariable String email) {
     return ResponseEntity.ok(usersDataService.getUser(email));
@@ -32,9 +33,15 @@ public class UserDataController {
     return null;
   }
 
-  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-  public void deleteUser(@PathVariable String id) {
-    usersDataService.deleteUser(Long.valueOf(id));
-  }
+//  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+//  public void deleteUser(@PathVariable String id) {
+//    usersDataService.deleteUser(Long.valueOf(id));
+//  }
 
+  @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+  public void updateUser(@RequestBody UserModel newUser, @PathVariable Long id) {
+    if (newUser != null) {
+      usersDataService.updateUser(newUser, id);
+    }
+  }
 }

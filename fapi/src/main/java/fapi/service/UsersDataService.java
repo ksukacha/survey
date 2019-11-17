@@ -36,4 +36,9 @@ public class UsersDataService implements IUsersDataService{
    MockUsers.deleteUser(id);
   }
 
+  @Override
+  public void updateUser(UserModel newUser, Long id) {
+    MockUsers.updateUser(newUser, id);
+  }
+
 }

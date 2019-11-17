@@ -29,6 +29,7 @@ export class NewSurveyComponent implements OnInit {
   selectedQuestions: QuestionModel[] = [];
   subscriptions: Subscription[] = [];
   loggedUser: User;
+
   constructor(private surveyService: SurveysService,
               private topicService: TopicsService,
               private usersService: UsersService,
@@ -89,8 +90,7 @@ export class NewSurveyComponent implements OnInit {
     this.choice = questionType.substring(3);*/
   }
 
-  onSubmit(): void {
-    this.submitted = true;
+  collectFieldForNewItem() {
     if (this.itemFormGroup.valid) {
       const itemName: string = this.itemFormGroup.get('itemName').value;
       const itemDescr: string = this.itemFormGroup.get('itemDescription').value;
@@ -110,16 +110,29 @@ export class NewSurveyComponent implements OnInit {
         qArray.push(q);
       }
       if (this.isSurveyItem()) {
-        this.newSurvey = new Survey(this.surveys.length, itemName, itemDescr, elapseDate, null, qArray);
+        return new Survey(this.surveys.length, itemName, itemDescr, elapseDate, this.loggedUser.login, qArray);
+      } else if (this.isTopicItem()) {
+        return new TopicModel(this.topics.length, itemName, qArray, true);
+      }
+    }
+    return null;
+  }
+
+  createSurvey(): void {
+    this.submitted = true;
+    if(this.collectFieldForNewItem() !== null) {
+      if (this.isSurveyItem()) {
+        this.newSurvey = this.collectFieldForNewItem() as Survey;
         this.subscriptions.push(this.surveyService.saveSurvey(this.newSurvey).subscribe(() => {
           // this.surveys.push(this.newSurvey);
           // this.surveyService.subject.next(this.surveys);
           this.loggedUser.ownSurveys.push(this.newSurvey);
-          this.router.navigate(['surveys']);
+          this.subscriptions.push(this.usersService.updateUser(this.loggedUser, this.loggedUser.id).subscribe(() =>
+            this.router.navigate(['surveys'])
+          ));
         }));
-        // this.router.navigate(['surveys']);
       } else if (this.isTopicItem()) {
-        this.newTopic = new TopicModel(this.topics.length, itemName, qArray, true);
+        this.newTopic = this.collectFieldForNewItem() as TopicModel;
         this.subscriptions.push(this.topicService.saveTopic(this.newTopic).subscribe(() => {
           this.topics.push(this.newTopic);
           this.topicService.subject.next(this.topics);
@@ -128,6 +141,17 @@ export class NewSurveyComponent implements OnInit {
       }
     }
   }
+
+  saveAsDraft(): void {
+    this.submitted = true;
+    if (this.collectFieldForNewItem() !== null) {
+      this.loggedUser.draftSurveys.push(this.collectFieldForNewItem() as Survey); // collected fields and return survey
+      this.subscriptions.push(this.usersService.updateUser(this.loggedUser, this.loggedUser.id).subscribe(() => {
+        this.router.navigate(['drafts']);
+      }));
+    }
+  }
+
   cancelCreation() {
     this.router.navigate(['surveys']);
   }
@@ -192,7 +216,7 @@ export class NewSurveyComponent implements OnInit {
         for (let j = 0; j < question.answers.length - 1; ++j) {
           this.addAnswer(curQuestion);
         }
-        for ( let k = 0; k < question.answers.length; ++k) {
+        for (let k = 0; k < question.answers.length; ++k) {
           (curQuestion.get('answers') as FormArray).controls[k].get('answerName').setValue(question.answers[k].name);
         }
       }

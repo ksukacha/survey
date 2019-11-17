@@ -30,12 +30,6 @@ export class SurveysService {
     return this.httpClient.get<Survey>('http://localhost:8081/api/surveys/' + surveyId);
   }
 
-  getSurveysTest(): Subscription {
-    return this.httpClient.get<Survey[]>('http://localhost:8081/api/surveys/surveys1').subscribe(surveys => {
-      this.subject.next(surveys);
-    });
-  }
-
   saveSurvey(s: Survey): Observable<Survey> {
     /*this.getSurveys().push(s);
     this.subject.next(this.getSurveys());*/
