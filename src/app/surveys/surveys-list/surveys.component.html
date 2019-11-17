@@ -3,6 +3,9 @@
 <div class="row">
   <div *ngFor="let survey of surveys" class="col">
     <div class="card">
+      <div class="card-header text-right">
+        <button class="btn btn-danger clearfix " (click)="deleteSurvey(survey.id)">x</button>
+      </div>
       <img class="card-img-top" src="../../../assets/images/mySurvey.png" alt="Card image">
       <div class="card-body">
         <h4 class="card-title">Survey {{survey.id + 1}}</h4>
@@ -16,8 +19,8 @@
             till {{survey.elapseDate}}
           </li>
         </ul>
-        <p class="card-text" *ngIf="survey.author != null ">Author: {{survey.author.login}}</p>
-        <a [routerLink]="['/home', survey.id]" class="btn btn-primary">Open</a>
+        <p class="card-text" *ngIf="survey.authorLogin != null ">Author: {{survey.authorLogin}}</p>
+        <a [routerLink]="['/surveys/'+survey.id+'/questions']" class="btn btn-primary">Open</a>
       </div>
     </div>
   </div>

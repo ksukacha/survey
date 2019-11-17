@@ -11,11 +11,11 @@ const routes: Routes = [
     component: SurveyDetailComponent,
     children: [
       {
-        path: '',
+        path: 'questions',
         component: SurveyQuestionTabComponent,
       },
       {
-        path: 'answer-part',
+        path: 'statistics',
         component: SurveyAnswerTabComponent
       }
     ]

@@ -34,14 +34,13 @@
     </div>
     <div class="col form-group">
       <label for="user-gender">Gender</label>
-      <select class="form-control custom-select" [formControlName]="'gender'" id="user-gender" (change)="pickGender($event)">
+      <select class="form-control custom-select" [formControl]="signUpFormGroup.controls['gender']" id="user-gender" (change)="pickGender($event)"
+              [ngClass]="{'is-invalid': submitted && signUpFormGroup.controls['gender'].errors }">
         <option value="">Choose...</option>
         <option *ngFor="let gender of genders" [ngValue]="gender">{{gender}}</option>
       </select>
-      <div *ngIf="submitted" class="alert alert-danger">
-        <div *ngIf="userGender.errors.required">
+      <div *ngIf="submitted && userGender.errors?.required" class="invalid-feedback">
           Please fill this field.
-        </div>
       </div>
     </div>
   </div>

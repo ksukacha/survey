@@ -9,6 +9,7 @@ import {AnswerModel} from '../../model/answer.model';
 import {TopicModel} from '../../model/topic.model';
 import {TopicsService} from '../../topics/topics.service';
 import {CurItemTypeService} from '../../cur-item-type.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-new',
@@ -25,7 +26,7 @@ export class NewSurveyComponent implements OnInit {
   surveys: Survey[];
   topics: TopicModel[];
   selectedQuestions: QuestionModel[] = [];
-  addToSurvey: false;
+  subscriptions: Subscription[] = [];
   constructor(private surveyService: SurveysService,
               private topicService: TopicsService,
               private router: Router,
@@ -103,23 +104,25 @@ export class NewSurveyComponent implements OnInit {
         qArray.push(q);
       }
       if (this.isSurveyItem()) {
-        this.newSurvey = new Survey(this.surveyService.getSurveysLength(), itemName, itemDescr, elapseDate, null, qArray);
-        this.surveyService.addSurvey(this.newSurvey);
-        alert('Survey created successfully!');
-        this.router.navigate(['home']);
+        this.newSurvey = new Survey(this.surveys.length, itemName, itemDescr, elapseDate, null, qArray);
+        this.subscriptions.push(this.surveyService.saveSurvey(this.newSurvey).subscribe(() => {
+          // this.surveys.push(this.newSurvey);
+          // this.surveyService.subject.next(this.surveys);
+          this.router.navigate(['surveys']);
+        }));
+        // this.router.navigate(['surveys']);
       } else if (this.isTopicItem()) {
-        this.newTopic = new TopicModel(this.topicService.getTopicsLength(), itemName, qArray, true);
-        this.topicService.addTopic(this.newTopic);
-        alert('Topic created successfully');
+        this.newTopic = new TopicModel(this.topics.length, itemName, qArray, true);
+        this.subscriptions.push(this.topicService.saveTopic(this.newTopic).subscribe(() => {
+          this.topics.push(this.newTopic);
+          this.topicService.subject.next(this.topics);
+        }));
         this.router.navigate(['topics']);
       }
-    } else {
-      alert('Please fill in all required fields');
     }
   }
-
   cancelCreation() {
-    this.router.navigate(['home']);
+    this.router.navigate(['surveys']);
   }
 
 
@@ -167,7 +170,8 @@ export class NewSurveyComponent implements OnInit {
 
   addQuestionsFromTopicToSurvey(): void {
     if (this.selectedQuestions.length !== 0) {
-      for (let i = 0; i < this.selectedQuestions.length; ++i) {
+      /*for (let i = 0; i < this.selectedQuestions.length; ++i)*/
+      for (const question of this.selectedQuestions) {
         this.addQuestion();
         let curQuestion: AbstractControl;
         if (this.questions.controls[this.questions.length - 1].touched) {
@@ -175,14 +179,14 @@ export class NewSurveyComponent implements OnInit {
         } else {
           curQuestion = this.questions.controls[this.questions.length - 2];
         }
-        curQuestion.get('questionName').setValue(this.selectedQuestions[i].name);
-        curQuestion.get('questionType').setValue(this.selectedQuestions[i].qType);
+        curQuestion.get('questionName').setValue(question.name);
+        curQuestion.get('questionType').setValue(question.qType);
         const counter = 0;
-        for (let j = 0; j < this.selectedQuestions[i].answers.length - 1; ++j) {
+        for (let j = 0; j < question.answers.length - 1; ++j) {
           this.addAnswer(curQuestion);
         }
-        for ( let k = 0; k < this.selectedQuestions[i].answers.length; ++k) {
-          (curQuestion.get('answers') as FormArray).controls[k].get('answerName').setValue(this.selectedQuestions[i].answers[k].name);
+        for ( let k = 0; k < question.answers.length; ++k) {
+          (curQuestion.get('answers') as FormArray).controls[k].get('answerName').setValue(question.answers[k].name);
         }
       }
     }

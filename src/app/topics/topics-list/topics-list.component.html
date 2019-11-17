@@ -2,6 +2,9 @@
 <hr/>
 <div *ngFor="let topic of topics">
   <div class="card mb-3" >
+    <div class="card-header text-left">
+      <button class="btn btn-danger clearfix " (click)="deleteTopic(topic.id)">x</button>
+    </div>
     <div class="row no-gutters">
       <div class="col-md-4">
         <img src="../../../assets/images/topic.png" class="card-img" alt="...">

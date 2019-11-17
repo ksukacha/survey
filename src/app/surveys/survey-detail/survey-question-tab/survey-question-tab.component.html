@@ -1,1 +1,50 @@
 <p>survey-question-tab works</p>
+<div *ngIf="survey">
+  <form [formGroup]="surveyFormGroup" (ngSubmit)="onSubmit()">
+    <div formArrayName="questions">
+      <div class="form-group" *ngFor="let question of questions.controls; let i = index" [formGroupName]="i">
+        <div class="border border-info rounded col-md-11">
+          <p>{{i+1}}. {{question.controls['questionName'].value}}</p>
+          <div formArrayName="answers">
+            <div class="form-group" *ngFor="let answer of question.get('answers').controls; let answerIndex = index"
+                 [formGroupName]="answerIndex">
+              <div *ngIf="question.controls['questionType'].value.toString()==='single-choice'">
+                <div class="row">
+                  <div class="col-md-1">
+                    <input type="radio" class="form-control" [formControl]="answer.controls['answerName']"
+                           [ngClass]="{ 'is-invalid': submitted && answer.controls['answerName'].errors }"
+                           placeholder="Radio-answer text"/>
+                    <div *ngIf="submitted && answer.controls['answerName'].errors" class="invalid-feedback">
+                      <div *ngIf="answer.controls['answerName'].errors.required">Answer is required</div>
+                    </div>
+                  </div>
+                  <div class="col-md-11">
+                    <p>{{answer.controls['answerName'].value}}</p>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="question.controls['questionType'].value.toString()==='multiple-choice'">
+                <div class="row">
+                  <div class="col-md-1">
+                    <input type="checkbox" class="form-control" [formControl]="answer.controls['answerName']"
+                           [ngClass]="{ 'is-invalid': submitted && answer.controls['answerName'].errors }"
+                    />
+                    <div *ngIf="submitted && answer.controls['answerName'].errors" class="invalid-feedback">
+                      <div *ngIf="answer.controls['answerName'].errors.required">Answer is required</div>
+                    </div>
+                  </div>
+                  <div class="col-md-11">
+                    <p>{{answer.controls['answerName'].value}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+
+
+</div>

@@ -9,31 +9,52 @@ import {SurveyAnswerTabComponent} from './surveys/survey-detail/survey-answer-ta
 import {NewSurveyComponent} from './surveys/new-survey/new-survey.component';
 import {TopicsListComponent} from './topics/topics-list/topics-list.component';
 import {TopicComponent} from './topics/topic/topic.component';
+import {ModalSignUpComponent} from './modals/modal-sign-up/modal-sign-up.component';
+import {ModalLoginComponent} from './modals/modal-login/modal-login.component';
+import {WelcomeComponent} from './page-parts/welcome/welcome/welcome.component';
+import {AuthUserGuard} from './authguard/auth-user.guard';
+import {AuthAdminGuard} from './authguard/auth-admin.guard';
 
 
 const routes: Routes = [
   {
-    path: 'home',
-    component: SurveysComponent,
-    data: [{section: SurveysSection.MY_SURVEYS}]
+    path: 'welcome',
+    component: WelcomeComponent
   },
   {
-    path: 'home/:id',
+    path: 'login',
+    component: ModalLoginComponent
+  },
+  {
+    path: 'register',
+    component: ModalSignUpComponent
+  },
+  {
+    path: 'surveys',
+    component: SurveysComponent,
+    data: [{section: SurveysSection.MY_SURVEYS}],
+    canActivate: [AuthUserGuard]
+  },
+  {
+    path: 'surveys/:id',
+    canActivate: [AuthUserGuard],
     loadChildren: () => import('./surveys/survey-detail/survey-detail.module').then(mod => mod.SurveyDetailModule),
   },
   {
     path: 'explore',
     component: SurveysComponent,
-    data: [{section: SurveysSection.EXPLORE}]
+    data: [{section: SurveysSection.EXPLORE}],
   },
   {
     path: 'surveys-taken',
     component: SurveysComponent,
-    data: [{section: SurveysSection.SURVEYS_TAKEN}]
+    data: [{section: SurveysSection.SURVEYS_TAKEN}],
+    canActivate: [AuthUserGuard]
   },
   {
     path: 'new',
     component: NewSurveyComponent,
+    canActivate: [AuthUserGuard]
    /* children: [
       {
         path: 'topics-list',
@@ -48,27 +69,32 @@ const routes: Routes = [
   {
     path: 'new/topics',
     component: TopicsListComponent,
-    data: [{isSurveyCreation: true}]
+    data: [{isSurveyCreation: true}],
+    canActivate: [AuthUserGuard]
   },
   {
     path: 'new/topics/:id',
     component: TopicComponent,
-    data: [{isSurveyCreation: true}]
+    data: [{isSurveyCreation: true}],
+    canActivate: [AuthUserGuard]
   },
   {
     path: 'drafts',
     component: SurveysComponent,
-    data: [{section: SurveysSection.DRAFTS}]
+    data: [{section: SurveysSection.DRAFTS}],
+    canActivate: [AuthUserGuard]
   },
   {
     path: 'topics',
     component: TopicsListComponent,
-    data: [{isSurveyCreation: false}]
+    data: [{isSurveyCreation: false}],
+    canActivate: [AuthAdminGuard]
   },
   {
     path: 'topics/:id',
     component: TopicComponent,
-    data: [{isSurveyCreation: false}]
+    data: [{isSurveyCreation: false}],
+    canActivate: [AuthAdminGuard]
   },
  /* {
     path: 'question-part',
@@ -78,7 +104,7 @@ const routes: Routes = [
     path: 'answer-part',
     component: SurveyAnswerTabComponent
   },*/
-  { path: '',   redirectTo: '/home', pathMatch: 'full' },
+  { path: '',   redirectTo: '/surveys', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 

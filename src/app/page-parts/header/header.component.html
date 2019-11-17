@@ -3,10 +3,10 @@
     <a class="navbar-brand" [routerLink]="'/home'"><img src="../../../assets/images/surveysLogo.png"></a>
     <ul class="nav navbar-nav">
       <li class="navbar-item">
-        <a class="nav-link" (click)="openLoginModal()" >Log in</a>
+        <a class="nav-link" [routerLink] = "'/login'"  >Log in</a> <!--openLoginModal() -->
       </li>
       <li class="navbar-item">
-        <a class="nav-link" (click)="openSignUpModal()">Sign up</a>
+        <a class="nav-link" [routerLink]= "'/register'" >Sign up</a>
       </li>
       <li>
         <app-dropdown-menu></app-dropdown-menu>

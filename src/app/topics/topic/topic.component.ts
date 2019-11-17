@@ -5,6 +5,7 @@ import {TopicsService} from '../topics.service';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {QuestionModel} from '../../model/question.model';
 import {Location} from '@angular/common';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-topic',
@@ -16,22 +17,25 @@ export class TopicComponent implements OnInit {
   selectedIndexes: Array<boolean> = [];
   isSurveyCreation: boolean;
   selectedQuestions: QuestionModel[] = [];
+  subscriptions: Subscription[] = [];
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private topicsService: TopicsService) { }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
-      this.topic = this.topicsService.getTopic(params.get('id'));
+      this.subscriptions.push(this.topicsService.getTopic(params.get('id')).subscribe(topic => {
+        this.topic = topic;
+        for (const i of this.topic.questions) {
+          this.selectedIndexes.push(false);
+        }
+      }));
     });
     this.activatedRoute.data.subscribe((isSurveyCreation: Data) => {
       this.isSurveyCreation = isSurveyCreation[0].isSurveyCreation;
     });
     this.topicsService.getSelectedQuestionsToNewSurvey().subscribe(selectedQuestions =>
-     this.selectedQuestions = selectedQuestions);
-    for (const i of this.topic.questions) {
-      this.selectedIndexes.push(false);
-    }
+      this.selectedQuestions = selectedQuestions);
   }
 
   addToNewSurvey(): void {

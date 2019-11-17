@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import {TopicModel} from '../model/topic.model';
-import {TOPICS} from './mock-topics';
-import {Observable, of, ReplaySubject, Subject} from 'rxjs';
+import {Observable, of, ReplaySubject, Subject, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Survey} from '../model/survey.model';
-import {SURVEYS} from '../mock-survey';
 import {QuestionModel} from '../model/question.model';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -14,36 +13,37 @@ export class TopicsService {
   subject: Subject<TopicModel[]> = new ReplaySubject<TopicModel[]>(1);
   selectedQuestionsToNewSurvey: Subject<QuestionModel[]> = new ReplaySubject<QuestionModel[]>(1);
   selectedQuestions: QuestionModel[] = [];
-  constructor() {
+  constructor(private httpClient: HttpClient) {
   }
 
   getSubject(): Observable<TopicModel[]> {
     return this.subject.asObservable();
   }
 
-  getTopics(): TopicModel[] {
-    return TOPICS;
+  getTopics(): Subscription {
+    return this.httpClient.get<TopicModel[]>('http://localhost:8081/api/topics').subscribe(topics => {
+      this.subject.next(topics);
+    });
   }
 
-  addTopic(t: TopicModel): void {
-    this.getTopics().push(t);
-    this.subject.next(this.getTopics());
+  getTopic(topicId: string): Observable<TopicModel> {
+    return this.httpClient.get<TopicModel>('http://localhost:8081/api/topics/' + topicId);
   }
 
-  getTopic(id: number | string) {
-    return this.getTopics().find(topic => topic.id === +id);
+  saveTopic(t: TopicModel): Observable<TopicModel> {
+    /*this.getSurveys().push(s);
+    this.subject.next(this.getSurveys());*/
+    return this.httpClient.post<TopicModel>('http://localhost:8081/api/topics', t);
   }
 
-  getTopicsLength(): number {
-    return TOPICS.length;
+  deleteTopic(topicId: number): Observable<void> {
+    return this.httpClient.delete<void>('http://localhost:8081/api/topics/' + topicId);
   }
+
   getSelectedQuestionsToNewSurvey(): Observable<QuestionModel[]> {
     return this.selectedQuestionsToNewSurvey.asObservable();
   }
   addSelectedQuestions(selectedQuestions: QuestionModel[]): void {
     this.selectedQuestionsToNewSurvey.next(selectedQuestions);
-  }
-  clearSelectedQuestions() {
-    this.selectedQuestions = [];
   }
 }

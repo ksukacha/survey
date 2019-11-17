@@ -1,17 +1,10 @@
-<div *ngIf="survey">
-  <!--<p>Id: {{survey.id}}</p>
-  <p>Description: {{survey.description}}</p>
-  <p>Elapse date: {{survey.elapseDate}}</p>
-  <p>Author: {{survey.author.login}}</p>
-  <p>
-    <button (click)="goHome()" class="btn btn-dark">Back</button>
-  </p>-->
+<div>
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link active" [routerLink]="''">Survey</a>
+      <a class="nav-link active" [routerLink]="'questions'">Survey</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" [routerLink]="'answer-part'">Answers statistics</a>
+      <a class="nav-link" [routerLink]="'statistics'">Answers statistics</a>
     </li>
   </ul>
   <router-outlet></router-outlet>

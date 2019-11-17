@@ -28,6 +28,11 @@ import { TopicsListComponent } from './topics/topics-list/topics-list.component'
 import {TopicsService} from './topics/topics.service';
 import {CurItemTypeService} from './cur-item-type.service';
 import { TopicComponent } from './topics/topic/topic.component';
+import {HttpClientModule} from '@angular/common/http';
+import {UsersService} from './users.service';
+import { WelcomeComponent } from './page-parts/welcome/welcome/welcome.component';
+import {AuthUserGuard} from './authguard/auth-user.guard';
+import {AuthAdminGuard} from './authguard/auth-admin.guard';
 
 /*import {SurveyQuestionTabComponent} from './surveys/survey-detail/survey-question-tab/survey-question-tab.component';
 import {SurveyAnswerTabComponent} from './surveys/survey-detail/survey-answer-tab/survey-answer-tab.component';*/
@@ -51,18 +56,20 @@ import {SurveyAnswerTabComponent} from './surveys/survey-detail/survey-answer-ta
     PageNotFoundComponent,
     TopicsListComponent,
     TopicComponent,
+    WelcomeComponent,
     /*SurveyQuestionTabComponent,
     SurveyAnswerTabComponent*/
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
     SurveyDetailModule,
     AppRoutingModule,
     NgbModule.forRoot(),
   ],
-  providers: [NgbActiveModal, SurveysService, TopicsService, CurItemTypeService],
+  providers: [NgbActiveModal, SurveysService, TopicsService, CurItemTypeService, UsersService, AuthUserGuard, AuthAdminGuard],
   bootstrap: [AppComponent],
   entryComponents: [ModalAboutComponent, ModalLoginComponent, ModalSignUpComponent]
 })
