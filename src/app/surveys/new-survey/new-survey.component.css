@@ -2,3 +2,7 @@ img {
   width:15px;
   align-content: end;
 }
+.invalid-answers-length {
+  font-size:80%;
+  color:#dc3545
+}

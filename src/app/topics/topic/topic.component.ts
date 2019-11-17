@@ -53,4 +53,13 @@ export class TopicComponent implements OnInit {
     // this.topicsService.clearSelectedQuestions();
     this.router.navigate(['new']);
   }
+  noSelectedIndexes(): boolean {
+    let res = true;
+    for (let i of this.selectedIndexes) {
+      if (i === true) {
+        res = false;
+      }
+    }
+    return res;
+  }
 }

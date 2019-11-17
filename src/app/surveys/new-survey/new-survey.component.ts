@@ -161,7 +161,7 @@ export class NewSurveyComponent implements OnInit {
     return this.fb.group({
       questionName: ['', Validators.required],
       questionType: ['', Validators.required],
-      answers: this.fb.array([this.answer])
+      answers: this.fb.array([this.answer], Validators.minLength(2))
     });
   }
 
