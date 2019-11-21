@@ -43,6 +43,11 @@ export class SurveysComponent implements OnInit {
     });
     this.surveysService.getSubject().subscribe(surveys => this.surveys = surveys);
   }
+  convertTimestampToLocaleString(timestamp: number): string {
+    const date: Date = new Date(timestamp);
+    const options = { month: 'long', day: 'numeric' };
+    return date.toLocaleString('en-GB', options);
+  }
   deleteSurvey(id: number) {
     /* this.subscriptions.push(this.surveysService.deleteSurvey(id).subscribe(() => {
       }

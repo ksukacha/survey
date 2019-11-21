@@ -16,14 +16,7 @@ public class SurveyDataController {
   @Autowired
   private SurveysDataService surveysDataService;
 
-  @RequestMapping ("/surveys1")
-  public List<SurveyModel> getAllSurveys1() {
-    List<SurveyModel> list = new ArrayList<>();
-    SurveyModel s = new SurveyModel(15, "surveyname", "descr",
-      "2010", null, null);
-    list.add(s);
-    return list;
-  }
+
   @RequestMapping
   public ResponseEntity<List<SurveyModel>> getAllSurveys() {
     return ResponseEntity.ok(surveysDataService.getAllSurveys());

@@ -43,8 +43,7 @@ export class NewSurveyComponent implements OnInit {
     this.itemFormGroup = this.fb.group({
       itemName: ['', Validators.required],
       itemDescription: [''],
-      elapseDate: ['', /*[Validators.required]*/],
-
+      elapseDate: ['', [Validators.required]],
       questions: this.fb.array([this.question])
     });
     this.curItemTypeService.getSubject().subscribe(itemType => this.itemType = itemType);
@@ -58,6 +57,10 @@ export class NewSurveyComponent implements OnInit {
         this.selectedQuestions = selectedQuestions;
         this.addQuestionsFromTopicToSurvey();
       });
+    if (!this.isSurveyItem()) {
+      this.itemFormGroup.removeControl('elapseDate');
+      this.itemFormGroup.removeControl('itemDescription');
+    }
   }
 
   private get itemName() {
@@ -90,11 +93,21 @@ export class NewSurveyComponent implements OnInit {
     this.choice = questionType.substring(3);*/
   }
 
+  private collectElapseDateFromJson(object): Date {
+    const elapseDate: Date = new Date();
+    const array: number[] = Object.values(object);
+    elapseDate.setFullYear(array[0], array[1], array[2]);
+  /*  let date: Date = new Date(elapseDate.getTime());
+    const options = { month: 'long', day: 'numeric' };
+    console.log(date.toLocaleString('en-GB', options));*/
+    return elapseDate;
+  }
+
   collectFieldForNewItem() {
     if (this.itemFormGroup.valid) {
       const itemName: string = this.itemFormGroup.get('itemName').value;
-      const itemDescr: string = this.itemFormGroup.get('itemDescription').value;
-      const elapseDate: string = this.itemFormGroup.get('elapseDate').value;
+      const itemDescr: string =  this.itemFormGroup.get('itemDescription').value;
+      const elapseDate: number = this.collectElapseDateFromJson(this.itemFormGroup.get('elapseDate').value).getTime();
       let q: QuestionModel;
       let a: AnswerModel;
       const qArray: Array<QuestionModel> = [];
@@ -201,7 +214,6 @@ export class NewSurveyComponent implements OnInit {
 
   addQuestionsFromTopicToSurvey(): void {
     if (this.selectedQuestions.length !== 0) {
-      /*for (let i = 0; i < this.selectedQuestions.length; ++i)*/
       for (const question of this.selectedQuestions) {
         this.addQuestion();
         let curQuestion: AbstractControl;

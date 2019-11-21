@@ -1,16 +1,18 @@
 package fapi.models;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class SurveyModel {
   private int id;
   private String name;
   private String description;
-  private String elapseDate;
-  private String authorLogin;
+  private Long elapseDate;
+  private String authorLogin;//id
   private List<QuestionModel> questions;
 
-  public SurveyModel(int id, String name, String description, String elapseDate, String authorLogin, List<QuestionModel> questions) {
+  public SurveyModel(int id, String name, String description, Long elapseDate, String authorLogin, List<QuestionModel> questions) {
     this.id = id;
     this.name = name;
     this.description = description;
@@ -31,7 +33,7 @@ public class SurveyModel {
     return description;
   }
 
-  public String getElapseDate() {
+  public Long getElapseDate() {
     return elapseDate;
   }
 
@@ -55,7 +57,7 @@ public class SurveyModel {
     this.description = description;
   }
 
-  public void setElapseDate(String elapseDate) {
+  public void setElapseDate(Long elapseDate) {
     this.elapseDate = elapseDate;
   }
 

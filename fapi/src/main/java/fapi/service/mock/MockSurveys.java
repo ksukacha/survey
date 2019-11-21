@@ -13,7 +13,7 @@ import java.util.List;
 public class MockSurveys {
 
   private static List<SurveyModel> mockUserSurveyList = new ArrayList<>(Arrays.asList(
-    new SurveyModel(0, "Fruits", "survey about fruits", "27.01.2020",
+    new SurveyModel(0, "Fruits", "survey about fruits", 1574640000L,
      "john1994",
       new ArrayList<QuestionModel>(Arrays.asList(
         new QuestionModel("What is the yummiest fruit to you?", "single-choice",
@@ -29,7 +29,7 @@ public class MockSurveys {
             new AnswerModel("yes"), new AnswerModel("no")
           )))
       ))),
-    new SurveyModel(1, "Coffee", "survey about coffee", "31.01.2020",
+    new SurveyModel(1, "Coffee", "survey about coffee", 1550102400L,
       "john1994",
       new ArrayList<QuestionModel>(Arrays.asList(
         new QuestionModel("Do you drink coffee?", "single-choice",
@@ -41,7 +41,7 @@ public class MockSurveys {
             new AnswerModel("latte"), new AnswerModel("espresso"), new AnswerModel("cappuccino"), new AnswerModel("americano")
           )))
       ))),
-    new SurveyModel(2, "Study", "survey about studies", "09.01.2020",
+    new SurveyModel(2, "Study", "survey about studies", 1548806400L,
       "liss-kudrow",
       new ArrayList<QuestionModel>(Arrays.asList(
         new QuestionModel("Are you currently studying at university?", "single-choice",
@@ -54,7 +54,7 @@ public class MockSurveys {
             new AnswerModel("Pedagogics"), new AnswerModel("Music"), new AnswerModel("none of the above")
           )))
       ))),
-    new SurveyModel(3, "Day schedule", "survey about day schedule", "09.01.2020",
+    new SurveyModel(3, "Day schedule", "survey about day schedule", 1548806400L,
       "schwimmy",
       new ArrayList<QuestionModel>(Arrays.asList(
         new QuestionModel("When do you usually get up?", "single-choice",

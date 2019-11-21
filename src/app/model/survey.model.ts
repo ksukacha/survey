@@ -5,11 +5,11 @@ export class Survey {
   id: number;
   name: string;
   description: string;
-  elapseDate: string;
+  elapseDate: number;
   authorLogin: string;
   questions: Array<QuestionModel>;
 
-  constructor(id: number, name: string, description: string, elapseDate: string, authorLogin: string, questions: Array<QuestionModel>) {
+  constructor(id: number, name: string, description: string, elapseDate: number, authorLogin: string, questions: Array<QuestionModel>) {
     this.id = id;
     this.name = name;
     this.description = description;

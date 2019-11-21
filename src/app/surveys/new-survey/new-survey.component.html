@@ -12,8 +12,11 @@
   </div>
   <hr/>
   <div *ngIf="isSurveyItem()" class="form-group">
-    <input class="form-control" formControlName="elapseDate" placeholder="Enter elapse date"
+    <input class="form-control" formControlName="elapseDate" placeholder="Enter elapse date" ngbDatepicker #d="ngbDatepicker" #spy
            [ngClass]="{ 'is-invalid': submitted && elapseDate.errors}"/>
+    <div class="input-group-addon" (click)="d.toggle()" >
+      <img src="../../../assets/images/calendar.png" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+    </div>
     <div *ngIf="submitted && elapseDate.errors" class="invalid-feedback">
       <div *ngIf="elapseDate.errors.required">
         Elapse date is required
@@ -125,3 +128,8 @@
   </ul>
 </form>
 
+
+<!--for receiving data from DatePicker -->
+<pre>elapseDate value:{{ elapseDate.value| json}}</pre>
+<!--<pre><b>userForm.date.touched: {{elapseDate.touched}}</b></pre>-->
+<!--<hr/>-->
