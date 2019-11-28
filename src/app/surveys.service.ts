@@ -30,10 +30,12 @@ export class SurveysService {
     return this.httpClient.get<Survey>('http://localhost:8081/api/surveys/' + surveyId);
   }
 
-  saveSurvey(s: Survey): Observable<Survey> {
+  saveSurvey(s: Survey, userId: number, surveyStatus: string): Observable<Survey> {
     /*this.getSurveys().push(s);
     this.subject.next(this.getSurveys());*/
-    return this.httpClient.post<Survey>('http://localhost:8081/api/surveys', s);
+
+    // return this.httpClient.post<Survey>('http://localhost:8081/api/surveys', s);
+    return this.httpClient.post<Survey>('http://localhost:8081/api/surveys/saveSurvey?userId=' + userId + '&surveyStatus=' + surveyStatus, s );
   }
 
   deleteSurvey(surveyId: number): Observable<void> {

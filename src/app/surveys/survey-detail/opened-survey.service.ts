@@ -10,7 +10,7 @@ export class OpenedSurveyService {
   constructor() { }
   setOpenedSurvey(openedSurvey: Survey) {
     this.subject.next(openedSurvey);
-    console.log("opened-survey-service", openedSurvey.id);
+    console.log("opened-survey-by.bsu.famcs.kachytskaya.service", openedSurvey.id);
   }
   getSubject(): Observable<Survey> {
     return this.subject.asObservable();

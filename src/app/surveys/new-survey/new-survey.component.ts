@@ -97,16 +97,16 @@ export class NewSurveyComponent implements OnInit {
     const elapseDate: Date = new Date();
     const array: number[] = Object.values(object);
     elapseDate.setFullYear(array[0], array[1], array[2]);
-  /*  let date: Date = new Date(elapseDate.getTime());
-    const options = { month: 'long', day: 'numeric' };
-    console.log(date.toLocaleString('en-GB', options));*/
+    /*  let date: Date = new Date(elapseDate.getTime());
+      const options = { month: 'long', day: 'numeric' };
+      console.log(date.toLocaleString('en-GB', options));*/
     return elapseDate;
   }
 
   collectFieldForNewItem() {
     if (this.itemFormGroup.valid) {
       const itemName: string = this.itemFormGroup.get('itemName').value;
-      const itemDescr: string =  this.itemFormGroup.get('itemDescription').value;
+      const itemDescr: string = this.itemFormGroup.get('itemDescription').value;
       const elapseDate: number = this.collectElapseDateFromJson(this.itemFormGroup.get('elapseDate').value).getTime();
       let q: QuestionModel;
       let a: AnswerModel;
@@ -133,16 +133,16 @@ export class NewSurveyComponent implements OnInit {
 
   createSurvey(): void {
     this.submitted = true;
-    if(this.collectFieldForNewItem() !== null) {
+    if (this.collectFieldForNewItem() !== null) {
       if (this.isSurveyItem()) {
         this.newSurvey = this.collectFieldForNewItem() as Survey;
-        this.subscriptions.push(this.surveyService.saveSurvey(this.newSurvey).subscribe(() => {
+        this.subscriptions.push(this.surveyService.saveSurvey(this.newSurvey, this.loggedUser.id, 'NEW').subscribe(() => {
           // this.surveys.push(this.newSurvey);
           // this.surveyService.subject.next(this.surveys);
           this.loggedUser.ownSurveys.push(this.newSurvey);
-          this.subscriptions.push(this.usersService.updateUser(this.loggedUser, this.loggedUser.id).subscribe(() =>
-            this.router.navigate(['surveys'])
-          ));
+          /* this.subscriptions.push(this.usersService.updateUser(this.loggedUser, this.loggedUser.id).subscribe(() =>
+             this.router.navigate(['surveys'])
+           ));*/
         }));
       } else if (this.isTopicItem()) {
         this.newTopic = this.collectFieldForNewItem() as TopicModel;

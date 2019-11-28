@@ -9,15 +9,15 @@ public class SurveyModel {
   private String name;
   private String description;
   private Long elapseDate;
-  private String authorLogin;//id
+  //private String authorLogin;//id
   private List<QuestionModel> questions;
 
-  public SurveyModel(int id, String name, String description, Long elapseDate, String authorLogin, List<QuestionModel> questions) {
+  public SurveyModel(int id, String name, String description, Long elapseDate, List<QuestionModel> questions) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.elapseDate = elapseDate;
-    this.authorLogin = authorLogin;
+    //this.authorLogin = authorLogin;
     this.questions = questions;
   }
 
@@ -37,9 +37,9 @@ public class SurveyModel {
     return elapseDate;
   }
 
-  public String getAuthorLogin() {
-    return authorLogin;
-  }
+//  public String getAuthorLogin() {
+//    return authorLogin;
+//  }
 
   public List<QuestionModel> getQuestions() {
     return questions;
@@ -61,9 +61,9 @@ public class SurveyModel {
     this.elapseDate = elapseDate;
   }
 
-  public void setAuthor(String authorLogin) {
-    this.authorLogin = authorLogin;
-  }
+//  public void setAuthor(String authorLogin) {
+//    this.authorLogin = authorLogin;
+//  }
 
   public void setQuestions(List<QuestionModel> questions) {
     this.questions = questions;
