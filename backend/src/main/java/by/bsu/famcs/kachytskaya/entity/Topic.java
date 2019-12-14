@@ -11,14 +11,19 @@ public class Topic {
   private Long id;
   private String name;
   private boolean shared;
-  @OneToMany(cascade = CascadeType.REMOVE)
-  @JoinTable (
-    name = "topic_question",
-    joinColumns = {@JoinColumn(name = "topic_id")},
-    inverseJoinColumns = {@JoinColumn(name = "question_id")})
+  @OneToMany(mappedBy = "topic")
+//  @JoinTable (
+//    name = "topic_question",
+//    joinColumns = {@JoinColumn(name = "topic_id")},
+//    inverseJoinColumns = {@JoinColumn(name = "question_id")})
   private Set<Question> questions = new HashSet<>();
 
   public Topic() {}
+
+  public Topic(String name, boolean shared) {
+    this.name = name;
+    this.shared = shared;
+  }
 
   public Long getId() {
     return id;

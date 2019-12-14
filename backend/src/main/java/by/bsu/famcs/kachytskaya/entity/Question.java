@@ -1,6 +1,10 @@
 package by.bsu.famcs.kachytskaya.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -10,13 +14,24 @@ public class Question {
   private Long id;
   private String name;
   @Enumerated
+  @Column(name="question_type")
   private QuestionTypeEnum questionType;
-  @OneToMany (cascade = CascadeType.ALL)
-  @JoinTable (
-    name = "question_answer",
-    joinColumns = {@JoinColumn(name = "question_id")},
-    inverseJoinColumns = {@JoinColumn(name = "answer_id")})
-  private Set<Answer> answers;
+  @OneToMany (mappedBy = "question", cascade = CascadeType.MERGE)
+//  @JsonManagedReference
+//  @JoinTable (
+//    name = "question_answer",
+//    joinColumns = {@JoinColumn(name = "question_id")},
+//    inverseJoinColumns = {@JoinColumn(name = "answer_id")})
+  private List<Answer> answers;
+  @ManyToOne(cascade = CascadeType.MERGE)
+  @JoinColumn(name="survey_id")
+  @JsonIgnore
+  private Survey survey;
+
+  @ManyToOne
+  @JoinColumn(name="topic_id")
+  @JsonIgnore
+  private Topic topic;
 
   public Question() {}
 
@@ -37,7 +52,7 @@ public class Question {
     return questionType;
   }
 
-  public Set<Answer> getAnswers() {
+  public List<Answer> getAnswers() {
     return answers;
   }
 
@@ -53,7 +68,33 @@ public class Question {
     this.questionType = questionType;
   }
 
-  public void setAnswers(Set<Answer> answers) {
+  public void setAnswers(List<Answer> answers) {
     this.answers = answers;
+  }
+
+  public Survey getSurvey() {
+    return survey;
+  }
+
+  public void setSurvey(Survey survey) {
+    this.survey = survey;
+  }
+
+  public Topic getTopic() {
+    return topic;
+  }
+
+  public void setTopic(Topic topic) {
+    this.topic = topic;
+  }
+
+  @Override
+  public String toString() {
+    return "Question{" +
+      "id=" + id +
+      ", name='" + name + '\'' +
+      ", questionType=" + questionType +
+     // ", answers=" + answers +
+      '}';
   }
 }

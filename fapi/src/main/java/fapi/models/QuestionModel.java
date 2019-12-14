@@ -4,12 +4,13 @@ import java.util.List;
 
 public class QuestionModel {
   private String name;
-  private String qType;
+  private String questionType;
   private List<AnswerModel> answers;
 
-  public QuestionModel(String name, String qType, List<AnswerModel> answers) {
+  public QuestionModel() {}
+  public QuestionModel(String name, String questionType, List<AnswerModel> answers) {
     this.name = name;
-    this.qType = qType;
+    this.questionType = questionType;
     this.answers = answers;
   }
 
@@ -17,8 +18,8 @@ public class QuestionModel {
     return name;
   }
 
-  public String getqType() {
-    return qType;
+  public String getQuestionType() {
+    return questionType;
   }
 
   public List<AnswerModel> getAnswers() {
@@ -29,11 +30,20 @@ public class QuestionModel {
     this.name = name;
   }
 
-  public void setqType(String qType) {
-    this.qType = qType;
+  public void setQuestionType(String questionType) {
+    this.questionType = questionType;
   }
 
   public void setAnswers(List<AnswerModel> answers) {
     this.answers = answers;
+  }
+
+  @Override
+  public String toString() {
+    return "QuestionModel{" +
+      "name='" + name + '\'' +
+      ", questionType='" + questionType + '\'' +
+      ", answers=" + answers +
+      '}';
   }
 }

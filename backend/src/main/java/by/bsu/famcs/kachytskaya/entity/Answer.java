@@ -1,9 +1,9 @@
 package by.bsu.famcs.kachytskaya.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 
 @Entity
 public class Answer {
@@ -11,7 +11,10 @@ public class Answer {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
-
+  @ManyToOne(cascade = CascadeType.MERGE)
+  @JoinColumn(name = "question_id")
+  @JsonIgnore
+  private Question question;
   public Answer() {}
 
   public Answer(String name) {
@@ -32,5 +35,13 @@ public class Answer {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Question getQuestion() {
+    return question;
+  }
+
+  public void setQuestion(Question question) {
+    this.question = question;
   }
 }

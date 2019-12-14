@@ -4,6 +4,7 @@ import by.bsu.famcs.kachytskaya.dto.SurveyDto;
 import by.bsu.famcs.kachytskaya.entity.Report;
 import by.bsu.famcs.kachytskaya.entity.Survey;
 import by.bsu.famcs.kachytskaya.mapper.SurveyMapper;
+import by.bsu.famcs.kachytskaya.repository.ReportRepository;
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,12 @@ import java.util.stream.Collectors;
 @Transactional
 public class SurveyService implements ISurveyService {
   private final SurveyRepository surveyRepository;
-  //private final ReportRepository reportRepository
+  private final ReportRepository reportRepository;
 
   @Autowired
-  public SurveyService(SurveyRepository surveyRepository) {
+  public SurveyService(SurveyRepository surveyRepository, ReportRepository reportRepository) {
     this.surveyRepository = surveyRepository;
+    this.reportRepository = reportRepository;
   }
 
   @Override
@@ -34,6 +36,11 @@ public class SurveyService implements ISurveyService {
     } else {
       throw new NotFoundException("Survey with id: " + id + " was not found");
     }
+  }
+  @Override
+  public Optional<Survey> getSurveyByName(String name) throws NotFoundException {
+    Optional<Survey> survey = surveyRepository.findByName(name);
+    return survey;
   }
 
   @Override
@@ -53,8 +60,10 @@ public class SurveyService implements ISurveyService {
       Survey s = optionalSurvey.get();
       List<Report> reports = s.getReports().stream().filter(report ->
         report.getSurvey().getId().equals(id)).collect(Collectors.toList());
-      //reports.removeAll(reports);
+      for(Report r: reports) {
+        reportRepository.deleteById(r.getId());
+      }
+      surveyRepository.deleteById(id);
     }
-    surveyRepository.deleteById(id);
   }
 }

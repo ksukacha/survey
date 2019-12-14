@@ -1,7 +1,10 @@
 package by.bsu.famcs.kachytskaya.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -34,7 +37,7 @@ public class User {
 //    inverseJoinColumns = {@JoinColumn(name = "survey_id")})
 //  private Set<Survey> passedSurveys = new HashSet<>();
 
-  @OneToMany(targetEntity = Report.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @OneToMany(/*targetEntity = Report.class,*/ mappedBy = "user", cascade = CascadeType.MERGE, fetch = FetchType.EAGER/*, cascade = CascadeType.ALL, fetch = FetchType.EAGER*/)
   private Set<Report> reports = new HashSet<>();
 
 
@@ -140,7 +143,26 @@ public class User {
       ", email='" + email + '\'' +
       ", password='" + password + '\'' +
       ", role=" + role +
-      ", reports=" + reports +
+//      ", reports=" + reports +
       '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    User user = (User) o;
+    return
+      Objects.equals(getFirstName(), user.getFirstName()) &&
+      Objects.equals(getLastName(), user.getLastName()) &&
+      Objects.equals(getUserName(), user.getUserName()) &&
+      Objects.equals(getEmail(), user.getEmail()) &&
+      Objects.equals(getPassword(), user.getPassword()) &&
+      getRole() == user.getRole();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash( getFirstName(), getLastName(), getUserName(), getEmail(), getPassword());
   }
 }

@@ -10,5 +10,5 @@ public interface ITopicService {
 
   Iterable<Topic> getTopics();
 
-  void deleteTopic(Topic topic);
+  void deleteTopic(Long id);
 }

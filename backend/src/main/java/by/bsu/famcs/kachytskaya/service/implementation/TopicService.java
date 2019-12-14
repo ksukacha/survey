@@ -5,9 +5,11 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import by.bsu.famcs.kachytskaya.repository.TopicRepository;
 import by.bsu.famcs.kachytskaya.service.ITopicService;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class TopicService implements ITopicService {
   private final TopicRepository topicRepository;
   @Autowired
@@ -36,7 +38,7 @@ public class TopicService implements ITopicService {
   }
 
   @Override
-  public void deleteTopic(Topic topic) {
-    topicRepository.delete(topic);
+  public void deleteTopic(Long id) {
+    topicRepository.deleteById(id);
   }
 }

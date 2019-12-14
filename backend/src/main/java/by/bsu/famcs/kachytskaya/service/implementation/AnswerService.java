@@ -5,9 +5,11 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import by.bsu.famcs.kachytskaya.repository.AnswerRepository;
 import by.bsu.famcs.kachytskaya.service.IAnswerService;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class AnswerService implements IAnswerService {
   private final AnswerRepository answerRepository;
 

@@ -1,6 +1,7 @@
 package by.bsu.famcs.kachytskaya.controller;
 
 import by.bsu.famcs.kachytskaya.dto.SurveyDto;
+import by.bsu.famcs.kachytskaya.dto.TestDto;
 import by.bsu.famcs.kachytskaya.entity.Report;
 import by.bsu.famcs.kachytskaya.entity.Survey;
 import by.bsu.famcs.kachytskaya.mapper.SurveyMapper;
@@ -14,12 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api/v1/surveys")
+@RequestMapping("/api/v1")
 public class SurveyController {
   private SurveyService surveyService;
   private SurveyMapper surveyMapper;
@@ -31,33 +33,36 @@ public class SurveyController {
     this.surveyMapper = surveyMapper;
   }
 
-  @GetMapping(value = "/{id}")
+  @GetMapping(value = "/surveys/{id}")
   public ResponseEntity<SurveyDto> getSurveyById(@PathVariable(name = "id") Long id) throws NotFoundException {
     Survey survey = surveyService.getSurveyById(id);
     return new ResponseEntity<>(surveyMapper.toDto(survey), HttpStatus.OK);
   }
-  @GetMapping
-  public ResponseEntity<Set<SurveyDto>> getAllSurveys() {
+  @GetMapping(value = "/surveys/all")
+  public ResponseEntity<List<SurveyDto>> getAllSurveys() {
     Iterable<Survey> allSurveys = surveyService.getSurveys();
-    Set<SurveyDto> allDtoSurveys = new HashSet<>();
+    List<SurveyDto> allDtoSurveys = new ArrayList<>();
     for(Survey s: allSurveys) {
       allDtoSurveys.add(surveyMapper.toDto(s));
     }
-    return ResponseEntity.ok(allDtoSurveys);
+    return new ResponseEntity<>(allDtoSurveys, HttpStatus.OK);
   }
-  @PostMapping(value = "/saveSurvey", params = {"userId", "surveyStatus"})
-  public ResponseEntity<SurveyDto> saveSurvey(@RequestParam("userId") Long userId,
-                                             @RequestParam("surveyStatus") String surveyStatus,
-                                             @RequestBody SurveyDto surveyDto) throws NotFoundException {
+  @PostMapping(value = "/surveys")
+  public SurveyDto saveSurvey(@RequestBody SurveyDto surveyDto) throws NotFoundException {
     Survey survey = surveyMapper.toEntity(surveyDto);
-    Report report = reportService.saveReport(userId, surveyStatus, survey);
-    SurveyDto surveyDtoResponse = surveyMapper.toDto(report.getSurvey());
-    return new ResponseEntity<>(surveyDtoResponse, HttpStatus.OK);
-
+    Report report = reportService.saveReport(surveyDto.getUserId(), surveyDto.getSurveyStatus(), survey, surveyDto.getCreatorUserId());
+    SurveyDto surveyDtoResponse = surveyMapper.toDto(report.getSurvey(), report);
+    return surveyDtoResponse;
   }
   @DeleteMapping(value = "/{id}")
   public void deleteSurvey(@PathVariable(name = "id") Long id) {
     surveyService.deleteSurvey(id);
+  }
+
+  @PostMapping(value="/other")
+  public String save(@RequestBody SurveyDto surveyDto){
+    System.out.println(surveyDto);
+    return surveyDto.toString();
   }
 
 }

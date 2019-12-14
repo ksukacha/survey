@@ -22,7 +22,7 @@ public class SurveysDataService implements ISurveysDataService {
     return surveyModelResponse == null ? Collections.emptyList() : Arrays.asList(surveyModelResponse);*/
     //return MockSurveys.getMockUserSurveysList();
     RestTemplate restTemplate = new RestTemplate();
-    SurveyModel[] surveyModelResponse = restTemplate.getForObject(backendServerUrl + "/api/v1/surveys", SurveyModel[].class);
+    SurveyModel[] surveyModelResponse = restTemplate.getForObject(backendServerUrl + "/api/v1", SurveyModel[].class);
     Set<SurveyModel> resultSet = new HashSet<>();
     if(surveyModelResponse!=null) {
       Collections.addAll(resultSet, surveyModelResponse);
@@ -46,9 +46,9 @@ public class SurveysDataService implements ISurveysDataService {
   }*/
 
   @Override
-  public SurveyModel saveSurvey(Long userId, String surveyStatus, SurveyModel s) {
+  public SurveyModel saveSurvey(/*Long userId, String surveyStatus, */SurveyModel s) {
     RestTemplate restTemplate = new RestTemplate();
-    return restTemplate.postForEntity(backendServerUrl + "/api/v1/surveys/saveSurvey?userId=" + userId + "&surveyStatus=" + surveyStatus, s,  SurveyModel.class).getBody();
+    return restTemplate.postForEntity(backendServerUrl + "/api/v1/surveys", /*/saveSurvey?userId=" + userId + "&surveyStatus=" + surveyStatus,*/ s,  SurveyModel.class).getBody();
   }
 
   @Override

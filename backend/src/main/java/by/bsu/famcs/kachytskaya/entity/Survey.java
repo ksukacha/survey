@@ -2,9 +2,7 @@ package by.bsu.famcs.kachytskaya.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Survey {
@@ -16,24 +14,24 @@ public class Survey {
   private String description;
   @Column(name ="elapse_date")
   private Long elapseDate;
-  @OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinTable (
-    name = "survey_question",
-    joinColumns = {@JoinColumn(name = "survey_id")},
-    inverseJoinColumns = {@JoinColumn(name = "question_id")})
-  private Set<Question> questions = new HashSet<>();
+  @OneToMany (mappedBy = "survey", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+
+//  @JoinTable (
+//    name = "survey_question",
+//    joinColumns = {@JoinColumn(name = "survey_id")},
+//    inverseJoinColumns = {@JoinColumn(name = "question_id")})
+  private List<Question> questions = new ArrayList<>();
   //@Enumerated
   //private SurveyStatusEnum status;
-  @OneToMany( mappedBy = "survey", cascade = CascadeType.ALL)
+  @OneToMany( mappedBy = "survey", cascade = CascadeType.MERGE, fetch = FetchType.EAGER/*, cascade = CascadeType.ALL*/)
   private Set<Report> reports = new HashSet<>();
 
   public Survey() {}
 
-  public Survey(String name, String description, Long elapseDate, Set<Question> questions) {
+  public Survey(String name, String description, Long elapseDate) {
     this.name = name;
     this.description = description;
     this.elapseDate = elapseDate;
-    this.questions = questions;
   }
 
   public Long getId() {
@@ -52,7 +50,7 @@ public class Survey {
     return elapseDate;
   }
 
-  public Set<Question> getQuestions() {
+  public List<Question> getQuestions() {
     return questions;
   }
 
@@ -84,7 +82,7 @@ public class Survey {
 //    this.status = status;
 //  }
 
-  public void setQuestions(Set<Question> questions) {
+  public void setQuestions(List<Question> questions) {
     this.questions = questions;
   }
 
@@ -117,4 +115,5 @@ public class Survey {
       ", questions=" + questions +
       '}';
   }
+
 }

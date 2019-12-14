@@ -15,4 +15,11 @@ public class AnswerModel {
   public void setName(String name) {
     this.name = name;
   }
+
+  @Override
+  public String toString() {
+    return "AnswerModel{" +
+      "name='" + name + '\'' +
+      '}';
+  }
 }

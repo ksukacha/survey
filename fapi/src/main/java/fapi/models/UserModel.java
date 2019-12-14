@@ -15,6 +15,7 @@ public class UserModel {
   private List<SurveyModel> takenSurveys;
   private List<SurveyModel> draftSurveys;
 
+  public UserModel() {}
   public UserModel(int id, String firstName, String lastName, String login, String birthDate, String email, String pass, String role, List<SurveyModel> ownSurveys, List<SurveyModel> takenSurveys, List<SurveyModel> draftSurveys) {
     this.id = id;
     this.firstName = firstName;

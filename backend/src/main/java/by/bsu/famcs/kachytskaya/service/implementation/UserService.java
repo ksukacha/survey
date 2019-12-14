@@ -52,7 +52,7 @@ public class UserService implements IUserService {
     Optional<User> user = userRepository.findById(userId);
     if (user.isPresent()) {
       Set<Report> filteredReports = user.get().getReports().stream().filter(report ->
-        (report.getCreatorUser().getId().equals(userId))).collect(Collectors.toSet());
+        (report.getCreatorUserId().equals(userId))).collect(Collectors.toSet());
       Set<Survey> createdSurveysByUser = new HashSet<>();
       for(Report r: filteredReports) {
         createdSurveysByUser.add(r.getSurvey());

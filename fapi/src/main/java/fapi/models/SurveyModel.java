@@ -1,7 +1,5 @@
 package fapi.models;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class SurveyModel {
@@ -9,8 +7,13 @@ public class SurveyModel {
   private String name;
   private String description;
   private Long elapseDate;
-  //private String authorLogin;//id
+  //private UserModel creator;
+  private String creatorUserId;
   private List<QuestionModel> questions;
+  private Long userId;
+  private String surveyStatus;
+
+  public SurveyModel() {}
 
   public SurveyModel(int id, String name, String description, Long elapseDate, List<QuestionModel> questions) {
     this.id = id;
@@ -37,9 +40,7 @@ public class SurveyModel {
     return elapseDate;
   }
 
-//  public String getAuthorLogin() {
-//    return authorLogin;
-//  }
+
 
   public List<QuestionModel> getQuestions() {
     return questions;
@@ -61,11 +62,46 @@ public class SurveyModel {
     this.elapseDate = elapseDate;
   }
 
-//  public void setAuthor(String authorLogin) {
-//    this.authorLogin = authorLogin;
-//  }
-
   public void setQuestions(List<QuestionModel> questions) {
     this.questions = questions;
+  }
+
+
+  public String getCreatorUserId() {
+    return creatorUserId;
+  }
+
+  public void setCreatorUserId(String creatorUserId) {
+    this.creatorUserId = creatorUserId;
+  }
+
+  public Long getUserId() {
+    return userId;
+  }
+
+  public void setUserId(Long userId) {
+    this.userId = userId;
+  }
+
+  public String getSurveyStatus() {
+    return surveyStatus;
+  }
+
+  public void setSurveyStatus(String surveyStatus) {
+    this.surveyStatus = surveyStatus;
+  }
+
+  @Override
+  public String toString() {
+    return "SurveyModel{" +
+      "id=" + id +
+      ", name='" + name + '\'' +
+      ", description='" + description + '\'' +
+      ", elapseDate=" + elapseDate +
+      ", creatorUserId=" + creatorUserId +
+      ", questions=" + questions +
+      ", userId=" + userId +
+      ", surveyStatus='" + surveyStatus + '\'' +
+      '}';
   }
 }
