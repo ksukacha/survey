@@ -28,7 +28,7 @@ export class SurveysService {
     // return this.httpClient.get<Survey[]>('http://localhost:8081/api/surveys').subscribe(surveys => {
     //   this.subject.next(surveys);
     // });
-    const observableSurveysDto: Observable<SurveyDto[]> = this.httpClient.get<SurveyDto[]>('http://localhost:8081/api/surveys/all');
+    const observableSurveysDto: Observable<SurveyDto[]> = this.httpClient.get<SurveyDto[]>('http://localhost:8081/api/surveys');
     const surveys: Survey[] = [];
     observableSurveysDto.subscribe(surveysDto => {
       for (const surveyDto of surveysDto) {

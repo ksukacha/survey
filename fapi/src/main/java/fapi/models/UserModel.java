@@ -6,24 +6,24 @@ public class UserModel {
   private int id;
   private String firstName;
   private String lastName;
-  private String login;
-  private String birthDate;
+  private String userName;
+  //private String birthDate;
   private String email;
-  private String pass;
+  private String password;
   private String role;
   private List<SurveyModel> ownSurveys;
   private List<SurveyModel> takenSurveys;
   private List<SurveyModel> draftSurveys;
 
   public UserModel() {}
-  public UserModel(int id, String firstName, String lastName, String login, String birthDate, String email, String pass, String role, List<SurveyModel> ownSurveys, List<SurveyModel> takenSurveys, List<SurveyModel> draftSurveys) {
+  public UserModel(int id, String firstName, String lastName, String userName, /*String birthDate,*/ String email, String password, String role, List<SurveyModel> ownSurveys, List<SurveyModel> takenSurveys, List<SurveyModel> draftSurveys) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.login = login;
-    this.birthDate = birthDate;
+    this.userName = userName;
+    //this.birthDate = birthDate;
     this.email = email;
-    this.pass = pass;
+    this.password = password;
     this.role = role;
     this.ownSurveys = ownSurveys;
     this.takenSurveys = takenSurveys;
@@ -42,20 +42,20 @@ public class UserModel {
     return lastName;
   }
 
-  public String getLogin() {
-    return login;
+  public String getUserName() {
+    return userName;
   }
 
-  public String getBirthDate() {
-    return birthDate;
-  }
+//  public String getBirthDate() {
+//    return birthDate;
+//  }
 
   public String getEmail() {
     return email;
   }
 
-  public String getPass() {
-    return pass;
+  public String getPassword() {
+    return password;
   }
 
   public String getRole() {
@@ -86,20 +86,20 @@ public class UserModel {
     this.lastName = lastName;
   }
 
-  public void setLogin(String login) {
-    this.login = login;
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
-  public void setBirthDate(String birthDate) {
-    this.birthDate = birthDate;
-  }
+//  public void setBirthDate(String birthDate) {
+//    this.birthDate = birthDate;
+//  }
 
   public void setEmail(String email) {
     this.email = email;
   }
 
-  public void setPass(String pass) {
-    this.pass = pass;
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   public void setOwnSurveys(List<SurveyModel> ownSurveys) {

@@ -48,7 +48,7 @@ export class LogInComponent implements OnInit {
         // this.user = user;
         // // if email and pass are correct - user is logged in
         // this.usersService.setLoggedUser(this.user);
-        // console.log('from log-in component', this.user.login);
+        // console.log('from log-in component', this.user.userName);
         // this.router.navigate(['surveys']);
       }));
 

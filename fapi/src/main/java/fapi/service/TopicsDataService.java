@@ -2,7 +2,7 @@ package fapi.service;
 
 
 import fapi.models.TopicModel;
-import fapi.service.mock.MockTopics;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -19,17 +19,18 @@ public class TopicsDataService implements ITopicsDataService {
     /*RestTemplate restTemplate = new RestTemplate();
     SurveyModel[] surveyModelResponse = restTemplate.getForObject(backendServerUrl + "/api/surveys/", SurveyModel[].class);
     return surveyModelResponse == null ? Collections.emptyList() : Arrays.asList(surveyModelResponse);*/
-    return MockTopics.getMockTopics();
+   // return MockTopics.getMockTopics();
+  return null;
   }
 
   @Override
   public TopicModel getTopicById(Long id) {
-    return MockTopics.getTopic(id);
+    return null;
   }
 
   @Override
   public TopicModel saveTopic(TopicModel topic) {
-    MockTopics.addTopic(topic);
+//    MockTopics.addTopic(topic);
     return topic;
   }
 
@@ -37,6 +38,6 @@ public class TopicsDataService implements ITopicsDataService {
   public void deleteTopic(Long id) {
     /*RestTemplate restTemplate = new RestTemplate();
     restTemplate.delete(backendServerUrl + "/api/surveys/" + id);*/
-    MockTopics.deleteTopic(id);
+    //MockTopics.deleteTopic(id);
   }
 }

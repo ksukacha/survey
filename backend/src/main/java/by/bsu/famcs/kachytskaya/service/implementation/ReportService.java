@@ -31,6 +31,7 @@ public class ReportService implements IReportService {
   }
 
   @Override
+  @Transactional(rollbackOn = Throwable.class)
   public Report saveReport(Long userId, String surveyStatus, Survey survey, String creatorUserId) throws NotFoundException {
     Report report;
     //boolean isSurveyCreator = SurveyStatusEnum.NEW.toString().equals(surveyStatus) && userId!=null;
@@ -39,18 +40,30 @@ public class ReportService implements IReportService {
       user = userService.getUserById(userId);
     }
     if(surveyStatus.equals("NEW")) {
-      survey.setId(0L);
+      // TODO посмотреть
+     // survey.setId(0L);
       survey = surveyService.saveSurvey(survey);
-      List<Question> questionList = survey.getQuestions();
-      for (int j = 0; j < questionList.size(); ++j) {
-        Question q = questionList.get(j);
+      Set<Question> questionSet = survey.getQuestions();
+      Iterator<Question> questionIterator = questionSet.iterator();
+//      for (int j = 0; j < questionList.size(); ++j) {
+//        Question q = questionList.get(j);
+//        q.setSurvey(survey);
+//        // questionService.saveQuestion(q);
+//        List<Answer> list = q.getAnswers();
+//        for (int i = 0; i < list.size(); i++) {
+//          Answer a = list.get(i);
+//          a.setQuestion(q);
+//          //answerService.saveAnswer(a);
+//        }
+//      }
+      while(questionIterator.hasNext()) {
+        Question q = questionIterator.next();
         q.setSurvey(survey);
-        // questionService.saveQuestion(q);
         List<Answer> list = q.getAnswers();
-        for (int i = 0; i < list.size(); i++) {
-          Answer a = list.get(i);
+        Iterator<Answer> answerIterator = list.iterator();
+        while(answerIterator.hasNext()) {
+          Answer a = answerIterator.next();
           a.setQuestion(q);
-          //answerService.saveAnswer(a);
         }
       }
     }else{

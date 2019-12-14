@@ -47,7 +47,7 @@ public class BackendApplication {
   public static void main(String[] args) {
     SpringApplication.run(BackendApplication.class, args);
   }
-//
+
 //  @Bean
 //  public CommandLineRunner springdata() throws Exception{
 //    return(args) -> {
@@ -83,7 +83,7 @@ public class BackendApplication {
 //      q1.setSurvey(s1);
 //      q1.setAnswers(answers);
 //
-//      List<Question> questions = new ArrayList<>();
+//      Set<Question> questions = new HashSet<>();
 //      questions.add(q1);
 //
 //      s1.setQuestions(questions);
@@ -108,7 +108,7 @@ public class BackendApplication {
 //      Question q2 = new Question("q2", QuestionTypeEnum.SINGLE_CHOICE);
 //      q2.setSurvey(s2);
 //      q2.setAnswers(answers2);
-//      List<Question> questions2 = new ArrayList<>();
+//      Set<Question> questions2 = new HashSet<>();
 //      questions2.add(q2);
 //
 //      s2.setQuestions(questions2);

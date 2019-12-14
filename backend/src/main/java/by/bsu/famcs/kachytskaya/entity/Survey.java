@@ -7,8 +7,8 @@ import java.util.*;
 @Entity
 public class Survey {
   @Id
-  @GeneratedValue (strategy = GenerationType.AUTO)
-  @Column(name = "survey_id", nullable = false, unique = true)
+  @GeneratedValue (strategy = GenerationType.IDENTITY)
+  @Column(name = "survey_id")
   private Long id;
   private String name;
   private String description;
@@ -20,7 +20,9 @@ public class Survey {
 //    name = "survey_question",
 //    joinColumns = {@JoinColumn(name = "survey_id")},
 //    inverseJoinColumns = {@JoinColumn(name = "question_id")})
-  private List<Question> questions = new ArrayList<>();
+
+  //TODO посмотреть
+  private Set<Question> questions = new HashSet<>();
   //@Enumerated
   //private SurveyStatusEnum status;
   @OneToMany( mappedBy = "survey", cascade = CascadeType.MERGE, fetch = FetchType.EAGER/*, cascade = CascadeType.ALL*/)
@@ -50,7 +52,7 @@ public class Survey {
     return elapseDate;
   }
 
-  public List<Question> getQuestions() {
+  public Set<Question> getQuestions() {
     return questions;
   }
 
@@ -82,7 +84,7 @@ public class Survey {
 //    this.status = status;
 //  }
 
-  public void setQuestions(List<Question> questions) {
+  public void setQuestions(Set<Question> questions) {
     this.questions = questions;
   }
 

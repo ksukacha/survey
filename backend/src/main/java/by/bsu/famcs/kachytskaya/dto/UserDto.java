@@ -14,7 +14,7 @@ public class UserDto {
   private String userName;
   private String email;
   private String password;
-  private UserRoleEnum role;
+  private String role;
   private Set<SurveyDto> createdSurveys = new HashSet<>();
   private Set<SurveyDto> passedSurveys = new HashSet<>();
 }

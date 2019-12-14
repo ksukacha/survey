@@ -73,11 +73,11 @@ export class SignUpComponent implements OnInit {
       const email: string = this.signUpFormGroup.get('email').value;
       const userGender: string = this.signUpFormGroup.get('gender').value;
       const password: string = this.signUpFormGroup.get('password').value;
-      const newUser = new User(5, firstName, lastName, userName, null, email, password, 'USER', null, null, null);
+      const newUser = new User(firstName, lastName, userName, email, password, 'USER');
       this.subscriptions.push(this.usersService.saveUser(newUser).subscribe(user => {
         this.newUser = user;
         this.activeModal.dismiss();
-        this.router.navigate(['surveys']);
+        // this.router.navigate(['surveys']);
       }));
     }
   }

@@ -22,15 +22,12 @@ public class UserDataController {
 
   @RequestMapping(value = "/{email}", method = RequestMethod.GET)
   public ResponseEntity<UserModel> getUser(@PathVariable String email) {
-    return ResponseEntity.ok(usersDataService.getUser(email));
+    return ResponseEntity.ok(usersDataService.getUserByEmail(email));
   }
 
   @RequestMapping(method = RequestMethod.POST)
   public ResponseEntity<UserModel> saveUser(@RequestBody UserModel user) {
-    if (user != null) {
-      return ResponseEntity.ok(usersDataService.saveUser(user));
-    }
-    return null;
+    return ResponseEntity.ok(usersDataService.saveUser(user));
   }
 
 //  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

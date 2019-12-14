@@ -38,6 +38,12 @@ public class UserService implements IUserService {
   }
 
   @Override
+  public User getUserByEmail(String email) throws NotFoundException {
+    Optional<User> optionalUser = userRepository.findByEmail(email);
+    return optionalUser.orElseThrow(() -> new NotFoundException("User with email: " + email + " was not found") );
+  }
+
+  @Override
   public User saveUser(User user) {
     return userRepository.save(user);
   }

@@ -17,7 +17,7 @@
 //     if (this.usersService.isUserLogged() || this.usersService.isAdminLogged()) {
 //       return true;
 //     } else {
-//       this.router.navigate(['login']);
+//       this.router.navigate(['userName']);
 //       return false;
 //     }
 //   }

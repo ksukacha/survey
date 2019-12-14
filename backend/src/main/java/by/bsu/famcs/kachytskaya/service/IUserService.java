@@ -10,6 +10,7 @@ import java.util.Set;
 public interface IUserService {
 
   User getUserById(Long id) throws NotFoundException;
+  User getUserByEmail(String email) throws NotFoundException;
 
   User saveUser(User user);
 

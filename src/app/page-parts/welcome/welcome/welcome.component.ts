@@ -16,7 +16,7 @@ export class WelcomeComponent implements OnInit {
     this.router.navigate(['explore']);
   }
   goToLogin(): void {
-    this.router.navigate(['login']);
+    this.router.navigate(['userName']);
   }
   goToRegister(): void {
     this.router.navigate(['register']);

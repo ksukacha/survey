@@ -123,7 +123,7 @@ export class NewSurveyComponent implements OnInit {
         qArray.push(q);
       }
       if (this.isSurveyItem()) {
-        return new Survey(this.surveys.length, itemName, itemDescr, elapseDate, /*this.loggedUser.login*/ 'changeme', qArray);
+        return new Survey(this.surveys.length, itemName, itemDescr, elapseDate, /*this.loggedUser.userName*/ 'changeme', qArray);
       } else if (this.isTopicItem()) {
         return new TopicModel(this.topics.length, itemName, qArray, true);
       }

@@ -18,11 +18,11 @@ public class SurveyDataController {
   private SurveysDataService surveysDataService;
 
 
-  @GetMapping("/surveys/all")
+  @GetMapping("/surveys")
   public ResponseEntity<Set<SurveyModel>> getAllSurveys() {
     return ResponseEntity.ok(surveysDataService.getAllSurveys());
   }
-  @GetMapping(value = "surveys/{id}")
+  @GetMapping(value = "/surveys/{id}")
   public ResponseEntity<SurveyModel> getSurvey(@PathVariable String id) {
     return ResponseEntity.ok(surveysDataService.getSurveyById(Long.valueOf(id)));
   }
@@ -38,7 +38,7 @@ public class SurveyDataController {
     return ResponseEntity.ok(surveysDataService.saveSurvey(/*userId, surveyStatus,*/ survey));
   }
 
-  @DeleteMapping(value = "/{id}")
+  @DeleteMapping(value = "/survey/{id}")
   public void deleteSurvey(@PathVariable String id) {
     surveysDataService.deleteSurvey(Long.valueOf(id));
   }

@@ -38,7 +38,7 @@ public class SurveyController {
     Survey survey = surveyService.getSurveyById(id);
     return new ResponseEntity<>(surveyMapper.toDto(survey), HttpStatus.OK);
   }
-  @GetMapping(value = "/surveys/all")
+  @GetMapping(value = "/surveys")
   public ResponseEntity<List<SurveyDto>> getAllSurveys() {
     Iterable<Survey> allSurveys = surveyService.getSurveys();
     List<SurveyDto> allDtoSurveys = new ArrayList<>();
@@ -54,7 +54,7 @@ public class SurveyController {
     SurveyDto surveyDtoResponse = surveyMapper.toDto(report.getSurvey(), report);
     return surveyDtoResponse;
   }
-  @DeleteMapping(value = "/{id}")
+  @DeleteMapping(value = "/survey/{id}")
   public void deleteSurvey(@PathVariable(name = "id") Long id) {
     surveyService.deleteSurvey(id);
   }
