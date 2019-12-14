@@ -16,7 +16,7 @@ public class Question {
   @Enumerated
   @Column(name="question_type")
   private QuestionTypeEnum questionType;
-  @OneToMany (mappedBy = "question", cascade = CascadeType.MERGE)
+  @OneToMany (mappedBy = "question", cascade = CascadeType.MERGE, orphanRemoval = true)
 //  @JsonManagedReference
 //  @JoinTable (
 //    name = "question_answer",

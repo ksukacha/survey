@@ -14,7 +14,7 @@ import {Subscription} from 'rxjs';
 })
 export class SidemenuComponent implements OnInit, OnDestroy {
   curItemType: string;
-  private loggedUser: User;
+  // private loggedUser: User;
   private subscriptions: Subscription[] = [];
   constructor(
     private modalService: NgbModal,
@@ -33,9 +33,9 @@ export class SidemenuComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscriptions.push(this.curItemTypeService.getSubject().subscribe(curItemType => this.curItemType = curItemType));
-    this.subscriptions.push(this.usersService.getLoggedUserSubject().subscribe(user => {
-      this.loggedUser = user;
-    }));
+    // this.subscriptions.push(this.usersService.getLoggedUserSubject().subscribe(user => {
+    //   this.loggedUser = user;
+    // }));
   }
   setSurveyItemType(): void {
     this.curItemTypeService.setCurrentItemType('Survey');

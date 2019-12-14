@@ -53,7 +53,7 @@ export class SurveyQuestionTabComponent implements OnInit {
 
   private patchValues(counter): FormGroup {
     const answersFormArray: FormArray = new FormArray([]);
-    if (this.survey.questions[counter].qType === 'single-choice') {
+    if (this.survey.questions[counter].questionType === 'SINGLE_CHOICE') {
       answersFormArray.push(new FormControl(false));
     } else {
       this.survey.questions[counter].answers.forEach((answer) => {
@@ -64,7 +64,7 @@ export class SurveyQuestionTabComponent implements OnInit {
     }
     return this.fb.group({
       questionName: [this.survey.questions[counter].name],
-      questionType: [this.survey.questions[counter].qType],
+      questionType: [this.survey.questions[counter].questionType],
       answers: answersFormArray
     });
   }

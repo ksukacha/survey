@@ -14,7 +14,7 @@ public class Survey {
   private String description;
   @Column(name ="elapse_date")
   private Long elapseDate;
-  @OneToMany (mappedBy = "survey", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+  @OneToMany (mappedBy = "survey", cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
 
 //  @JoinTable (
 //    name = "survey_question",

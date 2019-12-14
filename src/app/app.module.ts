@@ -31,8 +31,8 @@ import { TopicComponent } from './topics/topic/topic.component';
 import {HttpClientModule} from '@angular/common/http';
 import {UsersService} from './users.service';
 import { WelcomeComponent } from './page-parts/welcome/welcome/welcome.component';
-import {AuthUserGuard} from './authguard/auth-user.guard';
-import {AuthAdminGuard} from './authguard/auth-admin.guard';
+// import {AuthUserGuard} from './authguard/auth-user.guard';
+// import {AuthAdminGuard} from './authguard/auth-admin.guard';
 
 /*import {SurveyQuestionTabComponent} from './surveys/survey-detail/survey-question-tab/survey-question-tab.component';
 import {SurveyAnswerTabComponent} from './surveys/survey-detail/survey-answer-tab/survey-answer-tab.component';*/
@@ -69,7 +69,7 @@ import {SurveyAnswerTabComponent} from './surveys/survey-detail/survey-answer-ta
     AppRoutingModule,
     NgbModule.forRoot(),
   ],
-  providers: [NgbActiveModal, SurveysService, TopicsService, CurItemTypeService, UsersService, AuthUserGuard, AuthAdminGuard],
+  providers: [NgbActiveModal, SurveysService, TopicsService, CurItemTypeService, UsersService/*, AuthUserGuard, AuthAdminGuard*/],
   bootstrap: [AppComponent],
   entryComponents: [ModalAboutComponent, ModalLoginComponent, ModalSignUpComponent]
 })

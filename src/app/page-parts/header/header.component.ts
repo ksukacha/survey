@@ -13,14 +13,14 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  private loggedUser: User;
+  // private loggedUser: User;
   private subscriptions: Subscription[];
   constructor(private modalService: NgbModal,
               private usersService: UsersService) { }
   ngOnInit() {
-    this.usersService.getLoggedUserSubject().subscribe(user => {
-      this.loggedUser = user;
-    });
+    // this.usersService.getLoggedUserSubject().subscribe(user => {
+    //   this.loggedUser = user;
+    // });
   }
   openLoginModal() {
     const modalLoginRef = this.modalService.open(ModalLoginComponent);

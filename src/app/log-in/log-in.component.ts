@@ -14,7 +14,7 @@ export class LogInComponent implements OnInit {
   public logInFormGroup: FormGroup;
   private submitted: boolean;
   private subscriptions: Subscription[] = [];
-  private user: User;
+ // private user: User;
 
   constructor(private usersService: UsersService,
               private router: Router) {
@@ -26,9 +26,9 @@ export class LogInComponent implements OnInit {
       password: new FormControl('', [Validators.minLength(6), Validators.required]),
       rememberMe: new FormControl()
     });
-    this.usersService.getLoggedUserSubject().subscribe(user => {
-      this.user = user;
-    });
+    // this.usersService.getLoggedUserSubject().subscribe(user => {
+    //   this.user = user;
+    // });
   }
 
   private get email() {
@@ -45,11 +45,11 @@ export class LogInComponent implements OnInit {
       const email: string = this.email.value;
       const password: string = this.password.value;
       this.subscriptions.push(this.usersService.getUser(email).subscribe(user => {
-        this.user = user;
-        // if email and pass are correct - user is logged in
-        this.usersService.setLoggedUser(this.user);
-        console.log('from log-in component', this.user.login);
-        this.router.navigate(['surveys']);
+        // this.user = user;
+        // // if email and pass are correct - user is logged in
+        // this.usersService.setLoggedUser(this.user);
+        // console.log('from log-in component', this.user.login);
+        // this.router.navigate(['surveys']);
       }));
 
     }

@@ -17,5 +17,7 @@ export class Survey {
     this.authorLogin = authorLogin;
     this.questions = questions;
   }
+
+
 }
 

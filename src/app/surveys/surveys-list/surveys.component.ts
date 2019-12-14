@@ -16,7 +16,7 @@ import {User} from '../../model/user.model';
 export class SurveysComponent implements OnInit {
   surveys: Survey[];
   currentSurveysSection: SurveysSection;
-  loggedUser: User;
+  // loggedUser: User;
   private subscriptions: Subscription[] = [];
   constructor(private surveysService: SurveysService,
               private activatedRoute: ActivatedRoute,
@@ -24,9 +24,9 @@ export class SurveysComponent implements OnInit {
 
   ngOnInit() {
     // this.surveys = this.surveysService.getSurveys();
-    this.usersService.getLoggedUserSubject().subscribe(user => {
-      this.loggedUser = user;
-    });
+    // this.usersService.getLoggedUserSubject().subscribe(user => {
+    //   this.loggedUser = user;
+    // });
     this.activatedRoute.data.subscribe((currentSurveysSection: Data) => {
       this.currentSurveysSection = currentSurveysSection[0].section;
       console.log(this.currentSurveysSection);
@@ -34,11 +34,11 @@ export class SurveysComponent implements OnInit {
         this.surveysService.getSurveys(); // inside there's subject.next(surveys) which allows to display all surveys from backend
       }
       if (this.currentSurveysSection === SurveysSection.MY_SURVEYS) {
-        this.surveysService.setSurveysForDisplay(this.loggedUser.ownSurveys);
+        // this.surveysService.setSurveysForDisplay(this.loggedUser.ownSurveys);
       } else if (this.currentSurveysSection === SurveysSection.SURVEYS_TAKEN) {
-        this.surveysService.setSurveysForDisplay(this.loggedUser.takenSurveys);
+        // this.surveysService.setSurveysForDisplay(this.loggedUser.takenSurveys);
       } else if (this.currentSurveysSection === SurveysSection.DRAFTS) {
-        this.surveysService.setSurveysForDisplay(this.loggedUser.draftSurveys);
+       // this.surveysService.setSurveysForDisplay(this.loggedUser.draftSurveys);
       }
     });
     this.surveysService.getSubject().subscribe(surveys => this.surveys = surveys);
@@ -54,17 +54,17 @@ export class SurveysComponent implements OnInit {
     )); */
     const index = this.surveys.findIndex(s => s.id === id); // find index in your array
     this.surveys.splice(index, 1); // remove element from array
-    if (this.currentSurveysSection === SurveysSection.MY_SURVEYS) {
-      this.loggedUser.ownSurveys = this.surveys;
-      this.subscriptions.push(this.usersService.updateUser(this.loggedUser, this.loggedUser.id).subscribe());
-      this.subscriptions.push(this.surveysService.deleteSurvey(id).subscribe());
-    } else if (this.currentSurveysSection === SurveysSection.DRAFTS) {
-      this.loggedUser.draftSurveys = this.surveys;
-      this.subscriptions.push(this.usersService.updateUser(this.loggedUser, this.loggedUser.id).subscribe());
-    } else if (this.currentSurveysSection === SurveysSection.SURVEYS_TAKEN) {
-      this.loggedUser.takenSurveys = this.surveys;
-      this.subscriptions.push(this.usersService.updateUser(this.loggedUser, this.loggedUser.id).subscribe());
-    }
+    // if (this.currentSurveysSection === SurveysSection.MY_SURVEYS) {
+    //   this.loggedUser.ownSurveys = this.surveys;
+    //   this.subscriptions.push(this.usersService.updateUser(this.loggedUser, this.loggedUser.id).subscribe());
+    //   this.subscriptions.push(this.surveysService.deleteSurvey(id).subscribe());
+    // } else if (this.currentSurveysSection === SurveysSection.DRAFTS) {
+    //   this.loggedUser.draftSurveys = this.surveys;
+    //   this.subscriptions.push(this.usersService.updateUser(this.loggedUser, this.loggedUser.id).subscribe());
+    // } else if (this.currentSurveysSection === SurveysSection.SURVEYS_TAKEN) {
+    //   this.loggedUser.takenSurveys = this.surveys;
+    //   this.subscriptions.push(this.usersService.updateUser(this.loggedUser, this.loggedUser.id).subscribe());
+    // }
   }
 
 }

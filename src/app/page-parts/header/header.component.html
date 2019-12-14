@@ -3,10 +3,10 @@
   <div class="container-fluid">
     <a class="navbar-brand" [routerLink]="'/surveys'"><img src="../../../assets/images/surveysLogo.png"></a>
     <ul class="nav navbar-nav">
-      <li *ngIf="loggedUser == null" class="navbar-item">
+      <li  class="navbar-item"> <!--*ngIf="loggedUser == null"-->
         <a class="nav-link" [routerLink] = "'/login'"  >Log in</a> <!--openLoginModal() -->
       </li>
-      <li *ngIf="loggedUser == null" class="navbar-item">
+      <li  class="navbar-item"><!--*ngIf="loggedUser == null"-->
         <a class="nav-link" [routerLink]= "'/register'" >Sign up</a>
       </li>
       <li>

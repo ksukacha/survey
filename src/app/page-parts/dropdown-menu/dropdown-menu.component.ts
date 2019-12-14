@@ -10,18 +10,18 @@ import {Router} from '@angular/router';
 })
 export class DropdownMenuComponent implements OnInit {
   collapsed = true;
-  private loggedUser: User;
+ // private loggedUser: User;
   constructor(private usersService: UsersService,
               private router: Router) { }
 
   ngOnInit() {
-    this.usersService.getLoggedUserSubject().subscribe(user => {
-      this.loggedUser = user;
-    });
+    // this.usersService.getLoggedUserSubject().subscribe(user => {
+    //   this.loggedUser = user;
+    // });
   }
 
   logOut(): void {
-    this.usersService.logOut();
+   // this.usersService.logOut();
     this.router.navigate(['welcome']);
   }
 }

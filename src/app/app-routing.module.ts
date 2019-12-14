@@ -12,8 +12,8 @@ import {TopicComponent} from './topics/topic/topic.component';
 import {ModalSignUpComponent} from './modals/modal-sign-up/modal-sign-up.component';
 import {ModalLoginComponent} from './modals/modal-login/modal-login.component';
 import {WelcomeComponent} from './page-parts/welcome/welcome/welcome.component';
-import {AuthUserGuard} from './authguard/auth-user.guard';
-import {AuthAdminGuard} from './authguard/auth-admin.guard';
+// import {AuthUserGuard} from './authguard/auth-user.guard';
+// import {AuthAdminGuard} from './authguard/auth-admin.guard';
 
 
 const routes: Routes = [
@@ -33,7 +33,7 @@ const routes: Routes = [
     path: 'surveys',
     component: SurveysComponent,
     data: [{section: SurveysSection.MY_SURVEYS}],
-    canActivate: [AuthUserGuard]
+    // canActivate: [AuthUserGuard]
   },
   {
     path: 'surveys/:id',
@@ -48,12 +48,12 @@ const routes: Routes = [
     path: 'surveys-taken',
     component: SurveysComponent,
     data: [{section: SurveysSection.SURVEYS_TAKEN}],
-    canActivate: [AuthUserGuard]
+   // canActivate: [AuthUserGuard]
   },
   {
     path: 'new',
     component: NewSurveyComponent,
-    canActivate: [AuthUserGuard]
+   // canActivate: [AuthUserGuard]
    /* children: [
       {
         path: 'topics-list',
@@ -69,31 +69,31 @@ const routes: Routes = [
     path: 'new/topics',
     component: TopicsListComponent,
     data: [{isSurveyCreation: true}],
-    canActivate: [AuthUserGuard]
+    // canActivate: [AuthUserGuard]
   },
   {
     path: 'new/topics/:id',
     component: TopicComponent,
     data: [{isSurveyCreation: true}],
-    canActivate: [AuthUserGuard]
+    // canActivate: [AuthUserGuard]
   },
   {
     path: 'drafts',
     component: SurveysComponent,
     data: [{section: SurveysSection.DRAFTS}],
-    canActivate: [AuthUserGuard]
+    // canActivate: [AuthUserGuard]
   },
   {
     path: 'topics',
     component: TopicsListComponent,
     data: [{isSurveyCreation: false}],
-    canActivate: [AuthAdminGuard]
+    // canActivate: [AuthAdminGuard]
   },
   {
     path: 'topics/:id',
     component: TopicComponent,
     data: [{isSurveyCreation: false}],
-    canActivate: [AuthAdminGuard]
+    // canActivate: [AuthAdminGuard]
   },
  /* {
     path: 'question-part',

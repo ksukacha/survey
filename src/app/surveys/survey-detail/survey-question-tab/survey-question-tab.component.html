@@ -8,7 +8,7 @@
         <div class="border border-info rounded col-md-11">
           <p>{{questionIndex+1}}. {{question.controls['questionName'].value}}</p>
           <div formArrayName="answers">
-            <div *ngIf="question.controls['questionType'].value.toString()==='single-choice'">
+            <div *ngIf="question.controls['questionType'].value.toString()==='SINGLE_CHOICE'">
               <div *ngFor="let answer of survey.questions[questionIndex].answers; let answerIndex = index">
                 <div class="row">
                   <div class="col-md-1">
@@ -22,7 +22,7 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="question.controls['questionType'].value.toString()==='multiple-choice'">
+            <div *ngIf="question.controls['questionType'].value.toString()==='MULTIPLE_CHOICE'">
               <div *ngFor="let answer of question.get('answers').controls; let answerIndex = index">
                 <div class="row">
                   <div class="col-md-1">
