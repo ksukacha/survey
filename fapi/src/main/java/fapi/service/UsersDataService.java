@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,6 +23,8 @@ public class UsersDataService implements IUsersDataService, UserDetailsService {
   private String backendServerUrl;
   @Autowired
   private RestTemplate restTemplate;
+  @Autowired
+  public BCryptPasswordEncoder encoder;
 
 
   @Override
@@ -31,11 +34,13 @@ public class UsersDataService implements IUsersDataService, UserDetailsService {
 
   @Override
   public UserModel getUserByEmail(String email) {
-    return restTemplate.getForEntity(backendServerUrl + "/api/users?email=" + email, UserModel.class).getBody();
+    UserModel userModel = restTemplate.getForEntity(backendServerUrl + "/api/users?email=" + email, UserModel.class).getBody();
+    return userModel;
   }
 
   @Override
   public UserModel saveUser(UserModel user) {
+    user.setPassword(encoder.encode(user.getPassword()));
     return restTemplate.postForEntity(backendServerUrl + "/api/users", user, UserModel.class).getBody();
   }
 

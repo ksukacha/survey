@@ -62,6 +62,7 @@ CREATE TABLE report (
 CREATE TABLE topic (
     id bigint NOT NULL auto_increment,
     name varchar(20) NOT NULL,
+    shared boolean NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -99,9 +100,8 @@ INSERT INTO answer(id, name, question_id) VALUES (2, 'no', 1);
 INSERT INTO answer(id, name, question_id) VALUES (3, '+', 2);
 INSERT INTO answer(id, name, question_id) VALUES (4, '-', 2);
 
-INSERT INTO report(id, user_id, survey_id, creator_user_id, survey_status) VALUES(1, 1, 1, '1', 0);
--- INSERT INTO report(id, user_id, survey_id, creator_user_id, survey_status) VALUES(2, 1, 1, '1', 1);
--- INSERT INTO report(id, user_id, survey_id, creator_user_id, survey_status) VALUES(3, 2, 1, null, 1);
-INSERT INTO report(id, user_id, survey_id, creator_user_id, survey_status) VALUES(4, 2, 2, '2', 0);
-INSERT INTO report(id, user_id, survey_id, creator_user_id, survey_status) VALUES(5, 1, 2, null, 1);
+INSERT INTO report(id, creator_user_id, survey_status, survey_id, user_id ) VALUES(1, '1', 0, 1, 1);
+INSERT INTO report(id, creator_user_id, survey_status, survey_id, user_id) VALUES(2, '1', 1, 1, 1);
+INSERT INTO report(id, creator_user_id, survey_status, survey_id, user_id) VALUES(3, null, 1, 1, 2);
+-- INSERT INTO report(id, creator_user_id, survey_status, survey_id, user_id) VALUES(2, null, 1, 1, 2);
 

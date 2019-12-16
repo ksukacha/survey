@@ -11,6 +11,7 @@ import {OpenedSurveyService} from './surveys/survey-detail/opened-survey.service
 })
 export class SurveysService {
   subject: Subject<Survey[]> = new ReplaySubject<Survey[]>(1);
+  surveySubject: Subject<Survey> = new ReplaySubject<Survey>(1);
 
   constructor(private httpClient: HttpClient,
               private openedSurveyService: OpenedSurveyService) {
@@ -54,12 +55,20 @@ export class SurveysService {
     return this.openedSurveyService.subject.asObservable(); ///////////////////////////
   }
 
-  saveSurvey(s: Survey, userId: number, surveyStatus: string): Observable<Survey> {
+  saveSurvey(s: Survey, userId: number, creatorUserId: string, surveyStatus: string): Observable<Survey> {
     /*this.getSurveys().push(s);
     this.subject.next(this.getSurveys());*/
 
     // return this.httpClient.post<Survey>('http://localhost:8081/api/surveys', s);
-    return this.httpClient.post<Survey>('http://localhost:8081/api/surveys/saveSurvey?userId=' + userId + '&surveyStatus=' + surveyStatus, s);
+    const surveyDto: SurveyDto = new SurveyDto(s.name, s.description, s.elapseDate, s.questions, creatorUserId, userId, surveyStatus);
+    const observableSurveyDto: Observable<SurveyDto> = this.httpClient.post<SurveyDto>('http://localhost:8081/api/surveys', surveyDto);
+    observableSurveyDto.subscribe(sDto => {
+      const survey: Survey = new Survey(sDto.id, sDto.name, sDto.description,
+        sDto.elapseDate, sDto.creatorUserId, sDto.questions);
+      console.log('saveSurvey()', survey);
+      this.surveySubject.next(survey);
+    });
+    return this.surveySubject.asObservable();
   }
 
   deleteSurvey(surveyId: number): Observable<void> {

@@ -28,9 +28,11 @@ import { TopicsListComponent } from './topics/topics-list/topics-list.component'
 import {TopicsService} from './topics/topics.service';
 import {CurItemTypeService} from './cur-item-type.service';
 import { TopicComponent } from './topics/topic/topic.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {UsersService} from './users.service';
 import { WelcomeComponent } from './page-parts/welcome/welcome/welcome.component';
+import {TokenServiceService} from './token-service.service';
+import {AuthIntercepterService} from './auth-intercepter.service';
 // import {AuthUserGuard} from './authguard/auth-user.guard';
 // import {AuthAdminGuard} from './authguard/auth-admin.guard';
 
@@ -69,7 +71,8 @@ import {SurveyAnswerTabComponent} from './surveys/survey-detail/survey-answer-ta
     AppRoutingModule,
     NgbModule.forRoot(),
   ],
-  providers: [NgbActiveModal, SurveysService, TopicsService, CurItemTypeService, UsersService/*, AuthUserGuard, AuthAdminGuard*/],
+  providers: [NgbActiveModal, SurveysService, TopicsService, CurItemTypeService, UsersService/*, AuthUserGuard, AuthAdminGuard*/, TokenServiceService,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthIntercepterService, multi: true}],
   bootstrap: [AppComponent],
   entryComponents: [ModalAboutComponent, ModalLoginComponent, ModalSignUpComponent]
 })

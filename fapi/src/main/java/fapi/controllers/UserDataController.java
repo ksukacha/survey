@@ -4,6 +4,7 @@ import fapi.models.UserModel;
 import fapi.service.UsersDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class UserDataController {
 
   @Autowired
   private UsersDataService usersDataService;
+
 
   @RequestMapping
   public ResponseEntity<List<UserModel>> getAllUsers() {

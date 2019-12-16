@@ -44,6 +44,8 @@ public class BackendApplication {
   @Autowired
   private SurveyMapper surveyMapper;
 
+
+
   public static void main(String[] args) {
     SpringApplication.run(BackendApplication.class, args);
   }
@@ -52,21 +54,21 @@ public class BackendApplication {
 //  public CommandLineRunner springdata() throws Exception{
 //    return(args) -> {
 //
-//     User user1 = new User("john",
-//        "reed",
-//        "john1994",
-//        "john1994@gmail.com",
-//        "123456",
-//        UserRoleEnum.USER);
-//     userRepository.save(user1);
-//
-//      User user2 = new User("peter",
-//        "pan",
-//        "petpan",
-//        "petpan@gmail.com",
-//        "123456",
-//        UserRoleEnum.USER);
-//      userRepository.save(user2);
+////     User user1 = new User("john",
+////        "reed",
+////        "john1994",
+////        "john1994@gmail.com",
+////        "123456",
+////        UserRoleEnum.USER);
+////     userRepository.save(user1);
+////
+////      User user2 = new User("peter",
+////        "pan",
+////        "petpan",
+////        "petpan@gmail.com",
+////        "123456",
+////        UserRoleEnum.USER);
+////      userRepository.save(user2);
 //
 //      Answer a1 = new Answer("yes");
 //      Answer a2 = new Answer("no");

@@ -41,7 +41,7 @@ public class ReportService implements IReportService {
     }
     if(surveyStatus.equals("NEW")) {
       // TODO посмотреть
-     // survey.setId(0L);
+      //survey.setId(0L);
       survey = surveyService.saveSurvey(survey);
       Set<Question> questionSet = survey.getQuestions();
       Iterator<Question> questionIterator = questionSet.iterator();

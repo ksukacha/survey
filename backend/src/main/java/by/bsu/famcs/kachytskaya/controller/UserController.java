@@ -29,7 +29,9 @@ public class UserController {
   }
 
   @GetMapping
-  public ResponseEntity<User> getUserByEmail(@RequestParam String email) throws NotFoundException {
-    return ResponseEntity.ok(userService.getUserByEmail(email));
+  public ResponseEntity<UserDto> getUserByEmail(@RequestParam String email) throws NotFoundException {
+    User user = userService.getUserByEmail(email);
+    UserDto userDto = userMapper.toDto(user);
+    return ResponseEntity.ok(userDto);
   }
 }

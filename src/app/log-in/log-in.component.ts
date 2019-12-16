@@ -4,6 +4,8 @@ import {UsersService} from '../users.service';
 import {Subscription} from 'rxjs';
 import {User} from '../model/user.model';
 import {Router} from '@angular/router';
+import {LoginRequest} from '../model/loginRequest.model';
+import {TokenServiceService} from '../token-service.service';
 
 @Component({
   selector: 'app-log-in',
@@ -14,10 +16,11 @@ export class LogInComponent implements OnInit {
   public logInFormGroup: FormGroup;
   private submitted: boolean;
   private subscriptions: Subscription[] = [];
- // private user: User;
+  private user: User;
 
   constructor(private usersService: UsersService,
-              private router: Router) {
+              private router: Router,
+              private tokenService: TokenServiceService) {
   }
 
   ngOnInit() {
@@ -44,12 +47,16 @@ export class LogInComponent implements OnInit {
     if (this.logInFormGroup.valid) {
       const email: string = this.email.value;
       const password: string = this.password.value;
-      this.subscriptions.push(this.usersService.getUser(email).subscribe(user => {
-        // this.user = user;
-        // // if email and pass are correct - user is logged in
-        // this.usersService.setLoggedUser(this.user);
-        // console.log('from log-in component', this.user.userName);
-        // this.router.navigate(['surveys']);
+      // this.subscriptions.push(this.usersService.getUser(email).subscribe(user => {
+      //   // this.user = user;
+      //   // // if email and pass are correct - user is logged in
+      //   // this.usersService.setLoggedUser(this.user);
+      //   // console.log('from log-in component', this.user.userName);
+      //   // this.router.navigate(['surveys']);
+      // }));
+      this.subscriptions.push(this.usersService.loginUser(new LoginRequest(email, password)).subscribe(tokenResponce => {
+        console.log('token: ', tokenResponce);
+        this.tokenService.setToken(tokenResponce.token);
       }));
 
     }

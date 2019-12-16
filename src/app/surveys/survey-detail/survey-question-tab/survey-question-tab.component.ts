@@ -4,6 +4,12 @@ import {OpenedSurveyService} from '../opened-survey.service';
 import {Survey} from '../../../model/survey.model';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AnswerModel} from '../../../model/answer.model';
+import {QuestionModel} from '../../../model/question.model';
+import {TopicModel} from '../../../model/topic.model';
+import {HttpClient} from '@angular/common/http';
+import {Subscription} from 'rxjs';
+import {SurveyDto} from '../../../model/dto/surveyDto';
+import {SurveysService} from '../../../surveys.service';
 
 @Component({
   selector: 'app-survey-question-tab',
@@ -13,9 +19,11 @@ import {AnswerModel} from '../../../model/answer.model';
 export class SurveyQuestionTabComponent implements OnInit {
   private survey: Survey;
   private surveyFormGroup: FormGroup;
+  private subscriptions: Subscription[] = [];
 
   constructor(private openedSurvey: OpenedSurveyService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private surveyService: SurveysService) {
   }
 
   ngOnInit() {
@@ -89,5 +97,23 @@ export class SurveyQuestionTabComponent implements OnInit {
     }
     return (this.questions.at(counterQuestion).get('answers') as FormArray).controls[counterAnswer].value
       && this.survey.questions[counterQuestion].answers[counterAnswer].name;
+  }
+
+
+  collectFieldForPassedSurvey() {
+    if (this.surveyFormGroup.valid) {
+      // TODO: collect answers for each of the questions
+      console.log('valid');
+    }
+  }
+  onSubmit() {
+    this.collectFieldForPassedSurvey();
+
+    // TODO: get actual userId instead of 1;
+    // TODO: find out if user with userId is author of this survey, depending on that creatorUserId == userId or null
+    this.subscriptions.push(this.surveyService.saveSurvey(this.survey, 1, null,   'PASSED').subscribe(() => {
+     console.log('survey passed');
+     // TODO: add this survey to the user's 'passed surveys' list
+    }));
   }
 }

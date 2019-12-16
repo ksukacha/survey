@@ -4,6 +4,8 @@ import {Observable, of, ReplaySubject, Subject, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {User} from './model/user.model';
+import {LoginRequest} from './model/loginRequest.model';
+import {LoginResponse} from './model/loginResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +45,9 @@ export class UsersService {
 
   saveUser(user: User): Observable<User> {
     return this.httpClient.post<User>('http://localhost:8081/api/users', user);
+  }
+  loginUser(loginRequest: LoginRequest): Observable<LoginResponse> {
+     return this.httpClient.post<LoginResponse>('http://localhost:8081/api/login', loginRequest);
   }
 
   // deleteUser(userId: number): Observable<void> {

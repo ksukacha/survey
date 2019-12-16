@@ -16,8 +16,7 @@ public class UserModel {
   private List<SurveyModel> draftSurveys;
 
   public UserModel() {}
-  public UserModel(int id, String firstName, String lastName, String userName, /*String birthDate,*/ String email, String password, String role, List<SurveyModel> ownSurveys, List<SurveyModel> takenSurveys, List<SurveyModel> draftSurveys) {
-    this.id = id;
+  public UserModel(String firstName, String lastName, String userName, /*String birthDate,*/ String email, String password, String role) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.userName = userName;
@@ -25,9 +24,6 @@ public class UserModel {
     this.email = email;
     this.password = password;
     this.role = role;
-    this.ownSurveys = ownSurveys;
-    this.takenSurveys = takenSurveys;
-    this.draftSurveys = draftSurveys;
   }
 
   public int getId() {

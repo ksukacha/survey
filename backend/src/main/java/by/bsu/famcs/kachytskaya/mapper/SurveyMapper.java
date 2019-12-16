@@ -29,15 +29,16 @@ public class SurveyMapper {
   }
 
   public Survey toEntity(SurveyDto surveyDto) throws NotFoundException {
-    Survey survey;
-    Optional<Survey> surveyOptional = surveyService.getSurveyByName(surveyDto.getName());
-    if(surveyOptional.isPresent()) {
-      survey = surveyOptional.get();
-      return survey;
-    }else {
-      survey = mapper.map(surveyDto, Survey.class);
-      return survey;
-    }
+//    Survey survey;
+//    Optional<Survey> surveyOptional = surveyService.getSurveyByName(surveyDto.getName());
+//    if(surveyOptional.isPresent()) {
+//      survey = surveyOptional.get();
+//      return survey;
+//    }else {
+//      survey = mapper.map(surveyDto, Survey.class);
+//      return survey;
+//    }
+    return mapper.map(surveyDto, Survey.class);
   }
 
   public SurveyDto toDto(Survey entity, Report report) {

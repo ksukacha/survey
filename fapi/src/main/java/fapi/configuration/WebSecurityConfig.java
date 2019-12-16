@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
   public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
+    auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
   }
 
 //  @Bean
@@ -44,21 +44,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //    return new JwtAuthenticationFilter();
 //  }
 
-  @Bean
-  public BCryptPasswordEncoder encoder(){
-    return new BCryptPasswordEncoder();
-  }
+  @Autowired
+  public BCryptPasswordEncoder encoder;
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
     http.cors().and().csrf().disable()
       .authorizeRequests()
-      .antMatchers("/api/login/*", "/api/users").permitAll()
+      .antMatchers("/api/login", "/api/users").permitAll()
+     // .anyRequest().authenticated()
       .and()
       //.exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
       //.and()
       .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
     ;
     //http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
   }

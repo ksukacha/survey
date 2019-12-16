@@ -1,17 +1,47 @@
 package fapi.service;
 
 import fapi.security.SecurityJwtConstants;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
 public class UserTokenService implements IUserTokenService {
+
+  public String getUsernameFromToken(String token) {
+    return getClaimFromToken(token, Claims::getSubject);
+  }
+
+  public Date getExpirationDateFromToken(String token){
+    return getClaimFromToken(token, Claims::getExpiration);
+  }
+
+  private <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+    final Claims claims = getAllClaimsFromToken(token);
+    return claimsResolver.apply(claims);
+  }
+
+  private Claims getAllClaimsFromToken(String token) {
+    return Jwts.parser()
+      .setSigningKey(SecurityJwtConstants.SIGNING_KEY)
+      .parseClaimsJws(token)
+      .getBody();
+  }
+
+  private boolean isTokenExpired(String token) {
+    final Date expiration = getExpirationDateFromToken(token);
+    return expiration.before(new Date());
+  }
   @Override
   public String generateToken(Authentication authentication) {
     final String authorities = authentication.getAuthorities().stream()
@@ -23,5 +53,20 @@ public class UserTokenService implements IUserTokenService {
       .signWith(SignatureAlgorithm.HS256, SecurityJwtConstants.SIGNING_KEY)
       .setExpiration(new Date(System.currentTimeMillis() + SecurityJwtConstants.ACCESS_TOKEN_VALIDITY_SECONDS * 1000))
       .compact();
+  }
+
+  public boolean validateToken(String token, UserDetails userDetails) {
+    final String userName = getUsernameFromToken(token);
+    return userName.equals(userDetails.getUsername()) && !isTokenExpired(token);
+  }
+
+  public UsernamePasswordAuthenticationToken getAuthentication(final String token, final Authentication existingAuthentication, UserDetails userDetails) {
+    final JwtParser jwtParser = Jwts.parser().setSigningKey(SecurityJwtConstants.SIGNING_KEY);
+    final Jws<Claims> claimsJws = jwtParser.parseClaimsJws(token);
+    final Claims claims = claimsJws.getBody();
+    final Collection<? extends  GrantedAuthority> authorities = Arrays.stream(claims.get(SecurityJwtConstants.AUTHORITIES_KEY).toString().split(","))
+      .map(SimpleGrantedAuthority::new)
+      .collect(Collectors.toList());
+    return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
   }
 }

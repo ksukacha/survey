@@ -137,15 +137,15 @@ export class NewSurveyComponent implements OnInit {
       if (this.isSurveyItem()) {
         this.newSurvey = this.collectFieldForNewItem() as Survey;
 
-
-        // this.subscriptions.push(this.surveyService.saveSurvey(this.newSurvey, this.loggedUser.id,   'NEW').subscribe(() => {
-        //   // this.surveys.push(this.newSurvey);
-        //   // this.surveyService.subject.next(this.surveys);
-        //   //                     this.loggedUser.ownSurveys.push(this.newSurvey);
-        //   /* this.subscriptions.push(this.usersService.updateUser(this.loggedUser, this.loggedUser.id).subscribe(() =>
-        //      this.router.navigate(['surveys'])
-        //    ));*/
-        // }));
+        // TODO: get actual userId instead of 1;
+        this.subscriptions.push(this.surveyService.saveSurvey(this.newSurvey, 1, '1',   'NEW').subscribe(() => {
+           this.surveys.push(this.newSurvey);
+           this.surveyService.subject.next(this.surveys);
+          //                     this.loggedUser.ownSurveys.push(this.newSurvey);
+          /* this.subscriptions.push(this.usersService.updateUser(this.loggedUser, this.loggedUser.id).subscribe(() =>
+             this.router.navigate(['surveys'])
+           ));*/
+        }));
       } else if (this.isTopicItem()) {
         this.newTopic = this.collectFieldForNewItem() as TopicModel;
         this.subscriptions.push(this.topicService.saveTopic(this.newTopic).subscribe(() => {

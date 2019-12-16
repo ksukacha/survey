@@ -22,7 +22,7 @@ const routes: Routes = [
     component: WelcomeComponent
   },
   {
-    path: 'userName',
+    path: 'login',
     component: ModalLoginComponent
   },
   {
