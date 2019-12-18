@@ -55,10 +55,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken authentication = tokenProvider.getAuthentication(authToken, SecurityContextHolder.getContext().getAuthentication(), userDetails);
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
                 logger.info("Authenticated user " + userName + ", setting security context.");
+                //при успешной аутентификации устанавливается конктекст безопасности приложения, установленный контекст
+                //является переменной ThreadLocal
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
-
+        //направляем запрос пользователя к сервлету с первоначально запрашиваемым URL
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }

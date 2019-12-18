@@ -35,10 +35,10 @@ const routes: Routes = [
     data: [{section: SurveysSection.MY_SURVEYS}],
     // canActivate: [AuthUserGuard]
   },
-  {
-    path: 'surveys/:id',
-    loadChildren: () => import('./surveys/survey-detail/survey-detail.module').then(mod => mod.SurveyDetailModule),
-  },
+  // {
+  //   path: 'surveys/:id',
+  //   loadChildren: () => import('./surveys/survey-detail/survey-detail.module').then(mod => mod.SurveyDetailModule),
+  // },
   {
     path: 'explore',
     component: SurveysComponent,

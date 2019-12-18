@@ -6,6 +6,9 @@ import {TokenServiceService} from './token-service.service';
 @Injectable({
   providedIn: 'root'
 })
+
+// service will check if the session has a token in local storage,
+// then it will update the headers of all outgoing HTTP requests.
 export class AuthIntercepterService implements HttpInterceptor {
 
   constructor(private tokenService: TokenServiceService) { }

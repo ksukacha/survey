@@ -10,6 +10,7 @@ import {HttpClient} from '@angular/common/http';
 import {Subscription} from 'rxjs';
 import {SurveyDto} from '../../../model/dto/surveyDto';
 import {SurveysService} from '../../../surveys.service';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-survey-question-tab',
@@ -31,11 +32,11 @@ export class SurveyQuestionTabComponent implements OnInit, OnDestroy {
       questions: this.fb.array([])
     });
     console.log("came to q tab");
-    this.openedSurvey.getSubject().subscribe(survey => {
+    this.subscriptions.push(this.openedSurvey.getSubject().pipe(take(1)).subscribe(survey => {
       this.survey = survey;
       console.log('from q-tab', this.survey.id);
       this.fillInSurveyFormGroup();
-    });
+    }));
   }
 
   get question(): FormGroup {
