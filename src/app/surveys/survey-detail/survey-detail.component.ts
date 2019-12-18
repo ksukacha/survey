@@ -19,7 +19,8 @@ export class SurveyDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private location: Location,
     private surveysService: SurveysService,
-    private openedSurveyService: OpenedSurveyService
+    private openedSurveyService: OpenedSurveyService,
+    private router: Router
   ) {
   }
 
@@ -31,8 +32,9 @@ export class SurveyDetailComponent implements OnInit, OnDestroy {
     console.log('survey-detail.component oninit');
     this.route.paramMap.subscribe(params => {
       this.subscriptions.push(this.surveysService.getSurvey(params.get('id')).subscribe(survey => {
-        this.openedSurveyService.setOpenedSurvey(survey);
+        // this.openedSurveyService.setOpenedSurvey(survey);
         console.log('survey-detail-component', survey.id);
+        this.router.navigate(['questions']);
       }));
     });
   }

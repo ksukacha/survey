@@ -11,34 +11,8 @@ import {LoginResponse} from './model/loginResponse';
   providedIn: 'root'
 })
 export class UsersService {
-  // private loggedUserSubject: Subject<User> = new ReplaySubject(1);
-  // private userLogged: boolean = false;
-  // private adminLogged: boolean = false;
    constructor(private httpClient: HttpClient) {
   }
-  //
-  // getLoggedUserSubject(): Observable<User> {
-  //   return this.loggedUserSubject.asObservable();
-  // }
-  // setLoggedUser(user: User): void {
-  //   this.loggedUserSubject.next(user);
-  //   if (user.role === 'USER') {
-  //     this.userLogged = true;
-  //   } else if (user.role === 'ADMIN') {
-  //     this.adminLogged = true;
-  //   }
-  // }
-  // logOut(): void {
-  //   this.loggedUserSubject.next(null);
-  //   this.userLogged = false;
-  //   this.adminLogged = false;
-  // }
-  // isUserLogged() {
-  //   return this.userLogged;
-  // }
-  // isAdminLogged() {
-  //   return this.adminLogged;
-  // }
   getUser(userEmail: string): Observable<User> {
     return this.httpClient.get<User>('http://localhost:8081/api/users/' + userEmail);
   }
@@ -49,12 +23,8 @@ export class UsersService {
   loginUser(loginRequest: LoginRequest): Observable<LoginResponse> {
      return this.httpClient.post<LoginResponse>('http://localhost:8081/api/login', loginRequest);
   }
-
-  // deleteUser(userId: number): Observable<void> {
-  //   return this.httpClient.delete<void>('http://localhost:8081/api/users/' + userId);
-  // }
-  updateUser(user: User, id: number): Observable<Object> {
-    return this.httpClient.put('http://localhost:8081/api/users/' + id, user);
+  updateUser(user: User, id: number): Observable<User> {
+    return this.httpClient.put<User>('http://localhost:8081/api/users/' + id, user);
   }
 
 }

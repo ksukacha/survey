@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Survey} from '../../model/survey.model';
 import {SurveysService} from '../../surveys.service';
 import {SurveysSection} from '../surveys-section';
@@ -13,7 +13,7 @@ import {User} from '../../model/user.model';
   templateUrl: './surveys.component.html',
   styleUrls: ['./surveys.component.css']
 })
-export class SurveysComponent implements OnInit {
+export class SurveysComponent implements OnInit, OnDestroy {
   surveys: Survey[];
   currentSurveysSection: SurveysSection;
   // loggedUser: User;
@@ -23,10 +23,6 @@ export class SurveysComponent implements OnInit {
               private usersService: UsersService) { }
 
   ngOnInit() {
-    // this.surveys = this.surveysService.getSurveys();
-    // this.usersService.getLoggedUserSubject().subscribe(user => {
-    //   this.loggedUser = user;
-    // });
     this.activatedRoute.data.subscribe((currentSurveysSection: Data) => {
       this.currentSurveysSection = currentSurveysSection[0].section;
       console.log(this.currentSurveysSection);
@@ -41,7 +37,9 @@ export class SurveysComponent implements OnInit {
        // this.surveysService.setSurveysForDisplay(this.loggedUser.draftSurveys);
       }
     });
-    this.surveysService.getSubject().subscribe(surveys => this.surveys = surveys);
+    this.surveysService.getSubject().subscribe(surveys => {
+      this.surveys = surveys;
+    });
   }
   convertTimestampToLocaleString(timestamp: number): string {
     const date: Date = new Date(timestamp);
@@ -65,6 +63,9 @@ export class SurveysComponent implements OnInit {
     //   this.loggedUser.takenSurveys = this.surveys;
     //   this.subscriptions.push(this.usersService.updateUser(this.loggedUser, this.loggedUser.id).subscribe());
     // }
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
 }

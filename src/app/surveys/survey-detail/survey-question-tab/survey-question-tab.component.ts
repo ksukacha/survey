@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Data} from '@angular/router';
 import {OpenedSurveyService} from '../opened-survey.service';
 import {Survey} from '../../../model/survey.model';
@@ -16,7 +16,7 @@ import {SurveysService} from '../../../surveys.service';
   templateUrl: './survey-question-tab.component.html',
   styleUrls: ['./survey-question-tab.component.css']
 })
-export class SurveyQuestionTabComponent implements OnInit {
+export class SurveyQuestionTabComponent implements OnInit, OnDestroy {
   private survey: Survey;
   private surveyFormGroup: FormGroup;
   private subscriptions: Subscription[] = [];
@@ -30,6 +30,7 @@ export class SurveyQuestionTabComponent implements OnInit {
     this.surveyFormGroup = this.fb.group({
       questions: this.fb.array([])
     });
+    console.log("came to q tab");
     this.openedSurvey.getSubject().subscribe(survey => {
       this.survey = survey;
       console.log('from q-tab', this.survey.id);
@@ -59,6 +60,9 @@ export class SurveyQuestionTabComponent implements OnInit {
     });
   }
 
+  print(val: string) {
+    console.log(val);
+  }
   private patchValues(counter): FormGroup {
     const answersFormArray: FormArray = new FormArray([]);
     if (this.survey.questions[counter].questionType === 'SINGLE_CHOICE') {
@@ -115,5 +119,8 @@ export class SurveyQuestionTabComponent implements OnInit {
      console.log('survey passed');
      // TODO: add this survey to the user's 'passed surveys' list
     }));
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 }

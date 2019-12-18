@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {UsersService} from '../users.service';
 import {Subscription} from 'rxjs';
@@ -12,7 +12,7 @@ import {TokenServiceService} from '../token-service.service';
   templateUrl: './log-in.component.html',
   styleUrls: ['./log-in.component.css']
 })
-export class LogInComponent implements OnInit {
+export class LogInComponent implements OnInit, OnDestroy {
   public logInFormGroup: FormGroup;
   private submitted: boolean;
   private subscriptions: Subscription[] = [];
@@ -47,19 +47,15 @@ export class LogInComponent implements OnInit {
     if (this.logInFormGroup.valid) {
       const email: string = this.email.value;
       const password: string = this.password.value;
-      // this.subscriptions.push(this.usersService.getUser(email).subscribe(user => {
-      //   // this.user = user;
-      //   // // if email and pass are correct - user is logged in
-      //   // this.usersService.setLoggedUser(this.user);
-      //   // console.log('from log-in component', this.user.userName);
-      //   // this.router.navigate(['surveys']);
-      // }));
-      this.subscriptions.push(this.usersService.loginUser(new LoginRequest(email, password)).subscribe(tokenResponce => {
-        console.log('token: ', tokenResponce);
-        this.tokenService.setToken(tokenResponce.token);
+      this.subscriptions.push(this.usersService.loginUser(new LoginRequest(email, password)).subscribe(tokenResponse => {
+        console.log('token: ', tokenResponse);
+        this.tokenService.setToken(tokenResponse.token);
       }));
 
     }
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
 }

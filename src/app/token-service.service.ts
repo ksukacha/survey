@@ -7,7 +7,7 @@ export class TokenServiceService {
 
   constructor() { }
 
-  setToken (token: string) {
+  setToken(token: string): void{
     localStorage.setItem('token', token);
   }
 

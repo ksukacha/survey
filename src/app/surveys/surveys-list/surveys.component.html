@@ -20,7 +20,7 @@
           </li>
         </ul>
         <p class="card-text" *ngIf="survey.authorLogin != null ">Author: {{survey.authorLogin}}</p>
-        <a [routerLink]="['/surveys/'+survey.id+'/questions']" class="btn btn-primary">Open</a>
+        <a [routerLink]="['/surveys/'+survey.id]" class="btn btn-primary">Open</a>
       </div>
     </div>
   </div>

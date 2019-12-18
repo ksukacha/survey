@@ -1,13 +1,15 @@
-<div *ngIf="survey">
+<div *ngIf="survey" >
   <form [formGroup]="surveyFormGroup" (ngSubmit)="onSubmit()">
+    {{print('surveyFormGroup q size: ' + surveyFormGroup.get('questions').controls.length)}}
     <div formArrayName="questions">
       <div class="form-group"
            *ngFor="let question of surveyFormGroup.get('questions').controls; let questionIndex = index"
            [formGroupName]="questionIndex">
         <div class="border border-info rounded col-md-11">
-          <p>{{questionIndex+1}}. {{question.controls['questionName'].value}}</p>
+          <p>{{questionIndex + 1}}. {{question.controls['questionName'].value}}</p>
           <div formArrayName="answers">
             <div *ngIf="question.controls['questionType'].value.toString()==='SINGLE_CHOICE'">
+              {{print('question index: ' + questionIndex.toString())}}
               <div *ngFor="let answer of survey.questions[questionIndex].answers; let answerIndex = index">
                 <div class="row">
                   <div class="col-md-1">

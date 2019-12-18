@@ -26,25 +26,21 @@ export class SurveysService {
   }
 
   getSurveys(): Observable<Survey[]> {
-    // return this.httpClient.get<Survey[]>('http://localhost:8081/api/surveys').subscribe(surveys => {
-    //   this.subject.next(surveys);
-    // });
     const observableSurveysDto: Observable<SurveyDto[]> = this.httpClient.get<SurveyDto[]>('http://localhost:8081/api/surveys');
     const surveys: Survey[] = [];
     observableSurveysDto.subscribe(surveysDto => {
       for (const surveyDto of surveysDto) {
         const survey: Survey = new Survey(surveyDto.id, surveyDto.name, surveyDto.description,
           surveyDto.elapseDate, surveyDto.creatorUserId, surveyDto.questions);
-        console.log('getSurveys()', survey);
+        console.log('survey', survey);
         surveys.push(survey);
       }
       this.subject.next(surveys);
     });
-    return this.subject.asObservable(); ///////////////////////////
+    return this.subject.asObservable();
   }
 
   getSurvey(surveyId: string): Observable<Survey> {
-    // return this.httpClient.get<Survey>('http://localhost:8081/api/surveys/' + surveyId);
     const observableSurveyDto: Observable<SurveyDto> = this.httpClient.get<SurveyDto>('http://localhost:8081/api/surveys/' + surveyId);
     observableSurveyDto.subscribe(surveyDto => {
       const survey: Survey = new Survey(surveyDto.id, surveyDto.name, surveyDto.description,
@@ -52,14 +48,10 @@ export class SurveysService {
       console.log('getSurvey()', survey);
       this.openedSurveyService.setOpenedSurvey(survey);
     });
-    return this.openedSurveyService.subject.asObservable(); ///////////////////////////
+    return this.openedSurveyService.subject.asObservable();
   }
 
   saveSurvey(s: Survey, userId: number, creatorUserId: string, surveyStatus: string): Observable<Survey> {
-    /*this.getSurveys().push(s);
-    this.subject.next(this.getSurveys());*/
-
-    // return this.httpClient.post<Survey>('http://localhost:8081/api/surveys', s);
     const surveyDto: SurveyDto = new SurveyDto(s.name, s.description, s.elapseDate, s.questions, creatorUserId, userId, surveyStatus);
     const observableSurveyDto: Observable<SurveyDto> = this.httpClient.post<SurveyDto>('http://localhost:8081/api/surveys', surveyDto);
     observableSurveyDto.subscribe(sDto => {

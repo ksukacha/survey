@@ -53,17 +53,6 @@ const routes: Routes = [
   {
     path: 'new',
     component: NewSurveyComponent,
-   // canActivate: [AuthUserGuard]
-   /* children: [
-      {
-        path: 'topics-list',
-        component: TopicsListComponent,
-      },
-      {
-        path: 'topics-list/:id',
-        component: TopicComponent
-      }
-    ]*/
   },
   {
     path: 'new/topics',
@@ -77,12 +66,12 @@ const routes: Routes = [
     data: [{isSurveyCreation: true}],
     // canActivate: [AuthUserGuard]
   },
-  {
-    path: 'drafts',
-    component: SurveysComponent,
-    data: [{section: SurveysSection.DRAFTS}],
-    // canActivate: [AuthUserGuard]
-  },
+  // {
+  //   path: 'drafts',
+  //   component: SurveysComponent,
+  //   data: [{section: SurveysSection.DRAFTS}],
+  //   // canActivate: [AuthUserGuard]
+  // },
   {
     path: 'topics',
     component: TopicsListComponent,
@@ -95,15 +84,8 @@ const routes: Routes = [
     data: [{isSurveyCreation: false}],
     // canActivate: [AuthAdminGuard]
   },
- /* {
-    path: 'question-part',
-    component: SurveyQuestionTabComponent
-  },
-  {
-    path: 'answer-part',
-    component: SurveyAnswerTabComponent
-  },*/
-  { path: '',   redirectTo: '/surveys', pathMatch: 'full' },
+
+  { path: '',   redirectTo: '/explore', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 
