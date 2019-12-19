@@ -54,7 +54,6 @@ export class LogInComponent implements OnInit, OnDestroy {
         this.tokenService.setLoggedUserSubject();
        // this.router.navigate(['surveys']);
       }));
-
     }
   }
   ngOnDestroy() {

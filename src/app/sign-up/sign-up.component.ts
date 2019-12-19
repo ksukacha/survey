@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {PasswordValidation} from '../password-validation';
+import {CustomPasswordValidation} from '../password-validation';
 import {User} from '../model/user.model';
 import {UsersService} from '../users.service';
 import {Subscription} from 'rxjs';
@@ -33,7 +33,8 @@ export class SignUpComponent implements OnInit {
       email: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', [Validators.minLength(6), Validators.required]),
       repeatPassword: new FormControl('', [Validators.minLength(6), Validators.required]),
-    });
+    }, CustomPasswordValidation.matchPassword);
+
   }
 
   get firstName() {
@@ -87,5 +88,4 @@ export class SignUpComponent implements OnInit {
       onlySelf: true
     });
   }
-
 }

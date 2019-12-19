@@ -2,9 +2,9 @@
   <div class="form-row">
     <div class="col form-group">
       <label for="user-first-name">First name</label>
-      <input class="form-control" id="user-first-name" [formControlName]="'firstName'"/>
-      <div *ngIf="firstName.invalid && (firstName.dirty||firstName.touched||submitted)"
-           class="alert alert-danger">
+      <input class="form-control" id="user-first-name" [formControlName]="'firstName'" [ngClass]="{ 'is-invalid': submitted && firstName.errors }"/>
+      <div *ngIf="firstName.invalid && (submitted)"
+           class="invalid-feedback">
         <div *ngIf="firstName.errors.required">
           Please fill this field.
         </div>
@@ -12,9 +12,9 @@
     </div>
     <div class="col form-group">
       <label for="user-last-name">Last name</label>
-      <input class="form-control" id="user-last-name" [formControlName]="'lastName'"/>
-      <div *ngIf="lastName.invalid && (lastName.dirty||lastName.touched||submitted)"
-           class="alert alert-danger">
+      <input class="form-control" id="user-last-name" [formControlName]="'lastName'" [ngClass]="{ 'is-invalid': submitted && lastName.errors }"/>
+      <div *ngIf="lastName.invalid && (submitted)"
+           class="invalid-feedback">
         <div *ngIf="lastName.errors.required">
           Please fill this field.
         </div>
@@ -24,9 +24,9 @@
   <div class="form-row">
     <div class="col form-group">
       <label for="user-name">Username</label>
-      <input class="form-control" id="user-name" [formControlName]="'userName'"/>
-      <div *ngIf="userName.invalid && (userName.dirty||userName.touched||submitted)"
-           class="alert alert-danger">
+      <input class="form-control" id="user-name" [formControlName]="'userName'" [ngClass]="{ 'is-invalid': submitted && userName.errors }"/>
+      <div *ngIf="userName.invalid && (submitted)"
+           class="invalid-feedback">
         <div *ngIf="userName.errors.required">
           Please fill this field.
         </div>
@@ -46,9 +46,9 @@
   </div>
  <div class="form-group">
     <label for="user-email">Email</label>
-    <input class="form-control" id="user-email" [formControlName]="'email'"/>
-    <div *ngIf="email.invalid && (email.dirty||email.touched||submitted)"
-         class="alert alert-danger">
+    <input class="form-control" id="user-email" [formControlName]="'email'" [ngClass]="{ 'is-invalid': submitted && email.errors }"/>
+    <div *ngIf="email.invalid && (submitted)"
+         class="invalid-feedback">
       <div *ngIf="email.errors.required">
         Please fill this field.
       </div>
@@ -59,9 +59,9 @@
   </div>
   <div class="form-group">
     <label for="user-password">Password:</label>
-    <input type="password" class="form-control" id="user-password" [formControlName]="'password'"/>
-    <div *ngIf="password.invalid && (password.dirty||password.touched||submitted)"
-         class="alert alert-danger">
+    <input type="password" class="form-control" id="user-password" [formControlName]="'password'" [ngClass]="{ 'is-invalid': submitted && password.errors }"/>
+    <div *ngIf="password.invalid && (submitted)"
+         class="invalid-feedback">
       <div *ngIf="password.errors.required">
         Please fill this field.
       </div>
@@ -72,14 +72,17 @@
   </div>
  <div class="form-group">
     <label for="user-password-repeat">Repeat password:</label>
-    <input type="password" class="form-control" id="user-password-repeat" [formControlName]="'repeatPassword'"/>
-    <div *ngIf="repeatPassword.invalid && (repeatPassword.dirty||repeatPassword.touched||submitted)"
-         class="alert alert-danger">
+    <input type="password" class="form-control" id="user-password-repeat" [formControlName]="'repeatPassword'" [ngClass]="{ 'is-invalid': submitted && repeatPassword.errors }"/>
+    <div *ngIf="repeatPassword.invalid && (submitted)"
+         class="invalid-feedback">
       <div *ngIf="repeatPassword.errors.required">
         Please fill this field.
       </div>
       <div *ngIf="repeatPassword.errors.minLength">
         Must be at least 6 characters
+      </div>
+      <div *ngIf="repeatPassword.errors.NoPasswordMatch">
+        Passwords don't match
       </div>
     </div>
   </div>
