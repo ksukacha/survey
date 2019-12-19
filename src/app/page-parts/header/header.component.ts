@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {ModalAboutComponent} from '../../modals/modal-about/modal.about.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ModalLoginComponent} from '../../modals/modal-login/modal-login.component';
 import {ModalSignUpComponent} from '../../modals/modal-sign-up/modal-sign-up.component';

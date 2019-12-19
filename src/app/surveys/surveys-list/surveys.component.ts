@@ -32,9 +32,9 @@ export class SurveysComponent implements OnInit, OnDestroy {
     this.activatedRoute.data.subscribe((currentSurveysSection: Data) => {
       this.currentSurveysSection = currentSurveysSection[0].section;
       console.log(this.currentSurveysSection);
-      this.usersService.loggedUserSubject.asObservable().subscribe(user => {
+      this.subscriptions.push(this.usersService.loggedUserSubject.asObservable().subscribe(user => {
         this.loggedUser = user;
-      });
+      }));
       if (this.currentSurveysSection === SurveysSection.EXPLORE) {
         this.surveysService.getSurveys(); // inside there's subject.next(surveys) which allows to display all surveys from backend
       }
@@ -47,9 +47,9 @@ export class SurveysComponent implements OnInit, OnDestroy {
         // this.surveysService.setSurveysForDisplay(this.loggedUser.draftSurveys);
       }
     });
-    this.surveysService.getSubject().subscribe(surveys => {
+    this.subscriptions.push(this.surveysService.getSubject().subscribe(surveys => {
       this.surveys = surveys;
-    });
+    }));
   }
   convertTimestampToLocaleString(timestamp: number): string {
     const date: Date = new Date(timestamp);

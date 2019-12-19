@@ -27,15 +27,9 @@ public class SurveyDataController {
     return ResponseEntity.ok(surveysDataService.getSurveyById(Long.valueOf(id)));
   }
 
-//  @RequestMapping(method = RequestMethod.POST)
-//  public ResponseEntity<SurveyModel> saveSurvey(@RequestBody SurveyModel survey) {
-//      return ResponseEntity.ok(surveysDataService.saveSurvey(survey));
-//  }
-  @PostMapping(value = "/surveys"/*, params = {"userId", "surveyStatus"}*/)
-  public ResponseEntity<SurveyModel> saveSurvey(/*@RequestParam("userId") Long userId,
-                                           @RequestParam("surveyStatus") String surveyStatus,*/
-                                           @RequestBody SurveyModel survey) {
-    return ResponseEntity.ok(surveysDataService.saveSurvey(/*userId, surveyStatus,*/ survey));
+  @PostMapping(value = "/surveys")
+  public ResponseEntity<SurveyModel> saveSurvey(@RequestBody SurveyModel survey) {
+    return ResponseEntity.ok(surveysDataService.saveSurvey(survey));
   }
 
   @DeleteMapping(value = "/survey/{id}")

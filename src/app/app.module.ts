@@ -6,7 +6,6 @@ import { HeaderComponent } from './page-parts/header/header.component';
 import { SidemenuComponent } from './page-parts/sidemenu/sidemenu.component';
 import { ModalComponent } from './modal/modal.component';
 import { NewComponent } from './new/new.component';
-import { ModalAboutComponent } from './modals/modal-about/modal.about.component';
 import { DropdownMenuComponent } from './page-parts/dropdown-menu/dropdown-menu.component';
 import {SurveysService} from './surveys.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -39,7 +38,7 @@ import {AuthIntercepterService} from './auth-intercepter.service';
     SidemenuComponent,
     ModalComponent,
     NewComponent,
-    ModalAboutComponent,
+    // ModalAboutComponent,
     DropdownMenuComponent,
     LogInComponent,
     ModalLoginComponent,
@@ -72,6 +71,6 @@ import {AuthIntercepterService} from './auth-intercepter.service';
     {provide: HTTP_INTERCEPTORS, useClass: AuthIntercepterService, multi: true}
     ],
   bootstrap: [AppComponent],
-  entryComponents: [ModalAboutComponent, ModalLoginComponent, ModalSignUpComponent]
+  entryComponents: [/*ModalAboutComponent,*/ ModalLoginComponent, ModalSignUpComponent]
 })
 export class AppModule { }

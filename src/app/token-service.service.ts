@@ -3,14 +3,16 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {UsersService} from './users.service';
 import {Observable} from 'rxjs';
 import {User} from './model/user.model';
+import {Router} from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
 export class TokenServiceService {
 
-  constructor(private userService: UsersService) { }
+  constructor(private userService: UsersService,
+              private router: Router) { }
 
-  setToken(token: string): void{
+  setToken(token: string): void {
     localStorage.setItem('token', token);
   }
 
@@ -42,6 +44,7 @@ export class TokenServiceService {
       this.userService.getUser(userEmail).subscribe(user => {
         this.userService.loggedUserSubject.next(user);
         console.log(user);
+        this.router.navigate(['surveys']);
       });
     } else {
       this.userService.loggedUserSubject.next(null);

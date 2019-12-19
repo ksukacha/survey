@@ -12,6 +12,8 @@ import {TopicComponent} from './topics/topic/topic.component';
 import {ModalSignUpComponent} from './modals/modal-sign-up/modal-sign-up.component';
 import {ModalLoginComponent} from './modals/modal-login/modal-login.component';
 import {WelcomeComponent} from './page-parts/welcome/welcome/welcome.component';
+import {LogInComponent} from './log-in/log-in.component';
+import {SignUpComponent} from './sign-up/sign-up.component';
 // import {AuthUserGuard} from './authguard/auth-user.guard';
 // import {AuthAdminGuard} from './authguard/auth-admin.guard';
 
@@ -23,11 +25,11 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: ModalLoginComponent
+    component: LogInComponent
   },
   {
     path: 'register',
-    component: ModalSignUpComponent
+    component: SignUpComponent
   },
   {
     path: 'surveys',

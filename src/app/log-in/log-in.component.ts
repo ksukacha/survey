@@ -52,7 +52,7 @@ export class LogInComponent implements OnInit, OnDestroy {
         console.log('token: ', tokenResponse);
         this.tokenService.setToken(tokenResponse.token);
         this.tokenService.setLoggedUserSubject();
-        this.router.navigate(['surveys']);
+       // this.router.navigate(['surveys']);
       }));
 
     }
