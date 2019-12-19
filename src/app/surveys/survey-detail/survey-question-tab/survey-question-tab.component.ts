@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Data} from '@angular/router';
+import {ActivatedRoute, Data, Router} from '@angular/router';
 import {OpenedSurveyService} from '../opened-survey.service';
 import {Survey} from '../../../model/survey.model';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
@@ -11,6 +11,9 @@ import {Subscription} from 'rxjs';
 import {SurveyDto} from '../../../model/dto/surveyDto';
 import {SurveysService} from '../../../surveys.service';
 import {take} from 'rxjs/operators';
+import {User} from '../../../model/user.model';
+import {TokenServiceService} from '../../../token-service.service';
+import {UsersService} from '../../../users.service';
 
 @Component({
   selector: 'app-survey-question-tab',
@@ -21,17 +24,28 @@ export class SurveyQuestionTabComponent implements OnInit, OnDestroy {
   private survey: Survey;
   private surveyFormGroup: FormGroup;
   private subscriptions: Subscription[] = [];
+  private loggedUser: User;
 
   constructor(private openedSurvey: OpenedSurveyService,
               private fb: FormBuilder,
-              private surveyService: SurveysService) {
+              private surveyService: SurveysService,
+              private tokenService: TokenServiceService,
+              private userService: UsersService,
+              private router: Router) {
   }
 
   ngOnInit() {
     this.surveyFormGroup = this.fb.group({
       questions: this.fb.array([])
     });
-    console.log("came to q tab");
+    console.log('came to q tab');
+    if (!this.tokenService.isUserTokenPresent()) {
+      this.loggedUser = null;
+    } else {
+      this.subscriptions.push(this.userService.loggedUserSubject.asObservable().subscribe(user => {
+        this.loggedUser = user;
+      }));
+    }
     this.subscriptions.push(this.openedSurvey.getSubject().pipe(take(1)).subscribe(survey => {
       this.survey = survey;
       console.log('from q-tab', this.survey.id);
@@ -64,6 +78,7 @@ export class SurveyQuestionTabComponent implements OnInit, OnDestroy {
   print(val: string) {
     console.log(val);
   }
+
   private patchValues(counter): FormGroup {
     const answersFormArray: FormArray = new FormArray([]);
     if (this.survey.questions[counter].questionType === 'SINGLE_CHOICE') {
@@ -111,16 +126,23 @@ export class SurveyQuestionTabComponent implements OnInit, OnDestroy {
       console.log('valid');
     }
   }
+
   onSubmit() {
     this.collectFieldForPassedSurvey();
 
+    const userId = this.loggedUser == null ? null : this.loggedUser.id;
+    const creatorUserId = this.loggedUser != null && this.survey.authorLogin === this.loggedUser.userName ? this.loggedUser.id.toString() : null;
     // TODO: get actual userId instead of 1;
     // TODO: find out if user with userId is author of this survey, depending on that creatorUserId == userId or null
-    this.subscriptions.push(this.surveyService.saveSurvey(this.survey, 1, null,   'PASSED').subscribe(() => {
-     console.log('survey passed');
-     // TODO: add this survey to the user's 'passed surveys' list
+
+    this.subscriptions.push(this.surveyService.saveSurvey(this.survey, 1, creatorUserId, 'PASSED').subscribe(() => {
+      console.log('survey passed');
+      // TODO: add this survey to the user's 'passed surveys' list
+      this.loggedUser.passedSurveys.push(this.survey);
+      this.router.navigate(['surveys-taken']);
     }));
   }
+
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
   }

@@ -13,7 +13,8 @@ export class UserDto {
   createdSurveys: Array<SurveyDto>;
   passedSurveys: Array<SurveyDto>;
 
-  constructor(firstName: string, lastName: string, login: string, /*birthDate: string,*/ email: string, pass: string, role: string) {
+  constructor(id: number, firstName: string, lastName: string, login: string, /*birthDate: string,*/ email: string, pass: string, role: string) {
+    this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.userName = login;

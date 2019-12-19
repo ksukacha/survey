@@ -22,7 +22,7 @@ export class UsersService {
     const userSubject: Subject<User> = new ReplaySubject(1);
     const observableUserDto: Observable<UserDto> = this.httpClient.get<UserDto>('http://localhost:8081/api/users/' + userEmail);
     observableUserDto.subscribe(userDto => {
-      const user: User = new User(userDto.firstName, userDto.lastName, userDto.userName, userDto.email,
+      const user: User = new User(userDto.id, userDto.firstName, userDto.lastName, userDto.userName, userDto.email,
         userDto.password, userDto.role);
       const createdSurveysDto: SurveyDto[] = userDto.createdSurveys;
       const passedSurveysDto: SurveyDto[] = userDto.passedSurveys;

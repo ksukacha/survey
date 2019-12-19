@@ -28,7 +28,7 @@ export class NewSurveyComponent implements OnInit {
   topics: TopicModel[];
   selectedQuestions: QuestionModel[] = [];
   subscriptions: Subscription[] = [];
-  // loggedUser: User;
+  loggedUser: User;
 
   constructor(private surveyService: SurveysService,
               private topicService: TopicsService,
@@ -49,9 +49,9 @@ export class NewSurveyComponent implements OnInit {
     this.curItemTypeService.getSubject().subscribe(itemType => this.itemType = itemType);
     this.surveyService.getSubject().subscribe(surveys => this.surveys = surveys);
     this.topicService.getSubject().subscribe(topics => this.topics = topics);
-    // this.usersService.getLoggedUserSubject().subscribe(user => {
-    //   this.loggedUser = user;
-    // });
+    this.usersService.loggedUserSubject.asObservable().subscribe(user => {
+      this.loggedUser = user;
+    });
     this.topicService.getSelectedQuestionsToNewSurvey().subscribe(
       selectedQuestions => {
         this.selectedQuestions = selectedQuestions;
@@ -114,7 +114,11 @@ export class NewSurveyComponent implements OnInit {
       for (const qItem of this.questions.controls) {
         q = new QuestionModel(null, null, []);
         q.name = qItem.get('questionName').value;
-        q.questionType = qItem.get('questionType').value;
+       // q.questionType = qItem.get('questionType').value;
+        switch (qItem.get('questionType').value) {
+          case 'single-choice': q.questionType = 'SINGLE_CHOICE'; break;
+          case 'multiple-choice': q.questionType = 'MULTIPLE_CHOICE'; break;
+        }
         for (const ansItem of (qItem.get('answers') as FormArray).controls) {
           a = new AnswerModel(null);
           a.name = ansItem.get('answerName').value;
@@ -138,7 +142,7 @@ export class NewSurveyComponent implements OnInit {
         this.newSurvey = this.collectFieldForNewItem() as Survey;
 
         // TODO: get actual userId instead of 1;
-        this.subscriptions.push(this.surveyService.saveSurvey(this.newSurvey, 1, '1',   'NEW').subscribe(() => {
+        this.subscriptions.push(this.surveyService.saveSurvey(this.newSurvey, this.loggedUser.id, this.loggedUser.id.toString(),   'NEW').subscribe(() => {
            this.surveys.push(this.newSurvey);
            this.surveyService.subject.next(this.surveys);
           //                     this.loggedUser.ownSurveys.push(this.newSurvey);
