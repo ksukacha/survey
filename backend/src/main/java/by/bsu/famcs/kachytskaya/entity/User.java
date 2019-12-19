@@ -23,21 +23,7 @@ public class User {
   @Enumerated
   private UserRoleEnum role;
 
-//  @OneToMany(cascade = CascadeType.ALL)
-//  @JoinTable (
-//    name = "user_created_survey",
-//    joinColumns = {@JoinColumn(name = "user_id")},
-//    inverseJoinColumns = {@JoinColumn(name = "survey_id")})
-//  private Set<Survey> createdSurveys = new HashSet<>();
-//
-//  @ManyToMany
-//  @JoinTable(
-//    name = "user_passed_survey",
-//    joinColumns = {@JoinColumn(name = "user_id")},
-//    inverseJoinColumns = {@JoinColumn(name = "survey_id")})
-//  private Set<Survey> passedSurveys = new HashSet<>();
-
-  @OneToMany(/*targetEntity = Report.class,*/ mappedBy = "user", cascade = CascadeType.MERGE, fetch = FetchType.EAGER/*, cascade = CascadeType.ALL, fetch = FetchType.EAGER*/)
+  @OneToMany( mappedBy = "user", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
   private Set<Report> reports = new HashSet<>();
 
 
@@ -80,14 +66,6 @@ public class User {
     return role;
   }
 
-//  public Set<Survey> getCreatedSurveys() {
-//    return createdSurveys;
-//  }
-//
-//  public Set<Survey> getPassedSurveys() {
-//    return passedSurveys;
-//  }
-
 
   public Set<Report> getReports() {
     return reports;
@@ -116,14 +94,6 @@ public class User {
   public void setPassword(String password) {
     this.password = password;
   }
-
-//  public void setCreatedSurveys(Set<Survey> createdSurveys) {
-//    this.createdSurveys = createdSurveys;
-//  }
-//
-//  public void setPassedSurveys(Set<Survey> passedSurveys) {
-//    this.passedSurveys = passedSurveys;
-//  }
 
   public void setReports(Set<Report> reports) {
     this.reports = reports;

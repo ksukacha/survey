@@ -20,7 +20,8 @@ export class LogInComponent implements OnInit, OnDestroy {
 
   constructor(private usersService: UsersService,
               private router: Router,
-              private tokenService: TokenServiceService) {
+              private tokenService: TokenServiceService,
+              private userService: UsersService) {
   }
 
   ngOnInit() {
@@ -50,6 +51,8 @@ export class LogInComponent implements OnInit, OnDestroy {
       this.subscriptions.push(this.usersService.loginUser(new LoginRequest(email, password)).subscribe(tokenResponse => {
         console.log('token: ', tokenResponse);
         this.tokenService.setToken(tokenResponse.token);
+        this.tokenService.setLoggedUserSubject();
+        this.router.navigate(['surveys']);
       }));
 
     }

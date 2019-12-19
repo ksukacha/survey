@@ -1,6 +1,8 @@
 package fapi.models;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class UserModel {
   private int id;
@@ -11,9 +13,8 @@ public class UserModel {
   private String email;
   private String password;
   private String role;
-  private List<SurveyModel> ownSurveys;
-  private List<SurveyModel> takenSurveys;
-  private List<SurveyModel> draftSurveys;
+  private Set<SurveyModel> createdSurveys = new HashSet<>();
+  private Set<SurveyModel> passedSurveys = new HashSet<>();
 
   public UserModel() {}
   public UserModel(String firstName, String lastName, String userName, /*String birthDate,*/ String email, String password, String role) {
@@ -58,17 +59,6 @@ public class UserModel {
     return role;
   }
 
-  public List<SurveyModel> getOwnSurveys() {
-    return ownSurveys;
-  }
-
-  public List<SurveyModel> getTakenSurveys() {
-    return takenSurveys;
-  }
-
-  public List<SurveyModel> getDraftSurveys() {
-    return draftSurveys;
-  }
 
   public void setId(int id) {
     this.id = id;
@@ -98,19 +88,24 @@ public class UserModel {
     this.password = password;
   }
 
-  public void setOwnSurveys(List<SurveyModel> ownSurveys) {
-    this.ownSurveys = ownSurveys;
-  }
-
-  public void setTakenSurveys(List<SurveyModel> takenSurveys) {
-    this.takenSurveys = takenSurveys;
-  }
-
-  public void setDraftSurveys(List<SurveyModel> draftSurveys) {
-    this.draftSurveys = draftSurveys;
-  }
 
   public void setRole(String role) {
     this.role = role;
+  }
+
+  public Set<SurveyModel> getCreatedSurveys() {
+    return createdSurveys;
+  }
+
+  public void setCreatedSurveys(Set<SurveyModel> createdSurveys) {
+    this.createdSurveys = createdSurveys;
+  }
+
+  public Set<SurveyModel> getPassedSurveys() {
+    return passedSurveys;
+  }
+
+  public void setPassedSurveys(Set<SurveyModel> passedSurveys) {
+    this.passedSurveys = passedSurveys;
   }
 }

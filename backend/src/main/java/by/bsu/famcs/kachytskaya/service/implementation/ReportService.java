@@ -34,45 +34,34 @@ public class ReportService implements IReportService {
   @Transactional(rollbackOn = Throwable.class)
   public Report saveReport(Long userId, String surveyStatus, Survey survey, String creatorUserId) throws NotFoundException {
     Report report;
-    //boolean isSurveyCreator = SurveyStatusEnum.NEW.toString().equals(surveyStatus) && userId!=null;
     User user = new User();
     if (userId != null) {
       user = userService.getUserById(userId);
     }
-    if(surveyStatus.equals("NEW")) {
+    if (surveyStatus.equals("NEW")) {
       // TODO посмотреть
       //survey.setId(0L);
       survey = surveyService.saveSurvey(survey);
       Set<Question> questionSet = survey.getQuestions();
       Iterator<Question> questionIterator = questionSet.iterator();
-//      for (int j = 0; j < questionList.size(); ++j) {
-//        Question q = questionList.get(j);
-//        q.setSurvey(survey);
-//        // questionService.saveQuestion(q);
-//        List<Answer> list = q.getAnswers();
-//        for (int i = 0; i < list.size(); i++) {
-//          Answer a = list.get(i);
-//          a.setQuestion(q);
-//          //answerService.saveAnswer(a);
-//        }
-//      }
-      while(questionIterator.hasNext()) {
+
+      while (questionIterator.hasNext()) {
         Question q = questionIterator.next();
         q.setSurvey(survey);
         List<Answer> list = q.getAnswers();
         Iterator<Answer> answerIterator = list.iterator();
-        while(answerIterator.hasNext()) {
+        while (answerIterator.hasNext()) {
           Answer a = answerIterator.next();
           a.setQuestion(q);
         }
       }
-    }else{
+    } else {
       Optional<Survey> surveyOptional = surveyService.getSurveyByName(survey.getName());
-      if(surveyOptional.isPresent()) {
+      if (surveyOptional.isPresent()) {
         survey = surveyOptional.get();
       }
     }
-    report = new Report(userId != null ? user : null, survey, SurveyStatusEnum.valueOf(surveyStatus), creatorUserId/*isSurveyCreator ? userId : null*/);
+    report = new Report(userId != null ? user : null, survey, SurveyStatusEnum.valueOf(surveyStatus), creatorUserId);
     survey.getReports().add(report);
     if (userId != null) {
       user.getReports().add(report);
@@ -91,5 +80,15 @@ public class ReportService implements IReportService {
       }
     }
     return null;
+  }
+
+  @Override
+  public Optional<Iterable<Report>> getAllReportsByCreatorUserId(String creatorUserId) {
+    return reportRepository.getAllByCreatorUserId(creatorUserId);
+  }
+
+  @Override
+  public Optional<Iterable<Report>> getAllReportsByUserAndSurveyStatus(User user, SurveyStatusEnum surveyStatusEnum) {
+    return reportRepository.getAllByUserAndSurveyStatus(user, surveyStatusEnum);
   }
 }

@@ -16,7 +16,7 @@ import {User} from '../../model/user.model';
 export class SurveysComponent implements OnInit, OnDestroy {
   surveys: Survey[];
   currentSurveysSection: SurveysSection;
-  // loggedUser: User;
+  loggedUser: User;
   private subscriptions: Subscription[] = [];
   constructor(private surveysService: SurveysService,
               private activatedRoute: ActivatedRoute,
@@ -26,15 +26,19 @@ export class SurveysComponent implements OnInit, OnDestroy {
     this.activatedRoute.data.subscribe((currentSurveysSection: Data) => {
       this.currentSurveysSection = currentSurveysSection[0].section;
       console.log(this.currentSurveysSection);
+
+      this.usersService.loggedUserSubject.asObservable().subscribe(user => {
+        this.loggedUser = user;
+      });
       if (this.currentSurveysSection === SurveysSection.EXPLORE) {
         this.surveysService.getSurveys(); // inside there's subject.next(surveys) which allows to display all surveys from backend
       }
       if (this.currentSurveysSection === SurveysSection.MY_SURVEYS) {
-        // this.surveysService.setSurveysForDisplay(this.loggedUser.ownSurveys);
+        this.surveysService.setSurveysForDisplay(this.loggedUser.createdSurveys);
       } else if (this.currentSurveysSection === SurveysSection.SURVEYS_TAKEN) {
-        // this.surveysService.setSurveysForDisplay(this.loggedUser.takenSurveys);
+        this.surveysService.setSurveysForDisplay(this.loggedUser.passedSurveys);
       } else if (this.currentSurveysSection === SurveysSection.DRAFTS) {
-       // this.surveysService.setSurveysForDisplay(this.loggedUser.draftSurveys);
+        // this.surveysService.setSurveysForDisplay(this.loggedUser.draftSurveys);
       }
     });
     this.surveysService.getSubject().subscribe(surveys => {

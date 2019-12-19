@@ -1,6 +1,8 @@
 package fapi.configuration;
 
+import fapi.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +24,8 @@ import javax.annotation.Resource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Resource(name = "usersDataService")
+  @Autowired
+  @Qualifier("customUserDetailsService")
   private UserDetailsService userDetailsService;
 
 //  @Autowired
@@ -43,16 +46,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //  public JwtAuthenticationFilter authenticationTokenFilterBean(){
 //    return new JwtAuthenticationFilter();
 //  }
-
+//
+  @Bean
+  public JwtAuthenticationFilter authenticationTokenFilterBean() {
+    return new JwtAuthenticationFilter();
+  }
   @Autowired
   public BCryptPasswordEncoder encoder;
+
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
     http.cors().and().csrf().disable()
       .authorizeRequests()
       .antMatchers("/api/login", "/api/users").permitAll()
-     // .anyRequest().authenticated()
+      //.anyRequest().authenticated()
       .and()
       //.exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
       //.and()

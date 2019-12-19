@@ -12,4 +12,6 @@ import java.util.Optional;
 @Repository
 public interface ReportRepository extends CrudRepository<Report, Long> {
   Iterable<Report> getAllBySurvey(Survey survey);
+  Optional<Iterable<Report>> getAllByCreatorUserId(String creatorUserId);
+  Optional<Iterable<Report>> getAllByUserAndSurveyStatus(User user, SurveyStatusEnum surveyStatusEnum);
 }

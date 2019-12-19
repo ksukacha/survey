@@ -23,7 +23,7 @@ public class UserController {
   }
 
   @PostMapping
-  public ResponseEntity<User> saveSurvey(@RequestBody UserDto userDto) {
+  public ResponseEntity<User> saveUser(@RequestBody UserDto userDto) {
     User user = userMapper.toEntity(userDto);
     return ResponseEntity.ok(userService.saveUser(user));
   }

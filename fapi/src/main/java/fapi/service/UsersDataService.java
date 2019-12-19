@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@Service
+@Service("customUserDetailsService")
 public class UsersDataService implements IUsersDataService, UserDetailsService {
 
   @Value("${backend.server.url}")
@@ -57,6 +57,6 @@ public class UsersDataService implements IUsersDataService, UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     UserModel userModel = getUserByEmail(email);
-    return new User(userModel.getUserName(), userModel.getPassword(), Collections.emptyList());
+    return new User(userModel.getEmail(), userModel.getPassword(), Collections.emptyList());
   }
 }

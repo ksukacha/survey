@@ -1,4 +1,5 @@
 import {Survey} from './survey.model';
+import {SurveyDto} from './dto/surveyDto';
 
 export class User {
   id: number;
@@ -9,9 +10,8 @@ export class User {
   email: string;
   password: string;
   role: string;
-  ownSurveys: Array<Survey>;
-  takenSurveys: Array<Survey>;
-  draftSurveys: Array<Survey>;
+  createdSurveys: Array<Survey>;
+  passedSurveys: Array<Survey>;
 
   constructor(firstName: string, lastName: string, login: string, /*birthDate: string,*/ email: string, pass: string, role: string/*, ownSurveys: Array<Survey>, takenSurveys: Array<Survey>, draftSurveys: Array<Survey>*/) {
     this.firstName = firstName;
@@ -21,8 +21,5 @@ export class User {
     this.email = email;
     this.password = pass;
     this.role = role;
-    // this.ownSurveys = ownSurveys;
-    // this.takenSurveys = takenSurveys;
-    // this.draftSurveys = draftSurveys;
   }
 }

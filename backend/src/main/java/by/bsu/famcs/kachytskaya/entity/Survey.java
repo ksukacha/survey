@@ -15,16 +15,7 @@ public class Survey {
   @Column(name ="elapse_date")
   private Long elapseDate;
   @OneToMany (mappedBy = "survey", cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
-
-//  @JoinTable (
-//    name = "survey_question",
-//    joinColumns = {@JoinColumn(name = "survey_id")},
-//    inverseJoinColumns = {@JoinColumn(name = "question_id")})
-
-  //TODO посмотреть
   private Set<Question> questions = new HashSet<>();
-  //@Enumerated
-  //private SurveyStatusEnum status;
   @OneToMany( mappedBy = "survey", cascade = CascadeType.MERGE, fetch = FetchType.EAGER/*, cascade = CascadeType.ALL*/)
   private Set<Report> reports = new HashSet<>();
 
@@ -56,10 +47,6 @@ public class Survey {
     return questions;
   }
 
-  //  public SurveyStatusEnum getStatus() {
-//    return status;
-//  }
-
   public Set<Report> getReports() {
     return reports;
   }
@@ -79,10 +66,6 @@ public class Survey {
   public void setElapseDate(Long elapseDate) {
     this.elapseDate = elapseDate;
   }
-
-//  public void setStatus(SurveyStatusEnum status) {
-//    this.status = status;
-//  }
 
   public void setQuestions(Set<Question> questions) {
     this.questions = questions;
