@@ -7,6 +7,7 @@ import {ActivatedRoute, Data} from '@angular/router';
 import 'rxjs/add/operator/map';
 import {UsersService} from '../../users.service';
 import {User} from '../../model/user.model';
+import {TokenServiceService} from '../../token-service.service';
 
 @Component({
   selector: 'app-surveys',
@@ -20,13 +21,17 @@ export class SurveysComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   constructor(private surveysService: SurveysService,
               private activatedRoute: ActivatedRoute,
-              private usersService: UsersService) { }
+              private usersService: UsersService,
+              private tokenService: TokenServiceService) { }
 
   ngOnInit() {
+    if (!this.tokenService.isUserTokenPresent()) {
+      this.usersService.loggedUserSubject.next(null);
+      this.loggedUser = null;
+    }
     this.activatedRoute.data.subscribe((currentSurveysSection: Data) => {
       this.currentSurveysSection = currentSurveysSection[0].section;
       console.log(this.currentSurveysSection);
-
       this.usersService.loggedUserSubject.asObservable().subscribe(user => {
         this.loggedUser = user;
       });
@@ -34,6 +39,7 @@ export class SurveysComponent implements OnInit, OnDestroy {
         this.surveysService.getSurveys(); // inside there's subject.next(surveys) which allows to display all surveys from backend
       }
       if (this.currentSurveysSection === SurveysSection.MY_SURVEYS) {
+        console.log(this.loggedUser);
         this.surveysService.setSurveysForDisplay(this.loggedUser.createdSurveys);
       } else if (this.currentSurveysSection === SurveysSection.SURVEYS_TAKEN) {
         this.surveysService.setSurveysForDisplay(this.loggedUser.passedSurveys);

@@ -36,12 +36,15 @@ export class TokenServiceService {
     }
   }
 
-  setLoggedUserSubject(): Observable<User> {
-    const userEmail: string = this.getUserEmail();
-    this.userService.getUser(userEmail).subscribe(user => {
-      this.userService.loggedUserSubject.next(user);
-      console.log(user);
-    });
-    return;
+  setLoggedUserSubject(): void {
+    if (this.isUserTokenPresent()) {
+      const userEmail: string = this.getUserEmail();
+      this.userService.getUser(userEmail).subscribe(user => {
+        this.userService.loggedUserSubject.next(user);
+        console.log(user);
+      });
+    } else {
+      this.userService.loggedUserSubject.next(null);
+    }
   }
 }
